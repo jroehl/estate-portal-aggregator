@@ -1,0 +1,48 @@
+{
+  "name": "estate-portal-aggregator",
+  "version": "0.0.1",
+  "description": "This module helps fetching real estate data from immobilienscout24 and flowfact.",
+  "license": "MIT",
+  "keywords": [
+    "immobilienscout24",
+    "is24",
+    "flowfact",
+    "real-estates",
+    "estates"
+  ],
+  "bin": {
+    "estate-portal": "bin/estate-portal"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "npm run build:types && npm run build:js",
+    "build:tsc": "tsc",
+    "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
+    "build:watch": "npm run build:js -- --watch"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-async-to-generator": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/lodash": "^4.14.149",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^13.7.0",
+    "@types/request-promise-native": "^1.0.17",
+    "@types/yargs": "^15.0.3",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.8.4",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "oauth-1.0a": "^2.2.6",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
+    "yargs": "^15.1.0"
+  }
+}
