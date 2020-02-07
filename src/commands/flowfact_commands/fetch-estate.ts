@@ -55,12 +55,15 @@ exports.handler = async (argv: Arguments) => {
       ) as Estate).setValues();
     }
 
+    const name = [
+      parentCommand,
+      command.replace(' <estate-id>', ''),
+      apiVersion,
+      argv.normalize ? 'normalized' : 'original',
+      'long',
+    ].join('-');
     if (argv.storeResult) {
-      const fileName = storeResponse(
-        `${parentCommand}-${command}-long`,
-        result,
-        argv.pretty
-      );
+      const fileName = storeResponse(name, result, argv.pretty);
       Logger.log(`Result stored at "${fileName}"`);
     } else {
       Logger.logJSON(result);

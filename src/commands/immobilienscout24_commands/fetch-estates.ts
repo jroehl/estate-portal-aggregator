@@ -73,12 +73,14 @@ exports.handler = async (argv: Arguments) => {
       );
     }
 
+    const name = [
+      parentCommand,
+      command,
+      argv.normalize ? 'normalized' : 'original',
+      argv.detailed ? 'long' : 'short',
+    ].join('-');
     if (argv.storeResult) {
-      const fileName = storeResponse(
-        `${parentCommand}-${command}-${argv.detailed ? 'long' : 'short'}`,
-        results,
-        argv.pretty
-      );
+      const fileName = storeResponse(name, results, argv.pretty);
       Logger.log(
         `${results.length} result${
           results.length === 1 ? '' : 's'
