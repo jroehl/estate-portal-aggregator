@@ -8,7 +8,7 @@ import {
   Immobilienscout24,
   Immobilienscout24EstateCommon,
   Immobilienscout24EstateDetailed,
-} from '../../classes/portals/Immobilienscout24';
+} from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
 import { storeResponse } from '../../utils/cli-tools';
 import { Logger } from '../../utils';

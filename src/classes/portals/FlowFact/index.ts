@@ -1,6 +1,6 @@
 import { Credentials, BasicAuth, TokenAuth } from '../../Authorization';
-import FlowFactV1 from './v1';
-import FlowFactV2 from './v2';
+import FlowFactV1 from './v1/Portal';
+import FlowFactV2 from './v2/Portal';
 import { FlowFactCommonV1, FlowFactDetailedV1 } from './v1/Estate';
 import { FlowFactCommonV2, FlowFactDetailedV2 } from './v2/Estate';
 

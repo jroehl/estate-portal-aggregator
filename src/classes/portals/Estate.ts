@@ -12,7 +12,7 @@ export interface RealEstateCommon {
   active: boolean;
   address?: Address;
   archived: boolean;
-  estateType: string; // buildingType
+  estateType: string;
   createdAt: number;
   externalID: string;
   internalID: string;
