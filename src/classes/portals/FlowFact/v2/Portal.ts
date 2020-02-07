@@ -8,6 +8,7 @@ import {
   Credentials,
   TokenAuth,
 } from '../../../Authorization';
+import requestPromise from 'request-promise-native';
 
 export const estateSchemas = [
   'catering_accommodation_purchase',
@@ -70,29 +71,25 @@ export default class FlowFactV2 extends Portal {
     super(new FlowFactV2Authorization(credentials));
   }
 
-  private async _fetchEstates(
-    schemaID: string,
+  private async fetchRecursive(
+    baseURL: string,
+    opts?: requestPromise.RequestPromiseOptions,
     options?: FetchOptions,
     elements: any[] = []
   ): Promise<any[]> {
     const currentPage = options?.page || 1;
     const size = options?.pageSize || 50;
-    const uri = `${this.baseURL}/search-service/stable/schemas/${schemaID}?size=${size}&page=${currentPage}`;
+    const uri = `${baseURL}?size=${size}&page=${currentPage}`;
 
-    const res = await this.request(uri, {
-      method: 'POST',
-      body: {
-        target: 'ENTITY',
-        distinct: true,
-      },
-    });
+    const res = await this.request(uri, opts);
 
     const { entries, totalCount } = res;
 
     elements = [...elements, ...entries];
     if (options?.recursively && elements.length < totalCount) {
-      return this._fetchEstates(
-        schemaID,
+      return this.fetchRecursive(
+        baseURL,
+        opts,
         { ...options, page: currentPage + 1 },
         elements
       );
@@ -104,7 +101,17 @@ export default class FlowFactV2 extends Portal {
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
     const items = await Promise.all(
       estateSchemas.map(async schemaID => {
-        const results = await this._fetchEstates(schemaID, options);
+        const results = await this.fetchRecursive(
+          `${this.baseURL}/search-service/stable/schemas/${schemaID}`,
+          {
+            method: 'POST',
+            body: {
+              target: 'ENTITY',
+              distinct: true,
+            },
+          },
+          options
+        );
         return results.map(result => ({ type: schemaID, ...result }));
       })
     );
@@ -122,5 +129,23 @@ export default class FlowFactV2 extends Portal {
   async fetchEstate(id: string): Promise<any> {
     const uri = `${this.baseURL}/entity-service/stable/entities/${id}`;
     return this.request(uri, undefined, { id });
+  }
+
+  async fetchSchemas(options?: FetchOptions): Promise<any[]> {
+    const schemas = await Promise.all(
+      estateSchemas.map(async schemaID => {
+        return this.fetchRecursive(
+          `${this.baseURL}/schema-service/stable/v2/schemas/${schemaID}`,
+          undefined,
+          options
+        );
+      })
+    );
+    return schemas;
+  }
+
+  async fetchSchema(schemaID: string): Promise<any> {
+    const uri = `${this.baseURL}/schema-service/stable/v2/schemas/${schemaID}`;
+    return this.request(uri, undefined, { schemaID });
   }
 }

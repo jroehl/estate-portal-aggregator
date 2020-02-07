@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 import {
   Price,
   Address,
@@ -6,8 +8,6 @@ import {
   Estate,
   RealEstateCommon,
 } from '../Estate';
-
-import { get } from 'lodash';
 
 export class Immobilienscout24EstateCommon extends Estate {
   protected common!: RealEstateCommon;

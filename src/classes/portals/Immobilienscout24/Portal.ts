@@ -1,4 +1,6 @@
 import OAuth from 'oauth-1.0a';
+import { createHmac } from 'crypto';
+import { get } from 'lodash';
 
 import { Portal, FetchOptions } from '../Portal';
 import {
@@ -7,10 +9,6 @@ import {
   Credentials,
   OAuth as IOAuth,
 } from '../../Authorization';
-
-import { createHmac } from 'crypto';
-import { get } from 'lodash';
-
 export {
   Immobilienscout24EstateCommon,
   Immobilienscout24EstateDetailed,
@@ -72,13 +70,14 @@ export class Immobilienscout24 extends Portal {
     super(new Immobilienscout24Authorization(credentials));
   }
 
-  private async _fetchEstates(
+  private async fetchRecursive(
+    baseURL: string,
     options?: FetchOptions,
     elements: any[] = []
   ): Promise<any[]> {
     const currentPage = options?.page || 1;
     const size = options?.pageSize || 50;
-    const uri = `${this.baseURL}?pagesize=${size}&pagenumber=${currentPage}`;
+    const uri = `${baseURL}?pagesize=${size}&pagenumber=${currentPage}`;
 
     const res = await this.request(uri);
 
@@ -89,7 +88,8 @@ export class Immobilienscout24 extends Portal {
 
     elements = [...elements, ...realEstateElement];
     if (options?.recursively && elements.length < numberOfHits) {
-      return this._fetchEstates(
+      return this.fetchRecursive(
+        baseURL,
         { ...options, page: currentPage + 1 },
         elements
       );
@@ -99,7 +99,7 @@ export class Immobilienscout24 extends Portal {
   }
 
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
-    const results = await this._fetchEstates(options);
+    const results = await this.fetchRecursive(this.baseURL, options);
     if (!options?.detailed) return results;
     return Promise.all(
       results.map(async (res: any) => {

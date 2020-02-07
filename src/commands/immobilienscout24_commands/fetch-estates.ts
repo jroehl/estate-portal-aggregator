@@ -88,6 +88,6 @@ exports.handler = async (argv: Arguments) => {
       Logger.logJSON(results);
     }
   } catch (error) {
-    Logger.error(error.message);
+    Logger.error(error.message || error);
   }
 };

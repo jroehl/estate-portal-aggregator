@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { get } from 'lodash';
+
 import { RequestError } from './Portal';
 
 export interface Mapping {

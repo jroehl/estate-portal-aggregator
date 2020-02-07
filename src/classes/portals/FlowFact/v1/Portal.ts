@@ -43,7 +43,8 @@ export default class FlowFactV1 extends Portal {
     this.baseURL = `https://flowfactapi.flowfact.com/com.flowfact.server/api/rest/v1.0/customers/${credentials.customer}/users/${credentials.user}/estates`;
   }
 
-  private async _fetchEstates(
+  private async fetchRecursive(
+    baseURL: string,
     options?: FetchOptions,
     elements: any[] = []
   ): Promise<any[]> {
@@ -59,7 +60,8 @@ export default class FlowFactV1 extends Portal {
 
     elements = [...elements, ...estateshort];
     if (options?.recursively && elements.length < total) {
-      return this._fetchEstates(
+      return this.fetchRecursive(
+        baseURL,
         { ...options, page: currentPage + 1 },
         elements
       );
@@ -69,7 +71,7 @@ export default class FlowFactV1 extends Portal {
   }
 
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
-    const result = await this._fetchEstates(options);
+    const result = await this.fetchRecursive(this.baseURL, options);
     if (!options?.detailed) return result;
     return Promise.all(
       result.map(async (res: any) => {
