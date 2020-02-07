@@ -15,11 +15,11 @@ export class FlowFactCommonV2 extends Estate {
 
   protected async setCommon(): Promise<void> {
     this.common = {
-      active: this.isActive(this.get('status.values[0]')),
+      active: this.getActive('status.values[0]'),
       address: this.getAddress(),
-      archived: this.isArchived(this.get('status.values[0]')),
+      archived: this.getArchived('status.values[0]'),
       estateType: this.get('estatetype.values[0]'),
-      createdAt: this.sanitizeDate(this.get('_metadata.createdTimestamp')),
+      createdAt: this.getDate('_metadata.createdTimestamp'),
       externalID: this.get('identifier.values[0]'),
       internalID: this.get('_metadata.id'),
       livingSpace: this.get('livingarea.values[0]'),
@@ -27,11 +27,20 @@ export class FlowFactCommonV2 extends Estate {
       price: this.getPrice(),
       title: this.get('headline.values[0]'),
       previewImage: this.getPreviewImage(),
-      updatedAt: this.sanitizeDate(this.get('_metadata.timestamp')),
+      updatedAt: this.getDate('_metadata.timestamp'),
     };
   }
 
   protected async setDetailed(): Promise<void> {}
+
+  protected getBoolean(
+    path: any | any[],
+    defaultValue?: any
+  ): boolean | undefined {
+    const value = this.get(path, defaultValue);
+    if (value === 1) return true;
+    if (value === 0) return false;
+  }
 
   private getPreviewImage(): Attachment | undefined {
     const image = this.get('mainImage.values[0]', {});
@@ -53,18 +62,11 @@ export class FlowFactCommonV2 extends Estate {
   }
 
   private getAddress(): Address | undefined {
-    const street = this.get('addresses.values[0].street');
-    let houseNumber;
-    if (street) {
-      const match = street.match(/^.* ([0-9]+(?:-[0-9]+)(?:[a-z]-[a-z])?).*$/i);
-      houseNumber = match ? match[1] : undefined;
-    }
     return {
       city: this.get('addresses.values[0].city'),
-      houseNumber,
       postcode: this.get('addresses.values[0].zipcode'),
       country: this.get('addresses.values[0].country'),
-      street,
+      street: this.get('addresses.values[0].street'),
     };
   }
 }
@@ -73,62 +75,53 @@ export class FlowFactDetailedV2 extends FlowFactCommonV2 {
   protected async setDetailed(): Promise<void> {
     this.details = {
       attachments: await this.getAttachments(),
-      // @TODO implement missing properties
       // attic: this.get('attic'),
-      // balcony: this.get('balcony'),
+      balcony: this.getBoolean('balconyavailable.values[0'),
       // buildingEnergyRatingType: this.get('buildingEnergyRatingType'),
-      // cellar: this.get('cellar'),
-      // condition: this.get('condition'),
-      // constructionPhase: this.get('constructionPhase'),
-      // constructionYear: this.get('constructionYear'),
-      // courtage: this.getCourtage(),
-      // descriptionNote: this.get('descriptionNote'),
-      // energyCertificateAvailability: this.get(
-      //   'energyCertificate.energyCertificateAvailability'
-      // ),
-      // energyConsumptionContainsWarmWater: this.get(
-      //   'energyConsumptionContainsWarmWater'
-      // ),
-      // energyPerformanceCertificate: this.get('energyPerformanceCertificate'),
-      // floor: this.get('floor'),
+      cellar: this.getBoolean('cellar.values[0]'),
+      condition: this.get('condition.values[0]'),
+      constructionPhase: this.get('constructionphase.values[0]'),
+      constructionYear: this.get('yearofconstruction.values[0]'),
+      courtage: this.get('commissionInformation.values[0]'),
+      descriptionNote: this.get('textEstate.values[0]'),
+      energyCertificateAvailability: this.getBoolean(
+        'energy_certificate_availability.values[0]'
+      ),
+      energyConsumptionContainsWarmWater: this.getBoolean(
+        'energywithwarmwater.values[0]'
+      ),
+      energyPerformanceCertificate: this.getBoolean(
+        'energyCertificate.energy_performance_certificate.values[0]'
+      ),
+      floor: this.get('floor.values[0]'),
       // freeFrom: this.get('freeFrom'),
-      // furnishingNote: this.get('furnishingNote'),
-      // garden: this.get('garden'),
-      // guestBathroom: this.get('guestBathroom'),
-      // guestToilet: this.get('guestToilet'),
-      // handicappedAccessible: this.get('handicappedAccessible'),
-      // heatingType: this.get('heatingType'),
-      // interiorQuality: this.get('interiorQuality'),
-      // lastRefurbishment: this.get('lastRefurbishment'),
-      // listed: this.get('listed'),
-      // locationNote: this.get('locationNote'),
-      // lodgerFlat: this.get('lodgerFlat'),
+      furnishingNote: this.get('textEnvironment.values[0]'),
+      garden: this.getBoolean('gardenarea.values[0]'),
+      guestBathroom: this.getBoolean('guesttoilet.values[0]'),
+      guestToilet: this.getBoolean('guesttoilet.values[0]'),
+      handicappedAccessible: this.getBoolean('barrierfree.values[0]'),
+      heatingType: this.get('typeofheating.values[0]'),
+      interiorQuality: this.get('qualfitout.values[0]'),
+      lastRefurbishment: this.get('lastModernization.values[0]'),
+      listed: this.getBoolean('monument.values[0]'),
+      locationNote: this.get('textLocation.values[0]'),
+      lodgerFlat: this.getBoolean('lodger_flat.values[0]'),
       // numberOfApartments: this.get('numberOfApartments'),
-      // numberOfBathRooms: this.get('numberOfBathRooms'),
-      // numberOfBedRooms: this.get('numberOfBedRooms'),
+      numberOfBathRooms: this.get('numberbathrooms.values[0]'),
+      numberOfBedRooms: this.get('numberbedrooms.values[0]'),
       // numberOfCommercialUnits: this.get('numberOfCommercialUnits'),
-      // numberOfFloors: this.get('numberOfFloors'),
+      numberOfFloors: this.get('no_of_floors.values[0]'),
       // numberOfParkingSpaces: this.get('numberOfParkingSpaces'),
-      // otherNote: this.get('otherNote'),
+      otherNote: this.get('textFree.values[0]'),
       // parkingSpacePrice: this.get('parkingSpacePrice'),
-      // parkingSpaceType: this.get('parkingSpaceType'),
+      parkingSpaceType: this.get('parking.values[0]'),
       // patio: this.get('patio'),
-      // plotArea: this.get('plotArea'),
+      plotArea: this.get('plotarea.values[0]'),
       // residentialUnits: this.get('residentialUnits'),
       // summerResidencePractical: this.get('summerResidencePractical'),
-      // usableFloorSpace: this.get('usableFloorSpace'),
+      usableFloorSpace: this.get('usablearea.values[0]'),
     };
   }
-
-  // private getCourtage(): string {
-  //   const result = [
-  //     this.get('courtage.hasCourtage'),
-  //     this.get('courtage.courtageNote'),
-  //   ]
-  //     .filter(Boolean)
-  //     .join('\n');
-  //   return result;
-  // }
 
   private async getAttachments(): Promise<Attachment[]> {
     return this.get('onlineImage.values', []).map(

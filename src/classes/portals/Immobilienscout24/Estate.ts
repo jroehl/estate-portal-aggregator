@@ -15,11 +15,11 @@ export class Immobilienscout24EstateCommon extends Estate {
 
   protected async setCommon(): Promise<void> {
     this.common = {
-      active: this.isActive(this.get('realEstateState')),
+      active: this.getActive('realEstateState'),
       address: this.getAddress(),
-      archived: this.isArchived(this.get('realEstateState')),
+      archived: this.getArchived('realEstateState'),
       estateType: this.getEstateType(),
-      createdAt: this.sanitizeDate(this.get(['creationDate', '@creation'])),
+      createdAt: this.getDate(['creationDate', '@creation']),
       externalID: this.get('externalId'),
       internalID: this.get('@id'),
       livingSpace: this.get('livingSpace'),
@@ -27,9 +27,11 @@ export class Immobilienscout24EstateCommon extends Estate {
       price: this.getPrice(),
       title: this.get('title'),
       previewImage: this.getPreviewImage(),
-      updatedAt: this.sanitizeDate(
-        this.get(['lastModificationDate', '@modified', '@modification'])
-      ),
+      updatedAt: this.getDate([
+        'lastModificationDate',
+        '@modified',
+        '@modification',
+      ]),
     };
   }
 
@@ -81,10 +83,11 @@ export class Immobilienscout24EstateCommon extends Estate {
   private getAddress(): Address | undefined {
     return {
       city: this.get('address.city'),
-      houseNumber: this.get('address.houseNumber'),
       postcode: this.get('address.postcode'),
       country: this.get('address.country'),
-      street: this.get('address.street'),
+      street: [this.get('address.street'), this.get('address.houseNumber')]
+        .filter(Boolean)
+        .join(' '),
     };
   }
 }

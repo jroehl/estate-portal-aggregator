@@ -15,15 +15,15 @@ export class FlowFactCommonV1 extends Estate {
 
   protected async setCommon(): Promise<void> {
     this.common = {
-      active: this.isActive(this.get(['active', 'value.active'])),
+      active: this.getActive(['active', 'value.active']),
       address: this.getAddress(),
-      archived: this.isArchived(this.get(['archived', 'value.archived'])),
+      archived: this.getArchived(['archived', 'value.archived']),
       estateType: this.get([
         'estatetype.selected.id',
         'estatetype',
         'value.estatetype.selected.id',
       ]),
-      createdAt: this.sanitizeDate(this.get(['created', 'value.created'])),
+      createdAt: this.getDate(['created', 'value.created']),
       externalID: this.get(['identifier', 'value.identifier']),
       internalID: this.get(['id', 'value.id']),
       livingSpace: this.getDetail('livingarea'),
@@ -31,7 +31,7 @@ export class FlowFactCommonV1 extends Estate {
       price: this.getPrice(),
       title: this.get(['headline', 'value.headline']),
       previewImage: this.getPreviewImage(),
-      updatedAt: this.sanitizeDate(this.get(['modified', 'value.modified'])),
+      updatedAt: this.getDate(['modified', 'value.modified']),
     };
   }
 
@@ -81,18 +81,11 @@ export class FlowFactCommonV1 extends Estate {
   }
 
   private getAddress(): Address | undefined {
-    const street = this.get(['location.street', 'value.location.street']);
-    let houseNumber;
-    if (street) {
-      const match = street.match(/^.* ([0-9]+(?:-[0-9]+)(?:[a-z]-[a-z])?).*$/i);
-      houseNumber = match ? match[1] : undefined;
-    }
     return {
       city: this.get(['location.city', 'value.location.city']),
-      houseNumber,
       postcode: this.get(['location.postalcode', 'value.location.postalcode']),
       country: this.get(['location.country', 'value.location.country']),
-      street,
+      street: this.get(['location.street', 'value.location.street']),
     };
   }
 }

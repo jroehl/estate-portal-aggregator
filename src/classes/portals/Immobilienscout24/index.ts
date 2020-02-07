@@ -111,7 +111,7 @@ export class Immobilienscout24 extends Portal {
 
   async fetchEstate(id: string): Promise<any> {
     const uri = `${this.baseURL}/${id}`;
-    const res = await this.request(uri);
+    const res = await this.request(uri, undefined, { id });
     const [type] = Object.keys(res);
     const attachments = await this.getAttachments(
       get(res[type], 'attachments[0]["@xlink.href"]', '')

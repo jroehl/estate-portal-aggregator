@@ -81,6 +81,6 @@ export default class FlowFactV1 extends Portal {
 
   async fetchEstate(id: string): Promise<any> {
     const uri = `${this.baseURL}/${id}`;
-    return this.request(uri);
+    return this.request(uri, undefined, { id });
   }
 }

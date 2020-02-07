@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { get } from 'lodash';
+import { RequestError } from './Portal';
 
 export interface Mapping {
   [key: string]: any | any[];
@@ -32,7 +33,6 @@ export interface Price {
 
 export interface Address {
   city: string;
-  houseNumber: number;
   postcode: string;
   street: string;
   country: string;
@@ -89,6 +89,8 @@ export interface Attachment {
 export abstract class Estate {
   constructor(private response: Mapping) {}
 
+  private error?: RequestError;
+
   protected abstract common: RealEstateCommon;
   protected abstract async setCommon(): Promise<void>;
 
@@ -96,12 +98,17 @@ export abstract class Estate {
   protected abstract async setDetailed(): Promise<void>;
 
   async setValues(): Promise<Estate> {
-    await this.setCommon();
-    await this.setDetailed();
+    if (this.response.type === 'error') {
+      this.setError();
+    } else {
+      await this.setCommon();
+      await this.setDetailed();
+    }
     return this;
   }
 
-  public get values(): RealEstate {
+  public get values(): RealEstate | RequestError {
+    if (this.error) return this.error;
     if (!this.details) return this.common;
     return { ...this.common, ...this.details };
   }
@@ -114,15 +121,11 @@ export abstract class Estate {
     return this.values;
   }
 
-  protected isActive(active: any): boolean {
-    return !`${active}`.match(/(INACTIVE|false)/i);
+  private setError(): void {
+    this.error = this.response as RequestError;
   }
 
-  protected isArchived(archived: any): boolean {
-    return !!`${archived}`.match(/(ARCHIVED|TO_BE_DELETED|true)/i);
-  }
-
-  protected parseValue(value: any): any {
+  private parseValue(value: any, path: string): any {
     if (!value || Array.isArray(value)) return value;
     if (!isNaN(value)) return Number(value);
     if (value.toString().match(/AVAILABLE|YES|true/i)) return true;
@@ -131,9 +134,20 @@ export abstract class Estate {
     return value;
   }
 
-  protected sanitizeDate(date: number): number {
-    if (!isNaN(date)) return date;
-    return moment(date).valueOf();
+  protected getDate(path: any | any[], defaultValue?: any): number {
+    const value = this.get(path, defaultValue);
+    if (!isNaN(value)) return value;
+    return moment(value).valueOf();
+  }
+
+  protected getActive(path: any | any[], defaultValue?: any): boolean {
+    const value = this.get(path, defaultValue);
+    return !`${value}`.match(/(INACTIVE|false)/i);
+  }
+
+  protected getArchived(path: any | any[], defaultValue?: any): boolean {
+    const value = this.get(path, defaultValue);
+    return !!`${value}`.match(/(ARCHIVED|TO_BE_DELETED|true)/i);
   }
 
   protected get(path: any | any[], defaultValue?: any): any {
@@ -141,7 +155,7 @@ export abstract class Estate {
     for (const p of paths) {
       const result = get(this.response, p);
       if (result !== undefined && result !== null) {
-        return this.parseValue(result);
+        return this.parseValue(result, p);
       }
     }
     return defaultValue;

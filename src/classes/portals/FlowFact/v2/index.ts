@@ -8,7 +8,31 @@ import {
   Credentials,
   TokenAuth,
 } from '../../../Authorization';
-import { estateSchemas } from './config';
+import { Logger } from '../../../../utils';
+
+export const estateSchemas = [
+  'catering_accommodation_purchase',
+  'catering_accommodation_rent',
+  'flat_purchase',
+  'flat_rent',
+  'garage_pitch',
+  'garage_pitch_purchase',
+  'garage_pitch_rent',
+  'house_purchase',
+  'houses_rent',
+  'investment',
+  'land_lease',
+  'land_purchase',
+  'office_surgery_purchase',
+  'office_surgery_rent',
+  'other_commercial_estates_purchase',
+  'other_commercial_estates_rent',
+  'production_halls_purchase',
+  'production_halls_rent',
+  'shops_commerce_purchase',
+  'shops_commerce_rent',
+  'temporary_accommodation',
+];
 
 class FlowFactV2Authorization extends Authorization {
   protected authorizationHeader?: AuthorizationHeader;
@@ -80,8 +104,8 @@ export default class FlowFactV2 extends Portal {
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
     const items = await Promise.all(
       estateSchemas.map(async schemaID => {
-        const result = await this._fetchEstates(schemaID, options);
-        return { type: schemaID, ...result };
+        const results = await this._fetchEstates(schemaID, options);
+        return results.map(result => ({ type: schemaID, ...result }));
       })
     );
     const flattened = flatten(items);
@@ -92,11 +116,11 @@ export default class FlowFactV2 extends Portal {
         const result = await this.fetchEstate(estateID);
         return { type: res.type, ...result };
       })
-    );
+    ).then(items => items.filter(Boolean));
   }
 
   async fetchEstate(id: string): Promise<any> {
     const uri = `${this.baseURL}/entity-service/stable/entities/${id}`;
-    return this.request(uri);
+    return this.request(uri, undefined, { id });
   }
 }

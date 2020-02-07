@@ -89,5 +89,6 @@ exports.handler = async (argv: Arguments) => {
     }
   } catch (error) {
     Logger.error(error.message || error);
+    Logger.error(error);
   }
 };
