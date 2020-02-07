@@ -128,7 +128,6 @@ export abstract class Estate {
 
   private parseValue(value: any, path: string): any {
     if (!value || Array.isArray(value)) return value;
-    if (!isNaN(value)) return Number(value);
     if (value.toString().match(/AVAILABLE|YES|true/i)) return true;
     if (value.toString().match(/NOT_AVAILABLE|NOT|false/i)) return false;
     // return this.dictionary[value] || value;
@@ -137,7 +136,7 @@ export abstract class Estate {
 
   protected getDate(path: any | any[], defaultValue?: any): number {
     const value = this.get(path, defaultValue);
-    if (!isNaN(value)) return value;
+    if (!isNaN(value)) return Number(value);
     return moment(value).valueOf();
   }
 

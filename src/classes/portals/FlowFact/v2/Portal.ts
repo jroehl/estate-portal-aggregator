@@ -112,7 +112,7 @@ export default class FlowFactV2 extends Portal {
           },
           options
         );
-        return results.map(result => ({ type: schemaID, ...result }));
+        return results;
       })
     );
     const flattened = flatten(items);
@@ -121,7 +121,7 @@ export default class FlowFactV2 extends Portal {
       flattened.map(async (res: any) => {
         const estateID = res._metadata.id;
         const result = await this.fetchEstate(estateID);
-        return { type: res.type, ...result };
+        return result;
       })
     ).then(items => items.filter(Boolean));
   }
@@ -132,16 +132,8 @@ export default class FlowFactV2 extends Portal {
   }
 
   async fetchSchemas(options?: FetchOptions): Promise<any[]> {
-    const schemas = await Promise.all(
-      estateSchemas.map(async schemaID => {
-        return this.fetchRecursive(
-          `${this.baseURL}/schema-service/stable/v2/schemas/${schemaID}`,
-          undefined,
-          options
-        );
-      })
-    );
-    return schemas;
+    const uri = `${this.baseURL}/schema-service/stable/v2/schemas/`;
+    return this.fetchRecursive(uri, undefined, options);
   }
 
   async fetchSchema(schemaID: string): Promise<any> {

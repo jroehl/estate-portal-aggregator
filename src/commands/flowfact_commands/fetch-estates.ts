@@ -13,6 +13,9 @@ import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
 import { globalFlags } from '../../cli';
 import { paginatedFlags } from '..';
+import { APIVersion } from '../../classes/portals/FlowFact';
+import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
+import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
 
 export const command = 'fetch-estates';
 
@@ -51,7 +54,7 @@ exports.builder = (yargs: Argv) =>
 
 exports.handler = async (argv: Arguments) => {
   try {
-    const apiVersion = argv.apiV1 ? 'v1' : 'v2';
+    const apiVersion: APIVersion = argv.apiV1 ? 'v1' : 'v2';
     const flowFact = new FlowFact(apiVersion, argv as Credentials) as Portal;
 
     let results = await flowFact.fetchEstates({
@@ -60,6 +63,13 @@ exports.handler = async (argv: Arguments) => {
       pageSize: argv.pageSize,
       detailed: argv.detailed,
     });
+
+    if (apiVersion === 'v2') {
+      results = await enrichResultWithReadableKeys(
+        flowFact as FlowFactV2,
+        results
+      );
+    }
 
     if (argv.normalize) {
       const FlowFactEstate = argv.detailed
@@ -89,6 +99,5 @@ exports.handler = async (argv: Arguments) => {
     }
   } catch (error) {
     Logger.error(error.message || error);
-    Logger.error(error);
   }
 };
