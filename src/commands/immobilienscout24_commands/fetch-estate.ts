@@ -30,9 +30,9 @@ exports.builder = (yargs: Argv) =>
   yargs.usage(usage).positional('estate-id', { alias: ['id'], type: 'string' });
 
 exports.handler = async (argv: Arguments) => {
-  const is24 = new Immobilienscout24(argv as OAuth);
-
   try {
+    const is24 = new Immobilienscout24(argv as OAuth);
+
     let result = await is24.fetchEstate(argv.id);
 
     if (argv.normalize) {

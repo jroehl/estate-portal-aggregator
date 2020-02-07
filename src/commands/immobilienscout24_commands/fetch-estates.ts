@@ -54,9 +54,9 @@ exports.builder = (yargs: Argv) =>
     });
 
 exports.handler = async (argv: Arguments) => {
-  const is24 = new Immobilienscout24(argv as OAuth);
-
   try {
+    const is24 = new Immobilienscout24(argv as OAuth);
+
     let results = await is24.fetchEstates({
       recursively: argv.recursively,
       page: argv.page,

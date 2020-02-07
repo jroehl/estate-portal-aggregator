@@ -29,10 +29,10 @@ exports.builder = (yargs: Argv) =>
   yargs.usage(usage).positional('estate-id', { alias: ['id'], type: 'string' });
 
 exports.handler = async (argv: Arguments) => {
-  const apiVersion = argv.apiV1 ? 'v1' : 'v2';
-  const flowFact = new FlowFact(apiVersion, argv as Credentials) as Portal;
-
   try {
+    const apiVersion = argv.apiV1 ? 'v1' : 'v2';
+    const flowFact = new FlowFact(apiVersion, argv as Credentials) as Portal;
+
     let result = await flowFact.fetchEstate(argv.id);
 
     if (argv.normalize) {

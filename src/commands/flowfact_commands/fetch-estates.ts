@@ -50,10 +50,10 @@ exports.builder = (yargs: Argv) =>
     });
 
 exports.handler = async (argv: Arguments) => {
-  const apiVersion = argv.apiV1 ? 'v1' : 'v2';
-  const flowFact = new FlowFact(apiVersion, argv as Credentials) as Portal;
-
   try {
+    const apiVersion = argv.apiV1 ? 'v1' : 'v2';
+    const flowFact = new FlowFact(apiVersion, argv as Credentials) as Portal;
+
     let results = await flowFact.fetchEstates({
       recursively: argv.recursively,
       page: argv.page,
