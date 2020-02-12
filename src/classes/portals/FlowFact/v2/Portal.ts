@@ -83,6 +83,8 @@ export default class FlowFactV2 extends Portal {
 
     const res = await this.request(uri, opts);
 
+    if (res.type === 'error') return [...elements, res];
+
     const { entries, totalCount } = res;
 
     elements = [...elements, ...entries];

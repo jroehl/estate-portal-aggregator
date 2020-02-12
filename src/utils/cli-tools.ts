@@ -1,6 +1,7 @@
 import moment from 'moment';
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
+import { Mapping } from '../classes/portals/Estate';
 
 export const storeResponse = (
   command: string,
@@ -16,4 +17,11 @@ export const storeResponse = (
     pretty ? JSON.stringify(result, null, 2) : JSON.stringify(result)
   );
   return file;
+};
+
+export const loadDictionary = (path?: string): Mapping | undefined => {
+  if (!path) return undefined;
+  if (!existsSync(path) || !path.endsWith('.json'))
+    throw `No valid file found at "${path}"`;
+  return JSON.parse(readFileSync(path, 'utf-8'));
 };

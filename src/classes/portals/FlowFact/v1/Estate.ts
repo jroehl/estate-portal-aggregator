@@ -18,7 +18,7 @@ export class FlowFactCommonV1 extends Estate {
       active: this.getActive(['active', 'value.active']),
       address: this.getAddress(),
       archived: this.getArchived(['archived', 'value.archived']),
-      estateType: this.get([
+      estateType: this.getTranslated([
         'estatetype.selected.id',
         'estatetype',
         'value.estatetype.selected.id',
@@ -63,7 +63,7 @@ export class FlowFactCommonV1 extends Estate {
       'value.purchaseprice.value.value',
     ]);
     const rent = this.get(['rent.value.value', 'value.rent.value.value']);
-    const currency = this.get(
+    const currency = this.getTranslated(
       [
         'rent.value.unit',
         'value.rent.value.unit',
@@ -72,7 +72,7 @@ export class FlowFactCommonV1 extends Estate {
       ],
       '€'
     );
-    const marketingType = this.get(['tradetype', 'value.tradetype']);
+    const marketingType = this.getTranslated(['tradetype', 'value.tradetype']);
     return {
       value: price || rent,
       currency,
@@ -84,7 +84,10 @@ export class FlowFactCommonV1 extends Estate {
     return {
       city: this.get(['location.city', 'value.location.city']),
       postcode: this.get(['location.postalcode', 'value.location.postalcode']),
-      country: this.get(['location.country', 'value.location.country']),
+      country: this.getTranslated([
+        'location.country',
+        'value.location.country',
+      ]),
       street: this.get(['location.street', 'value.location.street']),
     };
   }

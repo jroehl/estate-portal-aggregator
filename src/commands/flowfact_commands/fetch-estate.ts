@@ -8,7 +8,7 @@ import {
 } from '../../classes/portals/FlowFact';
 import { Credentials } from '../../classes/Authorization';
 import { Portal } from '../../classes/portals/Portal';
-import { storeResponse } from '../../utils/cli-tools';
+import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
 import { APIVersion } from '../../classes/portals/FlowFact';
@@ -46,12 +46,14 @@ exports.handler = async (argv: Arguments) => {
     }
 
     if (argv.normalize) {
+      const dictionary = loadDictionary(argv.dictionary);
       const FlowFactEstate = argv.detailed
         ? FlowFactEstateDetailed
         : FlowFactEstateCommon;
       result = await (new FlowFactEstate(
         apiVersion,
-        result
+        result,
+        dictionary
       ) as Estate).setValues();
     }
 

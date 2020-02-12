@@ -54,6 +54,8 @@ export default class FlowFactV1 extends Portal {
 
     const res = await this.request(uri);
 
+    if (res.type === 'error') return [...elements, res];
+
     const {
       value: { estateshort, total },
     } = res;

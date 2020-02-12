@@ -81,6 +81,8 @@ export class Immobilienscout24 extends Portal {
 
     const res = await this.request(uri);
 
+    if (res.type === 'error') return [...elements, res];
+
     const {
       Paging: { numberOfHits },
       realEstateList: { realEstateElement },

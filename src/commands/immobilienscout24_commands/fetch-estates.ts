@@ -10,7 +10,7 @@ import {
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
-import { storeResponse } from '../../utils/cli-tools';
+import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { globalFlags } from '../../cli';
 import { paginatedFlags } from '..';
@@ -65,11 +65,14 @@ exports.handler = async (argv: Arguments) => {
     });
 
     if (argv.normalize) {
+      const dictionary = loadDictionary(argv.dictionary);
       const Estate = argv.detailed
         ? Immobilienscout24EstateDetailed
         : Immobilienscout24EstateCommon;
       results = await Promise.all(
-        results.map(async result => await new Estate(result).setValues())
+        results.map(
+          async result => await new Estate(result, dictionary).setValues()
+        )
       );
     }
 

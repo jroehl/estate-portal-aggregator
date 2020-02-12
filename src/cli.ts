@@ -6,6 +6,7 @@ export interface globalFlags {
   normalize: boolean;
   storeResult: boolean;
   pretty: boolean;
+  dictionary?: string;
 }
 
 yargs
@@ -30,6 +31,11 @@ yargs
       type: 'boolean',
       default: true,
       description: 'Store the estate pretty printed',
+    },
+    dictionary: {
+      type: 'string',
+      description:
+        'Path to dictionary file to translate the values to target language',
     },
   })
   .commandDir('commands')

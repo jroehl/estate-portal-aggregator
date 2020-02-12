@@ -1,7 +1,8 @@
 import moment from 'moment';
-import { get } from 'lodash';
+import { get, isObject } from 'lodash';
 
 import { RequestError } from './Portal';
+import { Logger } from '../../utils';
 
 export interface Mapping {
   [key: string]: any | any[];
@@ -88,7 +89,7 @@ export interface Attachment {
 }
 
 export abstract class Estate {
-  constructor(private response: Mapping) {}
+  constructor(private response: Mapping, private dictionary?: Mapping) {}
 
   private error?: RequestError;
 
@@ -126,12 +127,29 @@ export abstract class Estate {
     this.error = this.response as RequestError;
   }
 
-  private parseValue(value: any, path: string): any {
+  protected translate(value: string): string {
+    let result = value;
+    if (
+      isObject(this.dictionary) &&
+      typeof value === 'string' &&
+      !value.match(/ |\n/gi)
+    ) {
+      const key = value.toLowerCase();
+      result = this.dictionary[key];
+      if (result === undefined) {
+        Logger.warn(`No translation found for "${key}"`);
+        return value;
+      }
+    }
+
+    return result;
+  }
+
+  private parseValue(value: any, translate: boolean = true): any {
     if (!value || Array.isArray(value)) return value;
     if (value.toString().match(/AVAILABLE|YES|true/i)) return true;
     if (value.toString().match(/NOT_AVAILABLE|NOT|false/i)) return false;
-    // return this.dictionary[value] || value;
-    return value;
+    return translate ? this.translate(value) : value;
   }
 
   protected getDate(path: any | any[], defaultValue?: any): number {
@@ -155,7 +173,18 @@ export abstract class Estate {
     for (const p of paths) {
       const result = get(this.response, p);
       if (result !== undefined && result !== null) {
-        return this.parseValue(result, p);
+        return this.parseValue(result, false);
+      }
+    }
+    return defaultValue;
+  }
+
+  protected getTranslated(path: any | any[], defaultValue?: any): any {
+    const paths = Array.isArray(path) ? path : [path];
+    for (const p of paths) {
+      const result = get(this.response, p);
+      if (result !== undefined && result !== null) {
+        return this.parseValue(result, true);
       }
     }
     return defaultValue;
