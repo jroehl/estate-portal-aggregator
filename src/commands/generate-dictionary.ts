@@ -109,7 +109,7 @@ const objectify = (array: string[], mapping: Mapping = {}) =>
     };
   }, {});
 
-const generateResponseKeys = (): string[] => {
+export const generateEstatePropertyKeys = (): string[] => {
   return [
     ...propertyNames(RealEstate),
     ...propertyNames(Ad),
@@ -124,11 +124,8 @@ exports.builder = (yargs: Argv) =>
   yargs.usage(usage).options(generateDictionaryOptions);
 
 exports.handler = async (argv: Arguments) => {
-  const commonKeys = generateResponseKeys();
-  const result = objectify(
-    commonKeys,
-    argv.language ? estateCommon : undefined
-  );
+  const commonKeys = generateEstatePropertyKeys();
+  const result = objectify(commonKeys, estateCommon[argv.language]);
   try {
     const name = [command, 'common', argv.language].filter(Boolean).join('-');
     const fileName = storeResponse(name, result, true);

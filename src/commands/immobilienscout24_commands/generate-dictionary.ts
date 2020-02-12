@@ -5,6 +5,7 @@ import is24 from '../../translations';
 import { command as parentCommand } from '../immobilienscout24';
 import { Mapping } from '../../classes/portals/Estate';
 import { generateDictionaryOptions, dictionaryFlags } from '..';
+import { generateEstatePropertyKeys } from '../generate-dictionary';
 
 export const command = 'generate-dictionary';
 
@@ -19,11 +20,21 @@ interface Arguments extends dictionaryFlags {}
 exports.builder = (yargs: Argv) =>
   yargs.usage(usage).options(generateDictionaryOptions);
 
-const cleanValues = (mapping: Mapping) =>
+const cleanValues = (mapping: Mapping): Mapping =>
   Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
 
+export const getCommonKeys = (language?: string): Mapping => {
+  const result = language ? (is24 as Mapping)[language] : cleanValues(is24.en);
+
+  const excludedKeys = generateEstatePropertyKeys();
+  excludedKeys.forEach(key => delete (result as Mapping)[key]);
+
+  return result;
+};
+
 exports.handler = async (argv: Arguments) => {
-  const result = argv.language ? is24 : cleanValues(is24);
+  const result = getCommonKeys(argv.language);
+
   try {
     const name = [parentCommand, command, argv.language]
       .filter(Boolean)

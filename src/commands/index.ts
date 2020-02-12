@@ -7,14 +7,14 @@ export interface paginatedFlags {
 }
 
 export interface dictionaryFlags {
-  language: string;
+  language: 'de' | 'en';
 }
 
 export const generateDictionaryOptions: Mapping = {
   language: {
     type: 'string',
     alias: ['l'],
-    choices: ['de'],
+    choices: ['de', 'en'],
     required: false,
     description: 'Generate pre-filled dictionary with specified language',
   },

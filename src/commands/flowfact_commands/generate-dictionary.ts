@@ -13,6 +13,7 @@ import FlowFactV2, {
 } from '../../classes/portals/FlowFact/v2/Portal';
 import { Mapping } from '../../classes/portals/Estate';
 import { dictionaryFlags, generateDictionaryOptions } from '..';
+import { getCommonKeys } from '../immobilienscout24_commands/generate-dictionary';
 
 export const command = 'generate-dictionary';
 
@@ -27,32 +28,38 @@ interface Arguments extends globalFlags, flowfactFlags, dictionaryFlags {}
 exports.builder = (yargs: Argv) =>
   yargs.usage(usage).options(generateDictionaryOptions);
 
-const cleanValues = (mapping: Mapping) =>
-  Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
+const initFieldParse = (language: string, dictionary: Mapping = {}) => {
+  const parse = (props: Mapping = {}): Mapping[] => {
+    return Object.entries(props).map(
+      ([key, { name, captions, fields, properties }]: [string, any]) => {
+        const lowerKey = (name || key).toLowerCase();
+        return flatten([
+          {
+            [lowerKey]: language
+              ? captions[language] || dictionary[lowerKey] || ''
+              : '',
+          },
+          ...parse(properties || fields),
+        ]);
+      }
+    );
+  };
 
-const generateDictionary = async (flowFact: FlowFactV2): Promise<Mapping> => {
+  return parse;
+};
+
+const generateDictionary = async (
+  flowFact: FlowFactV2,
+  dictionary: Mapping,
+  language: string
+): Promise<Mapping> => {
   const schemas = await flowFact.fetchSchemas();
-  const values = flatten(
-    schemas.map(({ name, captions, properties }: Mapping) => {
-      if (!estateSchemas.includes(name)) return [];
-      return flatten([
-        { [name.toLowerCase()]: captions.de },
-        ...Object.entries(properties).map(
-          ([key, { captions, fields = [] }]: [string, any]) => {
-            return flatten([
-              { [key.toLowerCase()]: captions.de || '' },
-              ...Object.entries(fields).map(
-                ([key, { captions }]: [string, any]) => {
-                  return { [key.toLowerCase()]: captions.de };
-                }
-              ),
-            ]);
-          }
-        ),
-      ]);
-    })
+  const reducedSchemas = schemas.filter(({ name }) =>
+    estateSchemas.includes(name)
   );
-  return values.reduce((red, value) => ({ ...red, ...value }), {});
+  const parseFields = initFieldParse(language, dictionary);
+  const values = flatten(parseFields(reducedSchemas));
+  return Object.assign({}, ...values);
 };
 
 exports.handler = async (argv: Arguments) => {
@@ -60,20 +67,25 @@ exports.handler = async (argv: Arguments) => {
   try {
     const flowFact = new FlowFact(apiVersion, argv as Credentials) as FlowFact;
 
-    let result: Mapping;
-    if (apiVersion === 'v2') {
-      const dictionary = await generateDictionary(flowFact as FlowFactV2);
-      result = dictionary;
+    let result: Mapping = {};
+    if (apiVersion === 'v1') {
+      result = getCommonKeys(argv.language);
     } else {
-      result = estateCommon;
+      const dictionary = await generateDictionary(
+        flowFact as FlowFactV2,
+        {
+          ...estateCommon.fallbacks.en,
+          ...estateCommon[argv.language || 'en'],
+        },
+        argv.language
+      );
+      result = dictionary;
     }
-
-    const cleaned = argv.language ? result : cleanValues(result);
 
     const name = [parentCommand, command, apiVersion, argv.language]
       .filter(Boolean)
       .join('-');
-    const fileName = storeResponse(name, cleaned, true);
+    const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {
     Logger.error(error.message || error);
