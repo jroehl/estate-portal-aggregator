@@ -11,8 +11,8 @@ import { Portal } from '../../classes/portals/Portal';
 import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
-import { GlobalFlags } from '../../cli';
-import { PaginatedFlags } from '..';
+import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
+import { PaginatedFlags } from '../../cli';
 import { APIVersion } from '../../classes/portals/FlowFact';
 import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
@@ -30,26 +30,11 @@ interface Arguments extends GlobalFlags, FlowFactFlags, PaginatedFlags {}
 exports.builder = (yargs: Argv) =>
   yargs
     .usage(usage)
-    .group('detailed', 'Args')
+    .group(Object.keys(fetchOptions), 'Fetch options')
+    .group(Object.keys(fetchMultipleOptions), 'Fetch multiple options')
     .options({
-      detailed: {
-        type: 'boolean',
-        default: false,
-        description: 'Return estates with all details',
-      },
-      recursively: {
-        type: 'boolean',
-        default: true,
-        description: 'Fetch all paginated results',
-      },
-      'page-size': {
-        type: 'number',
-        description: 'Fetch results paginated according to size',
-      },
-      page: {
-        type: 'number',
-        description: 'Fetch specific page',
-      },
+      ...fetchOptions,
+      ...fetchMultipleOptions,
     });
 
 exports.handler = async (argv: Arguments) => {

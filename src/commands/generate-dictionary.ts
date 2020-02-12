@@ -10,7 +10,7 @@ import {
   Mapping,
 } from '../classes/portals/Estate';
 import estateCommon from '../translations';
-import { generateDictionaryOptions, DictionaryFlags } from '.';
+import { generateDictionaryOptions, DictionaryFlags } from '../cli';
 
 export const command = 'generate-dictionary';
 
@@ -121,7 +121,10 @@ export const generateEstatePropertyKeys = (): string[] => {
 interface Arguments extends DictionaryFlags {} // tslint:disable-line no-empty-interface
 
 exports.builder = (yargs: Argv) =>
-  yargs.usage(usage).options(generateDictionaryOptions);
+  yargs
+    .usage(usage)
+    .group(Object.keys(generateDictionaryOptions), 'Dictionary options')
+    .options(generateDictionaryOptions);
 
 exports.handler = async (argv: Arguments) => {
   const commonKeys = generateEstatePropertyKeys();

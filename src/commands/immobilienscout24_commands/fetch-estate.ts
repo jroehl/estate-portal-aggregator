@@ -12,7 +12,7 @@ import {
 import { OAuth } from '../../classes/Authorization';
 import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { GlobalFlags } from '../../cli';
+import { GlobalFlags, fetchOptions } from '../../cli';
 
 export const command = 'fetch-estate <estate-id>';
 
@@ -27,7 +27,11 @@ interface Arguments extends GlobalFlags, Immobilienscout24Flags {
 }
 
 exports.builder = (yargs: Argv) =>
-  yargs.usage(usage).positional('estate-id', { alias: ['id'], type: 'string' });
+  yargs
+    .group(Object.keys(fetchOptions), 'Fetch options')
+    .options(fetchOptions)
+    .usage(usage)
+    .positional('estate-id', { alias: ['id'], type: 'string' });
 
 exports.handler = async (argv: Arguments) => {
   try {

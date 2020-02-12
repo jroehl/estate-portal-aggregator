@@ -12,7 +12,7 @@ import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
 import { APIVersion } from '../../classes/portals/FlowFact';
-import { GlobalFlags } from '../../cli';
+import { GlobalFlags, fetchOptions } from '../../cli';
 import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
 
@@ -29,7 +29,11 @@ interface Arguments extends GlobalFlags, FlowFactFlags {
 }
 
 exports.builder = (yargs: Argv) =>
-  yargs.usage(usage).positional('estate-id', { alias: ['id'], type: 'string' });
+  yargs
+    .group(Object.keys(fetchOptions), 'Fetch options')
+    .options(fetchOptions)
+    .usage(usage)
+    .positional('estate-id', { alias: ['id'], type: 'string' });
 
 exports.handler = async (argv: Arguments) => {
   try {

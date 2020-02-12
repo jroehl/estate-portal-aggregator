@@ -4,7 +4,7 @@ import { storeResponse } from '../../utils/cli-tools';
 import is24 from '../../translations';
 import { command as parentCommand } from '../immobilienscout24';
 import { Mapping } from '../../classes/portals/Estate';
-import { generateDictionaryOptions, DictionaryFlags } from '..';
+import { generateDictionaryOptions, DictionaryFlags } from '../../cli';
 import { generateEstatePropertyKeys } from '../generate-dictionary';
 
 export const command = 'generate-dictionary';
@@ -18,7 +18,10 @@ $0 ${parentCommand} ${command} [args]
 interface Arguments extends DictionaryFlags {} // tslint:disable-line no-empty-interface
 
 exports.builder = (yargs: Argv) =>
-  yargs.usage(usage).options(generateDictionaryOptions);
+  yargs
+    .usage(usage)
+    .group(Object.keys(generateDictionaryOptions), 'Dictionary options')
+    .options(generateDictionaryOptions);
 
 const cleanValues = (mapping: Mapping): Mapping =>
   Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});

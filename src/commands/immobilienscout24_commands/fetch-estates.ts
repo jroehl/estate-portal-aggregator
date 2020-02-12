@@ -12,8 +12,8 @@ import {
 import { OAuth } from '../../classes/Authorization';
 import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { GlobalFlags } from '../../cli';
-import { PaginatedFlags } from '..';
+import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
+import { PaginatedFlags } from '../../cli';
 
 export const command = 'fetch-estates';
 
@@ -31,26 +31,11 @@ interface Arguments
 exports.builder = (yargs: Argv) =>
   yargs
     .usage(usage)
-    .group('detailed', 'Args')
+    .group(Object.keys(fetchOptions), 'Fetch options')
+    .group(Object.keys(fetchMultipleOptions), 'Fetch multiple options')
     .options({
-      detailed: {
-        type: 'boolean',
-        default: false,
-        description: 'Return estates with all details',
-      },
-      recursively: {
-        type: 'boolean',
-        default: true,
-        description: 'Fetch all paginated results',
-      },
-      'page-size': {
-        type: 'number',
-        description: 'Fetch results paginated according to size',
-      },
-      page: {
-        type: 'number',
-        description: 'Fetch specific page',
-      },
+      ...fetchOptions,
+      ...fetchMultipleOptions,
     });
 
 exports.handler = async (argv: Arguments) => {
