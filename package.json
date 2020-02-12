@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "This module helps fetching real estate data from immobilienscout24 and flowfact.",
   "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "jroeh <mail@johannroehl.de>",
   "files": [
     "lib/**/*"
   ],
@@ -24,7 +27,12 @@
     "build": "rm -rf lib && npm run build:tsc && npm run build:js",
     "build:tsc": "tsc",
     "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
-    "build:watch": "npm run build:js -- --watch"
+    "build:watch": "npm run build:js -- --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
