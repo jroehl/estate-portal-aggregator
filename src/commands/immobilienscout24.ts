@@ -17,7 +17,7 @@ export IS24_OAUTH_TOKEN="<oauth-token>"
 export IS24_OAUTH_TOKEN_SECRET="<oauth-token-secret>"
 `;
 
-export interface immobilienscout24Flags {
+export interface Immobilienscout24Flags {
   consumerKey?: string;
   consumerSecret?: string;
   oauthToken?: string;

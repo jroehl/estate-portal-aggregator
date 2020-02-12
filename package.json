@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "This module helps fetching real estate data from immobilienscout24 and flowfact.",
   "license": "MIT",
+  "files": [
+    "lib/**/*"
+  ],
   "keywords": [
     "immobilienscout24",
     "is24",
@@ -16,7 +19,9 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "npm run build:types && npm run build:js",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "build": "rm -rf lib && npm run build:tsc && npm run build:js",
     "build:tsc": "tsc",
     "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
     "build:watch": "npm run build:js -- --watch"
@@ -34,6 +39,9 @@
     "@types/node": "^13.7.0",
     "@types/request-promise-native": "^1.0.17",
     "@types/yargs": "^15.0.3",
+    "prettier": "^1.19.1",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.7.5"
   },
   "dependencies": {

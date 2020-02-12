@@ -56,7 +56,9 @@ class Immobilienscout24Authorization extends Authorization {
     );
 
     if (!isValid) {
-      throw 'Credential validation for Immobilienscout24 failed - missing property';
+      throw new Error(
+        'Credential validation for Immobilienscout24 failed - missing property'
+      );
     }
     return credentials;
   }

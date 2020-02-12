@@ -29,7 +29,9 @@ class FlowFactV1Authorization extends Authorization {
     );
 
     if (!isValid) {
-      throw 'Credential validation for FlowFact v1 failed - missing property';
+      throw new Error(
+        'Credential validation for FlowFact v1 failed - missing property'
+      );
     }
     return credentials;
   }

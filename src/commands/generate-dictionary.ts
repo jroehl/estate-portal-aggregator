@@ -10,7 +10,7 @@ import {
   Mapping,
 } from '../classes/portals/Estate';
 import estateCommon from '../translations';
-import { generateDictionaryOptions, dictionaryFlags } from '.';
+import { generateDictionaryOptions, DictionaryFlags } from '.';
 
 export const command = 'generate-dictionary';
 
@@ -118,7 +118,7 @@ export const generateEstatePropertyKeys = (): string[] => {
   ].map(key => key.toLowerCase());
 };
 
-interface Arguments extends dictionaryFlags {}
+interface Arguments extends DictionaryFlags {} // tslint:disable-line no-empty-interface
 
 exports.builder = (yargs: Argv) =>
   yargs.usage(usage).options(generateDictionaryOptions);

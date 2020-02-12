@@ -1,12 +1,12 @@
 import { Mapping } from '../classes/portals/Estate';
 
-export interface paginatedFlags {
+export interface PaginatedFlags {
   recursively: boolean;
   page: number;
   pageSize: number;
 }
 
-export interface dictionaryFlags {
+export interface DictionaryFlags {
   language: 'de' | 'en';
 }
 

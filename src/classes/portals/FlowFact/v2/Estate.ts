@@ -30,8 +30,6 @@ export class FlowFactCommonV2 extends Estate {
     };
   }
 
-  protected async setDetailed(): Promise<void> {}
-
   protected getBoolean(
     path: any | any[],
     defaultValue?: any

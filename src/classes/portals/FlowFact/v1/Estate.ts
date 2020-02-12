@@ -35,8 +35,6 @@ export class FlowFactCommonV1 extends Estate {
     };
   }
 
-  protected async setDetailed(): Promise<void> {}
-
   protected getDetail(detail: string): any {
     const found = this.get('value.details.any', []).find(
       ({ name }: { name: string }) => name === detail

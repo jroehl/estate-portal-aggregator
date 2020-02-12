@@ -3,8 +3,8 @@ import { flatten } from 'lodash';
 
 import { Logger } from '../../utils';
 import { storeResponse } from '../../utils/cli-tools';
-import { command as parentCommand, flowfactFlags } from '../flowfact';
-import { globalFlags } from '../../cli';
+import { command as parentCommand, FlowFactFlags } from '../flowfact';
+import { GlobalFlags } from '../../cli';
 import estateCommon from '../../translations';
 import { Credentials } from '../../classes/Authorization';
 import { FlowFact, APIVersion } from '../../classes/portals/FlowFact';
@@ -12,7 +12,7 @@ import FlowFactV2, {
   estateSchemas,
 } from '../../classes/portals/FlowFact/v2/Portal';
 import { Mapping } from '../../classes/portals/Estate';
-import { dictionaryFlags, generateDictionaryOptions } from '..';
+import { DictionaryFlags, generateDictionaryOptions } from '..';
 import { getCommonKeys } from '../immobilienscout24_commands/generate-dictionary';
 
 export const command = 'generate-dictionary';
@@ -23,7 +23,7 @@ const usage = `
 $0 ${parentCommand} ${command} [args]
 `;
 
-interface Arguments extends globalFlags, flowfactFlags, dictionaryFlags {}
+interface Arguments extends GlobalFlags, FlowFactFlags, DictionaryFlags {}
 
 exports.builder = (yargs: Argv) =>
   yargs.usage(usage).options(generateDictionaryOptions);

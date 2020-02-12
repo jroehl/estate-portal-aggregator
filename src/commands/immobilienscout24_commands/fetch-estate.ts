@@ -2,7 +2,7 @@ import { Argv } from 'yargs';
 
 import {
   command as parentCommand,
-  immobilienscout24Flags,
+  Immobilienscout24Flags,
 } from '../immobilienscout24';
 import {
   Immobilienscout24,
@@ -12,7 +12,7 @@ import {
 import { OAuth } from '../../classes/Authorization';
 import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { globalFlags } from '../../cli';
+import { GlobalFlags } from '../../cli';
 
 export const command = 'fetch-estate <estate-id>';
 
@@ -22,7 +22,7 @@ const usage = `
 $0 ${parentCommand} ${command} [args]
 `;
 
-interface Arguments extends globalFlags, immobilienscout24Flags {
+interface Arguments extends GlobalFlags, Immobilienscout24Flags {
   id: string;
 }
 

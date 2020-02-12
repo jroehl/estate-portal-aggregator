@@ -1,7 +1,7 @@
 // Import our DAO object
 import * as yargs from 'yargs'; // We will take advantage of typings and intellsence.
 
-export interface globalFlags {
+export interface GlobalFlags {
   detailed: boolean;
   normalize: boolean;
   storeResult: boolean;
@@ -9,6 +9,7 @@ export interface globalFlags {
   dictionary?: string;
 }
 
+// tslint:disable-next-line no-unused-expression
 yargs
   .usage('$0 <cmd> [args]')
   .options({

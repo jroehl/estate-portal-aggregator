@@ -24,7 +24,7 @@ export FLOWFACT_CUSTOMER="<customer>"
 export FLOWFACT_USER="<user>"
 `;
 
-export interface flowfactFlags {
+export interface FlowFactFlags {
   apiV1?: boolean;
   token?: string;
   password?: string;

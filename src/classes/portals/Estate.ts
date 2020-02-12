@@ -97,7 +97,7 @@ export abstract class Estate {
   protected abstract async setCommon(): Promise<void>;
 
   protected abstract details?: RealEstateDetailed;
-  protected abstract async setDetailed(): Promise<void>;
+  protected async setDetailed(): Promise<void> {} // tslint:disable-line no-empty
 
   async setValues(): Promise<Estate> {
     if (this.response.type === 'error') {

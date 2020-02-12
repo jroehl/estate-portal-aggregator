@@ -22,6 +22,6 @@ export const storeResponse = (
 export const loadDictionary = (path?: string): Mapping | undefined => {
   if (!path) return undefined;
   if (!existsSync(path) || !path.endsWith('.json'))
-    throw `No valid file found at "${path}"`;
+    throw new Error(`No valid file found at "${path}"`);
   return JSON.parse(readFileSync(path, 'utf-8'));
 };

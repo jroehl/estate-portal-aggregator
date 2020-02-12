@@ -1,6 +1,6 @@
 import { Argv } from 'yargs';
 
-import { command as parentCommand, flowfactFlags } from '../flowfact';
+import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import {
   FlowFact,
   FlowFactEstateDetailed,
@@ -11,8 +11,8 @@ import { Portal } from '../../classes/portals/Portal';
 import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
-import { globalFlags } from '../../cli';
-import { paginatedFlags } from '..';
+import { GlobalFlags } from '../../cli';
+import { PaginatedFlags } from '..';
 import { APIVersion } from '../../classes/portals/FlowFact';
 import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
@@ -25,7 +25,7 @@ const usage = `
 $0 ${parentCommand} ${command} [args]
 `;
 
-interface Arguments extends globalFlags, flowfactFlags, paginatedFlags {}
+interface Arguments extends GlobalFlags, FlowFactFlags, PaginatedFlags {}
 
 exports.builder = (yargs: Argv) =>
   yargs

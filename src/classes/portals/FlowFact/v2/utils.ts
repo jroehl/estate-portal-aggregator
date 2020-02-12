@@ -26,7 +26,7 @@ class ResultEnricher {
     Object.entries(fields).reduce(
       (red, [key, value]: [string, any]) => ({
         ...red,
-        [value.value]: { key: key, ...value },
+        [value.value]: { key, ...value },
       }),
       {} as Mapping
     );
@@ -60,7 +60,9 @@ class ResultEnricher {
     const schema = this.schemas[schemaID];
 
     if (!schema)
-      throw `Schema <${schemaID}> not found - is the ResultEnricher initialized?`;
+      throw new Error(
+        `Schema <${schemaID}> not found - is the ResultEnricher initialized?`
+      );
 
     Object.entries(schema.properties).forEach(
       ([key, { type, fields = {} }]: [string, any]) => {

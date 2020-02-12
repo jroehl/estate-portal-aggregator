@@ -2,7 +2,7 @@ import { Argv } from 'yargs';
 
 import {
   command as parentCommand,
-  immobilienscout24Flags,
+  Immobilienscout24Flags,
 } from '../immobilienscout24';
 import {
   Immobilienscout24,
@@ -12,8 +12,8 @@ import {
 import { OAuth } from '../../classes/Authorization';
 import { storeResponse, loadDictionary } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { globalFlags } from '../../cli';
-import { paginatedFlags } from '..';
+import { GlobalFlags } from '../../cli';
+import { PaginatedFlags } from '..';
 
 export const command = 'fetch-estates';
 
@@ -24,9 +24,9 @@ $0 ${parentCommand} ${command} [args]
 `;
 
 interface Arguments
-  extends globalFlags,
-    immobilienscout24Flags,
-    paginatedFlags {}
+  extends GlobalFlags,
+    Immobilienscout24Flags,
+    PaginatedFlags {}
 
 exports.builder = (yargs: Argv) =>
   yargs

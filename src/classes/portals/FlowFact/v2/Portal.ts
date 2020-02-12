@@ -58,7 +58,9 @@ class FlowFactV2Authorization extends Authorization {
     const isValid = Boolean(basicAuth.token);
 
     if (!isValid) {
-      throw 'Credential validation for FlowFact v2 failed - missing property';
+      throw new Error(
+        'Credential validation for FlowFact v2 failed - missing property'
+      );
     }
     return credentials;
   }
@@ -125,7 +127,7 @@ export default class FlowFactV2 extends Portal {
         const result = await this.fetchEstate(estateID);
         return result;
       })
-    ).then(items => items.filter(Boolean));
+    ).then(x => x.filter(Boolean));
   }
 
   async fetchEstate(id: string): Promise<any> {

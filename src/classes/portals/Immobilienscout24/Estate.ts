@@ -35,8 +35,6 @@ export class Immobilienscout24EstateCommon extends Estate {
     };
   }
 
-  protected async setDetailed(): Promise<void> {}
-
   private getEstateType(): string {
     let result = this.get(['buildingType', 'apartmentType', 'estateType']);
     if (!result) {
