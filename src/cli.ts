@@ -11,9 +11,9 @@ export interface GlobalFlags {
 }
 
 export interface PaginatedFlags {
-  recursively: boolean;
-  page: number;
-  pageSize: number;
+  recursively?: boolean;
+  page?: number;
+  pageSize?: number;
 }
 
 export type AvailableTranslations = 'de' | 'en';
@@ -21,6 +21,16 @@ export type AvailableTranslations = 'de' | 'en';
 export interface DictionaryFlags {
   language: AvailableTranslations;
 }
+
+export interface FetchSingleOptions {
+  dictionaryPath?: string;
+  normalizedResult?: boolean;
+  detailedResult?: boolean;
+}
+
+export interface FetchMultipleOptions
+  extends FetchSingleOptions,
+    PaginatedFlags {}
 
 export const fetchOptions: { [key: string]: yargs.Options } = {
   'store-result': {

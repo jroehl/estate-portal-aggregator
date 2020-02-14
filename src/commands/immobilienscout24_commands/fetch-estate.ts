@@ -16,7 +16,8 @@ import {
   generateOutputName,
 } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { GlobalFlags, fetchOptions } from '../../cli';
+import { GlobalFlags, fetchOptions, FetchSingleOptions } from '../../cli';
+import { Immobilienscout24Estate } from '../../classes/portals/Immobilienscout24/Estate';
 
 export const command = 'fetch-estate <estate-id>';
 
@@ -37,19 +38,40 @@ exports.builder = (yargs: Argv) =>
     .usage(usage)
     .positional('estate-id', { alias: ['id'], type: 'string' });
 
+export const fetchEstate = async (
+  id: string,
+  credentials: OAuth,
+  options: FetchSingleOptions
+): Promise<Immobilienscout24Estate> => {
+  if (!options) {
+    options = {
+      normalizedResult: true,
+      detailedResult: true,
+    };
+  }
+  const is24 = new Immobilienscout24(credentials);
+
+  let result = await is24.fetchEstate(id);
+
+  if (options.normalizedResult) {
+    const dictionary = loadDictionary(options.dictionaryPath);
+    const Estate = options.detailedResult
+      ? Immobilienscout24EstateDetailed
+      : Immobilienscout24EstateCommon;
+
+    result = await new Estate(result, dictionary).setValues();
+  }
+
+  return result;
+};
+
 exports.handler = async (argv: Arguments) => {
   try {
-    const is24 = new Immobilienscout24(argv as OAuth);
-
-    let result = await is24.fetchEstate(argv.id);
-
-    if (argv.normalize) {
-      const dictionary = loadDictionary(argv.dictionary);
-      const Estate = argv.detailed
-        ? Immobilienscout24EstateDetailed
-        : Immobilienscout24EstateCommon;
-      result = await new Estate(result, dictionary).setValues();
-    }
+    const result = await fetchEstate(argv.id, argv as OAuth, {
+      detailedResult: argv.detailed,
+      normalizedResult: argv.normalize,
+      dictionaryPath: argv.dictionary,
+    });
 
     const name = generateOutputName(
       parentCommand,
