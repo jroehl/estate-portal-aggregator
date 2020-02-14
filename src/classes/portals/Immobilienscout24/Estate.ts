@@ -9,6 +9,10 @@ import {
   RealEstateCommon,
 } from '../Estate';
 
+export type Immobilienscout24Estate =
+  | Immobilienscout24EstateCommon
+  | Immobilienscout24EstateDetailed;
+
 export class Immobilienscout24EstateCommon extends Estate {
   protected common!: RealEstateCommon;
   protected details?: RealEstateDetailed;

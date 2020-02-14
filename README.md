@@ -82,16 +82,29 @@ estate-portal flowfact fetch-estate --help
 
 ## Usage as a module
 
+Following functions are exported:
+
+- fetchEstateImmobilienscout24
+- fetchEstatesImmobilienscout24
+- fetchEstateFlowFactV1
+- fetchEstatesFlowFactV1
+- fetchEstateFlowFactV2
+- fetchEstatesFlowFactV2
+- generateDictionaryCommonProperties
+- generateDictionaryImmobilienscout24
+- generateDictionaryFlowFactV1
+- generateDictionaryFlowFactV2
+
 ### Immobilienscout24
 
-Have a look at [fetch-estate.ts](src/commands/immobilienscout24_commands/fetch-estate.ts) and [fetch-estates.ts](src/commands/immobilienscout24_commands/fetch-estates.ts) to get an idea how to use the classes
+Have a look at [fetch-estate.ts](src/commands/immobilienscout24_commands/fetch-estate.ts) and [fetch-estates.ts](src/commands/immobilienscout24_commands/fetch-estates.ts) to get an idea how to use the classes and functions
 
 ### FlowFact
 
-Have a look at [fetch-estate.ts](src/commands/flowfact_commands/fetch-estate.ts) and [fetch-estates.ts](src/commands/flowfact_commands/fetch-estates.ts) to get an idea how to use the classes
+Have a look at [fetch-estate.ts](src/commands/flowfact_commands/fetch-estate.ts) and [fetch-estates.ts](src/commands/flowfact_commands/fetch-estates.ts) to get an idea how to use the classes and functions
 
 ## TODO
 
 - [ ] tests
-- [ ] integrate ci (github actions)
-- [ ] integrate [semantic-release](https://www.npmjs.com/package/semantic-release)
+- [x] integrate ci (github actions)
+- [x] integrate [semantic-release](https://www.npmjs.com/package/semantic-release)

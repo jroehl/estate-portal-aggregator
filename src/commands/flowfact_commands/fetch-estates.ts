@@ -2,20 +2,30 @@ import { Argv } from 'yargs';
 
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import {
-  FlowFact,
-  FlowFactEstateDetailed,
-  FlowFactEstateCommon,
+  FlowFactEstateV1,
+  FlowFactEstateV2,
+  FlowFactEstateDetailedV1,
+  FlowFactEstateCommonV1,
+  FlowFactEstateDetailedV2,
+  FlowFactEstateCommonV2,
 } from '../../classes/portals/FlowFact';
-import { Credentials } from '../../classes/Authorization';
-import { Portal } from '../../classes/portals/Portal';
-import { storeResponse, loadDictionary } from '../../utils/cli-tools';
+import { TokenAuth, BasicAuth } from '../../classes/Authorization';
+import {
+  storeResponse,
+  loadDictionary,
+  generateOutputName,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { Estate } from '../../classes/portals/Estate';
-import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
+import {
+  GlobalFlags,
+  fetchOptions,
+  fetchMultipleOptions,
+  FetchMultipleOptions,
+} from '../../cli';
 import { PaginatedFlags } from '../../cli';
-import { APIVersion } from '../../classes/portals/FlowFact';
 import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
+import FlowFactV1 from '../../classes/portals/FlowFact/v1/Portal';
 
 export const command = 'fetch-estates';
 
@@ -37,48 +47,94 @@ exports.builder = (yargs: Argv) =>
       ...fetchMultipleOptions,
     });
 
+export const fetchEstatesV1 = async (
+  credentials: BasicAuth,
+  options: FetchMultipleOptions = {
+    normalizedResult: true,
+    detailedResult: true,
+  }
+): Promise<FlowFactEstateV1[]> => {
+  const flowFact = new FlowFactV1(credentials);
+
+  let results = await flowFact.fetchEstates({
+    recursively: options.recursively,
+    page: options.page,
+    pageSize: options.pageSize,
+    detailed: options.detailedResult,
+  });
+
+  if (options.normalizedResult) {
+    const dictionary = loadDictionary(options.dictionaryPath);
+
+    const EstateV1 = options.detailedResult
+      ? FlowFactEstateDetailedV1
+      : FlowFactEstateCommonV1;
+
+    results = await Promise.all(
+      results.map(
+        async result => await new EstateV1(result, dictionary).setValues()
+      )
+    );
+  }
+
+  return results;
+};
+
+export const fetchEstatesV2 = async (
+  credentials: TokenAuth,
+  options: FetchMultipleOptions = {
+    normalizedResult: true,
+    detailedResult: true,
+  }
+): Promise<FlowFactEstateV2[]> => {
+  const flowFact = new FlowFactV2(credentials);
+
+  let results = await flowFact.fetchEstates({
+    recursively: options.recursively,
+    page: options.page,
+    pageSize: options.pageSize,
+    detailed: options.detailedResult,
+  });
+
+  if (options.normalizedResult) {
+    results = await enrichResultWithReadableKeys(flowFact, results);
+
+    const dictionary = loadDictionary(options.dictionaryPath);
+
+    const EstateV2 = options.detailedResult
+      ? FlowFactEstateDetailedV2
+      : FlowFactEstateCommonV2;
+
+    results = await Promise.all(
+      results.map(
+        async result => await new EstateV2(result, dictionary).setValues()
+      )
+    );
+  }
+
+  return results;
+};
+
 exports.handler = async (argv: Arguments) => {
   try {
-    const apiVersion: APIVersion = argv.apiV1 ? 'v1' : 'v2';
-    const flowFact = new FlowFact(apiVersion, argv as Credentials) as Portal;
+    const options = {
+      ...argv,
+      detailedResult: argv.detailed,
+      normalizedResult: argv.normalize,
+      dictionaryPath: argv.dictionary,
+    };
 
-    let results = await flowFact.fetchEstates({
-      recursively: argv.recursively,
-      page: argv.page,
-      pageSize: argv.pageSize,
-      detailed: argv.detailed,
-    });
+    const results = await (argv.apiV1
+      ? fetchEstatesV1(argv as BasicAuth, options)
+      : fetchEstatesV2(argv as TokenAuth, options));
 
-    if (apiVersion === 'v2') {
-      results = await enrichResultWithReadableKeys(
-        flowFact as FlowFactV2,
-        results
-      );
-    }
-
-    if (argv.normalize) {
-      const dictionary = loadDictionary(argv.dictionary);
-      const FlowFactEstate = argv.detailed
-        ? FlowFactEstateDetailed
-        : FlowFactEstateCommon;
-      results = await Promise.all(
-        results.map(
-          async result =>
-            await (new FlowFactEstate(
-              apiVersion,
-              result,
-              dictionary
-            ) as Estate).setValues()
-        )
-      );
-    }
-
-    const name = [
+    const name = generateOutputName(
       parentCommand,
       command,
+      argv.apiV1 ? 'v1' : 'v2',
       argv.normalize ? 'normalized' : 'original',
-      argv.detailed ? 'long' : 'short',
-    ].join('-');
+      argv.detailed ? 'long' : 'short'
+    );
     if (argv.storeResult) {
       const fileName = storeResponse(name, results, argv.pretty);
       Logger.log(

@@ -752,7 +752,7 @@ export default {
   production_halls_rent: 'Production/Hall Rental',
   additional_costs_per_sqm: 'Additional costs per m2',
   shops_commerce_purchase: 'Retail purchase',
-  shop: 'Load',
+  shop: 'Shop',
   sales_hall: 'Sales hall',
   exhibition_area: 'Exhibition',
   mall: 'Department store',

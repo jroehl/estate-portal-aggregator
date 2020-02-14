@@ -1,6 +1,6 @@
 import { Argv } from 'yargs';
 import { Logger } from '../utils';
-import { storeResponse } from '../utils/cli-tools';
+import { storeResponse, generateOutputName } from '../utils/cli-tools';
 import {
   RealEstateCommon,
   RealEstateDetailed,
@@ -10,7 +10,11 @@ import {
   Mapping,
 } from '../classes/portals/Estate';
 import estateCommon from '../translations';
-import { generateDictionaryOptions, DictionaryFlags } from '../cli';
+import {
+  generateDictionaryOptions,
+  DictionaryFlags,
+  AvailableTranslations,
+} from '../cli';
 
 export const command = 'generate-dictionary';
 
@@ -126,11 +130,19 @@ exports.builder = (yargs: Argv) =>
     .group(Object.keys(generateDictionaryOptions), 'Dictionary options')
     .options(generateDictionaryOptions);
 
-exports.handler = async (argv: Arguments) => {
+export const generateDictionary = (
+  language?: AvailableTranslations
+): Mapping => {
   const commonKeys = generateEstatePropertyKeys();
-  const result = objectify(commonKeys, estateCommon[argv.language]);
+  const mapping = language ? estateCommon[language] : undefined;
+  return objectify(commonKeys, mapping);
+};
+
+exports.handler = async (argv: Arguments) => {
   try {
-    const name = [command, 'common', argv.language].filter(Boolean).join('-');
+    const result = generateDictionary(argv.language);
+
+    const name = generateOutputName(command, 'common', argv.language);
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {

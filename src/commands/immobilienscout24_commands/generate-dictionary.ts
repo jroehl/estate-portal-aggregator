@@ -1,10 +1,14 @@
 import { Argv } from 'yargs';
 import { Logger } from '../../utils';
-import { storeResponse } from '../../utils/cli-tools';
+import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import is24 from '../../translations';
 import { command as parentCommand } from '../immobilienscout24';
 import { Mapping } from '../../classes/portals/Estate';
-import { generateDictionaryOptions, DictionaryFlags } from '../../cli';
+import {
+  generateDictionaryOptions,
+  DictionaryFlags,
+  AvailableTranslations,
+} from '../../cli';
 import { generateEstatePropertyKeys } from '../generate-dictionary';
 
 export const command = 'generate-dictionary';
@@ -26,7 +30,9 @@ exports.builder = (yargs: Argv) =>
 const cleanValues = (mapping: Mapping): Mapping =>
   Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
 
-export const getCommonKeys = (language?: string): Mapping => {
+export const generateDictionary = (
+  language?: AvailableTranslations
+): Mapping => {
   const result = language ? (is24 as Mapping)[language] : cleanValues(is24.en);
 
   const excludedKeys = generateEstatePropertyKeys();
@@ -36,12 +42,10 @@ export const getCommonKeys = (language?: string): Mapping => {
 };
 
 exports.handler = async (argv: Arguments) => {
-  const result = getCommonKeys(argv.language);
-
   try {
-    const name = [parentCommand, command, argv.language]
-      .filter(Boolean)
-      .join('-');
+    const result = generateDictionary(argv.language);
+
+    const name = generateOutputName(parentCommand, command, argv.language);
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {

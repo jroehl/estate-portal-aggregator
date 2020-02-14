@@ -8,7 +8,7 @@ import {
   RealEstateCommon,
 } from '../../Estate';
 
-export class FlowFactCommonV2 extends Estate {
+export class FlowFactEstateCommonV2 extends Estate {
   protected common!: RealEstateCommon;
   protected details?: RealEstateDetailed;
 
@@ -70,7 +70,7 @@ export class FlowFactCommonV2 extends Estate {
   }
 }
 
-export class FlowFactDetailedV2 extends FlowFactCommonV2 {
+export class FlowFactEstateDetailedV2 extends FlowFactEstateCommonV2 {
   protected async setDetailed(): Promise<void> {
     this.details = {
       attachments: await this.getAttachments(),

@@ -10,10 +10,20 @@ import {
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
-import { storeResponse, loadDictionary } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  loadDictionary,
+  generateOutputName,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
+import {
+  GlobalFlags,
+  fetchOptions,
+  fetchMultipleOptions,
+  FetchMultipleOptions,
+} from '../../cli';
 import { PaginatedFlags } from '../../cli';
+import { Immobilienscout24Estate } from '../../classes/portals/Immobilienscout24/Estate';
 
 export const command = 'fetch-estates';
 
@@ -38,35 +48,53 @@ exports.builder = (yargs: Argv) =>
       ...fetchMultipleOptions,
     });
 
+export const fetchEstates = async (
+  credentials: OAuth,
+  options: FetchMultipleOptions = {
+    normalizedResult: true,
+    detailedResult: true,
+  }
+): Promise<Immobilienscout24Estate[]> => {
+  const is24 = new Immobilienscout24(credentials);
+
+  let results = await is24.fetchEstates({
+    recursively: options.recursively,
+    page: options.page,
+    pageSize: options.pageSize,
+    detailed: options.detailedResult,
+  });
+
+  if (options.normalizedResult) {
+    const dictionary = loadDictionary(options.dictionaryPath);
+
+    const Estate = options.detailedResult
+      ? Immobilienscout24EstateDetailed
+      : Immobilienscout24EstateCommon;
+
+    results = await Promise.all(
+      results.map(
+        async result => await new Estate(result, dictionary).setValues()
+      )
+    );
+  }
+
+  return results;
+};
 exports.handler = async (argv: Arguments) => {
   try {
-    const is24 = new Immobilienscout24(argv as OAuth);
-
-    let results = await is24.fetchEstates({
-      recursively: argv.recursively,
-      page: argv.page,
-      pageSize: argv.pageSize,
-      detailed: argv.detailed,
+    const results = await fetchEstates(argv as OAuth, {
+      ...argv,
+      detailedResult: argv.detailed,
+      normalizedResult: argv.normalize,
+      dictionaryPath: argv.dictionary,
     });
 
-    if (argv.normalize) {
-      const dictionary = loadDictionary(argv.dictionary);
-      const Estate = argv.detailed
-        ? Immobilienscout24EstateDetailed
-        : Immobilienscout24EstateCommon;
-      results = await Promise.all(
-        results.map(
-          async result => await new Estate(result, dictionary).setValues()
-        )
-      );
-    }
-
-    const name = [
+    const name = generateOutputName(
       parentCommand,
       command,
       argv.normalize ? 'normalized' : 'original',
-      argv.detailed ? 'long' : 'short',
-    ].join('-');
+      argv.detailed ? 'long' : 'short'
+    );
     if (argv.storeResult) {
       const fileName = storeResponse(name, results, argv.pretty);
       Logger.log(
