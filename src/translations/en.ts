@@ -327,6 +327,7 @@ export default {
   cpv: 'Komoren',
   cranerunway: 'Crane runway',
   cranerunwayload: 'Crane runway load',
+  createdat: 'Created at',
   creation: 'Creationdate of this entity',
   creationdate: 'The date of issue of the offering',
   cri: 'Kap Verde',
@@ -690,6 +691,7 @@ export default {
   industrytypelist: 'List of industry types',
   industrytypes: 'Industry types',
   interiorquality: 'Interior quality',
+  internalid: 'Internal ID',
   internationalcountryregion:
     'Only for locations (of real estates) outside germany: country and region',
   internet: 'Type of internet connection',
@@ -1076,6 +1078,7 @@ export default {
   precisehousenumber:
     'Whether precision of the coordinates is of the level of house number',
   prefabricated: 'Prefabricated',
+  previewimage: 'Preview image',
   previous: 'Reference to the previous result page',
   pri: 'Puerto Rico',
   price: 'Price',
@@ -1458,6 +1461,7 @@ export default {
   unspecified: 'Unspecified',
   unsure: 'Unsure about the rating',
   unwanted: 'Unwanted',
+  updatedat: 'Updated at',
   upgrading: 'Upgrading',
   uploadurl:
     'The API-client sends a multi-part-POST request to this URL with the video file and an authentication-token. One part is "videofile" with the video file, the other is "auth", the authentication-token',

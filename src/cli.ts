@@ -16,8 +16,10 @@ export interface PaginatedFlags {
   pageSize: number;
 }
 
+export type AvailableTranslations = 'de' | 'en';
+
 export interface DictionaryFlags {
-  language: 'de' | 'en';
+  language: AvailableTranslations;
 }
 
 export const fetchOptions: { [key: string]: yargs.Options } = {
