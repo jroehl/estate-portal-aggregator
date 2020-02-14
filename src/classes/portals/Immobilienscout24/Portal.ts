@@ -64,7 +64,7 @@ class Immobilienscout24Authorization extends Authorization {
   }
 }
 
-export class Immobilienscout24 extends Portal {
+export class Immobilienscout24Portal extends Portal {
   baseURL: string =
     'https://rest.immobilienscout24.de/restapi/api/offer/v1.0/user/me/realestate';
 

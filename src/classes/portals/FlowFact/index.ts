@@ -1,6 +1,6 @@
 import { Credentials, BasicAuth, TokenAuth } from '../../Authorization';
-import FlowFactV1 from './v1/Portal';
-import FlowFactV2 from './v2/Portal';
+import FlowFactPortalV1 from './v1/Portal';
+import FlowFactPortalV2 from './v2/Portal';
 import { FlowFactEstateCommonV1, FlowFactEstateDetailedV1 } from './v1/Estate';
 import { FlowFactEstateCommonV2, FlowFactEstateDetailedV2 } from './v2/Estate';
 import { Mapping } from '../Estate';
@@ -8,13 +8,13 @@ import { Mapping } from '../Estate';
 export type APIVersion = 'v1' | 'v2';
 
 // portal factory for api versions
-export class FlowFact {
+export class FlowFactPortal {
   constructor(apiVersion: APIVersion, credentials: Credentials) {
     switch (apiVersion) {
       case 'v1':
-        return new FlowFactV1(credentials as BasicAuth);
+        return new FlowFactPortalV1(credentials as BasicAuth);
       case 'v2':
-        return new FlowFactV2(credentials as TokenAuth);
+        return new FlowFactPortalV2(credentials as TokenAuth);
       default:
         throw new Error('API Version is invalid');
     }

@@ -66,7 +66,7 @@ class FlowFactV2Authorization extends Authorization {
   }
 }
 
-export default class FlowFactV2 extends Portal {
+export default class FlowFactPortalV2 extends Portal {
   baseURL: string = 'https://api.production.cloudios.flowfact-prod.cloud';
 
   constructor(credentials: TokenAuth) {

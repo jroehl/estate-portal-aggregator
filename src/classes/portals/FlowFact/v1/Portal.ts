@@ -39,7 +39,7 @@ class FlowFactV1Authorization extends Authorization {
   }
 }
 
-export default class FlowFactV1 extends Portal {
+export default class FlowFactPortalV1 extends Portal {
   baseURL: string;
 
   constructor(credentials: BasicAuth) {
