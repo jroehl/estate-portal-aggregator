@@ -10,7 +10,11 @@ import {
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
-import { storeResponse, loadDictionary } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  loadDictionary,
+  generateOutputName,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { GlobalFlags, fetchOptions } from '../../cli';
 
@@ -47,12 +51,12 @@ exports.handler = async (argv: Arguments) => {
       result = await new Estate(result, dictionary).setValues();
     }
 
-    const name = [
+    const name = generateOutputName(
       parentCommand,
       command.replace(' <estate-id>', ''),
       argv.normalize ? 'normalized' : 'original',
-      'long',
-    ].join('-');
+      'long'
+    );
     if (argv.storeResult) {
       const fileName = storeResponse(name, result, argv.pretty);
       Logger.log(`Result stored at "${fileName}"`);

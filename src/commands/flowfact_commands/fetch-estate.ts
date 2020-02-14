@@ -8,7 +8,11 @@ import {
 } from '../../classes/portals/FlowFact';
 import { Credentials } from '../../classes/Authorization';
 import { Portal } from '../../classes/portals/Portal';
-import { storeResponse, loadDictionary } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  loadDictionary,
+  generateOutputName,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
 import { APIVersion } from '../../classes/portals/FlowFact';
@@ -61,13 +65,13 @@ exports.handler = async (argv: Arguments) => {
       ) as Estate).setValues();
     }
 
-    const name = [
+    const name = generateOutputName(
       parentCommand,
       command.replace(' <estate-id>', ''),
       apiVersion,
       argv.normalize ? 'normalized' : 'original',
-      'long',
-    ].join('-');
+      'long'
+    );
     if (argv.storeResult) {
       const fileName = storeResponse(name, result, argv.pretty);
       Logger.log(`Result stored at "${fileName}"`);

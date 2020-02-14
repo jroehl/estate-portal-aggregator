@@ -1,6 +1,6 @@
 import { Argv } from 'yargs';
 import { Logger } from '../utils';
-import { storeResponse } from '../utils/cli-tools';
+import { storeResponse, generateOutputName } from '../utils/cli-tools';
 import {
   RealEstateCommon,
   RealEstateDetailed,
@@ -130,7 +130,7 @@ exports.handler = async (argv: Arguments) => {
   const commonKeys = generateEstatePropertyKeys();
   const result = objectify(commonKeys, estateCommon[argv.language]);
   try {
-    const name = [command, 'common', argv.language].filter(Boolean).join('-');
+    const name = generateOutputName(command, 'common', argv.language);
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {

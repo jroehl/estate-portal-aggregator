@@ -8,7 +8,11 @@ import {
 } from '../../classes/portals/FlowFact';
 import { Credentials } from '../../classes/Authorization';
 import { Portal } from '../../classes/portals/Portal';
-import { storeResponse, loadDictionary } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  loadDictionary,
+  generateOutputName,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { Estate } from '../../classes/portals/Estate';
 import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
@@ -73,12 +77,12 @@ exports.handler = async (argv: Arguments) => {
       );
     }
 
-    const name = [
+    const name = generateOutputName(
       parentCommand,
       command,
       argv.normalize ? 'normalized' : 'original',
-      argv.detailed ? 'long' : 'short',
-    ].join('-');
+      argv.detailed ? 'long' : 'short'
+    );
     if (argv.storeResult) {
       const fileName = storeResponse(name, results, argv.pretty);
       Logger.log(

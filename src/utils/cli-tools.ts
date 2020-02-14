@@ -25,3 +25,6 @@ export const loadDictionary = (path?: string): Mapping | undefined => {
     throw new Error(`No valid file found at "${path}"`);
   return JSON.parse(readFileSync(path, 'utf-8'));
 };
+
+export const generateOutputName = (...parts: string[]): string =>
+  parts.filter(Boolean).join('-');

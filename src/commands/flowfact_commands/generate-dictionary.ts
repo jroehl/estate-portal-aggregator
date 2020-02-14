@@ -2,7 +2,7 @@ import { Argv } from 'yargs';
 import { flatten } from 'lodash';
 
 import { Logger } from '../../utils';
-import { storeResponse } from '../../utils/cli-tools';
+import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import { GlobalFlags } from '../../cli';
 import estateCommon from '../../translations';
@@ -85,9 +85,12 @@ exports.handler = async (argv: Arguments) => {
       result = dictionary;
     }
 
-    const name = [parentCommand, command, apiVersion, argv.language]
-      .filter(Boolean)
-      .join('-');
+    const name = generateOutputName(
+      parentCommand,
+      command,
+      apiVersion,
+      argv.language
+    );
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {

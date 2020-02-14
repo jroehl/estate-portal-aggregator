@@ -10,7 +10,11 @@ import {
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
-import { storeResponse, loadDictionary } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  loadDictionary,
+  generateOutputName,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
 import { PaginatedFlags } from '../../cli';
@@ -61,12 +65,12 @@ exports.handler = async (argv: Arguments) => {
       );
     }
 
-    const name = [
+    const name = generateOutputName(
       parentCommand,
       command,
       argv.normalize ? 'normalized' : 'original',
-      argv.detailed ? 'long' : 'short',
-    ].join('-');
+      argv.detailed ? 'long' : 'short'
+    );
     if (argv.storeResult) {
       const fileName = storeResponse(name, results, argv.pretty);
       Logger.log(

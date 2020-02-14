@@ -1,6 +1,6 @@
 import { Argv } from 'yargs';
 import { Logger } from '../../utils';
-import { storeResponse } from '../../utils/cli-tools';
+import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import is24 from '../../translations';
 import { command as parentCommand } from '../immobilienscout24';
 import { Mapping } from '../../classes/portals/Estate';
@@ -39,9 +39,7 @@ exports.handler = async (argv: Arguments) => {
   const result = getCommonKeys(argv.language);
 
   try {
-    const name = [parentCommand, command, argv.language]
-      .filter(Boolean)
-      .join('-');
+    const name = generateOutputName(parentCommand, command, argv.language);
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {
