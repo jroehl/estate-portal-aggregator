@@ -9,16 +9,16 @@ import {
 import { BasicAuth, TokenAuth } from '../../classes/Authorization';
 import { loadDictionary } from '../../utils/cli-tools';
 import { FetchSingleOptions } from '../../cli';
-import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
+import FlowFactPortalV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
-import FlowFactV1 from '../../classes/portals/FlowFact/v1/Portal';
+import FlowFactPortalV1 from '../../classes/portals/FlowFact/v1/Portal';
 
 export const fetchEstateV1 = async (
   id: string,
   credentials: BasicAuth,
   options: FetchSingleOptions = { normalizedResult: true, detailedResult: true }
 ): Promise<FlowFactEstateV1> => {
-  const flowFact = new FlowFactV1(credentials);
+  const flowFact = new FlowFactPortalV1(credentials);
   let result = await flowFact.fetchEstate(id);
   if (options.normalizedResult) {
     const dictionary = loadDictionary(options.dictionaryPath);
@@ -35,7 +35,7 @@ export const fetchEstateV2 = async (
   credentials: TokenAuth,
   options: FetchSingleOptions = { normalizedResult: true, detailedResult: true }
 ): Promise<FlowFactEstateV2> => {
-  const flowFact = new FlowFactV2(credentials);
+  const flowFact = new FlowFactPortalV2(credentials);
   let result = await flowFact.fetchEstate(id);
   if (options.normalizedResult) {
     result = await enrichResultWithReadableKeys(flowFact, result);

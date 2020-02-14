@@ -1,5 +1,5 @@
 import {
-  Immobilienscout24,
+  Immobilienscout24Portal,
   Immobilienscout24EstateCommon,
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
@@ -13,7 +13,7 @@ export const fetchEstate = async (
   credentials: OAuth,
   options: FetchSingleOptions = { normalizedResult: true, detailedResult: true }
 ): Promise<Immobilienscout24Estate> => {
-  const is24 = new Immobilienscout24(credentials);
+  const is24 = new Immobilienscout24Portal(credentials);
   let result = await is24.fetchEstate(id);
   if (options.normalizedResult) {
     const dictionary = loadDictionary(options.dictionaryPath);

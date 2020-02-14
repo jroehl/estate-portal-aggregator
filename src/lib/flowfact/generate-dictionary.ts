@@ -2,7 +2,7 @@ import { flatten } from 'lodash';
 import { AvailableTranslations } from '../../cli';
 import estateCommon from '../../translations';
 import { TokenAuth } from '../../classes/Authorization';
-import FlowFactV2, {
+import FlowFactPortalV2, {
   estateSchemas,
 } from '../../classes/portals/FlowFact/v2/Portal';
 import { Mapping } from '../../classes/portals/Estate';
@@ -41,7 +41,7 @@ export const generateDictionaryFlowFactV2 = async (
   credentials: TokenAuth,
   language?: AvailableTranslations
 ): Promise<Mapping> => {
-  const flowFact = new FlowFactV2(credentials);
+  const flowFact = new FlowFactPortalV2(credentials);
   const schemas = await flowFact.fetchSchemas();
   const reducedSchemas = schemas.filter(({ name }) =>
     estateSchemas.includes(name)

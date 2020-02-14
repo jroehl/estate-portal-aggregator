@@ -19,13 +19,13 @@ export {
 } from './lib/flowfact/generate-dictionary';
 
 export {
-  FlowFact,
+  FlowFactPortal,
   FlowFactEstateCommon,
   FlowFactEstateDetailed,
 } from './classes/portals/FlowFact';
 
 export {
-  Immobilienscout24,
+  Immobilienscout24Portal,
   Immobilienscout24EstateCommon,
   Immobilienscout24EstateDetailed,
 } from './classes/portals/Immobilienscout24/Portal';

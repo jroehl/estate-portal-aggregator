@@ -1,5 +1,5 @@
 import {
-  Immobilienscout24,
+  Immobilienscout24Portal,
   Immobilienscout24EstateCommon,
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
@@ -15,7 +15,7 @@ export const fetchEstates = async (
     detailedResult: true,
   }
 ): Promise<Immobilienscout24Estate[]> => {
-  const is24 = new Immobilienscout24(credentials);
+  const is24 = new Immobilienscout24Portal(credentials);
   let results = await is24.fetchEstates({
     recursively: options.recursively,
     page: options.page,

@@ -1,10 +1,10 @@
-import FlowFactV2 from './Portal';
+import FlowFactPortalV2 from './Portal';
 import { get, cloneDeep } from 'lodash';
 import { Mapping } from '../../../../classes/portals/Estate';
 import { Logger } from '../../../../utils';
 
 export const enrichResultWithReadableKeys = async (
-  flowFact: FlowFactV2,
+  flowFact: FlowFactPortalV2,
   result: any | any[]
 ) => {
   const enricher = new ResultEnricher(flowFact);
@@ -20,7 +20,7 @@ class ResultEnricher {
   private tries: number = 0;
   private schemas!: Mapping;
 
-  constructor(private flowFact: FlowFactV2) {}
+  constructor(private flowFact: FlowFactPortalV2) {}
 
   private getFieldMap = (fields: Mapping) =>
     Object.entries(fields).reduce(

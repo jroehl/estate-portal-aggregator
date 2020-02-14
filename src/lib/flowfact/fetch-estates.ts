@@ -9,9 +9,9 @@ import {
 import { TokenAuth, BasicAuth } from '../../classes/Authorization';
 import { loadDictionary } from '../../utils/cli-tools';
 import { FetchMultipleOptions } from '../../cli';
-import FlowFactV2 from '../../classes/portals/FlowFact/v2/Portal';
+import FlowFactPortalV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
-import FlowFactV1 from '../../classes/portals/FlowFact/v1/Portal';
+import FlowFactPortalV1 from '../../classes/portals/FlowFact/v1/Portal';
 
 export const fetchEstatesV1 = async (
   credentials: BasicAuth,
@@ -20,7 +20,7 @@ export const fetchEstatesV1 = async (
     detailedResult: true,
   }
 ): Promise<FlowFactEstateV1[]> => {
-  const flowFact = new FlowFactV1(credentials);
+  const flowFact = new FlowFactPortalV1(credentials);
   let results = await flowFact.fetchEstates({
     recursively: options.recursively,
     page: options.page,
@@ -48,7 +48,7 @@ export const fetchEstatesV2 = async (
     detailedResult: true,
   }
 ): Promise<FlowFactEstateV2[]> => {
-  const flowFact = new FlowFactV2(credentials);
+  const flowFact = new FlowFactPortalV2(credentials);
   let results = await flowFact.fetchEstates({
     recursively: options.recursively,
     page: options.page,
