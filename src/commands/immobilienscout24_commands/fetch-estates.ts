@@ -7,8 +7,12 @@ import {
 import { OAuth } from '../../classes/Authorization';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
-import { PaginatedFlags } from '../../cli';
+import {
+  GlobalFlags,
+  fetchOptions,
+  fetchMultipleOptions,
+  PaginatedFlags,
+} from '../../cli';
 import { fetchEstates } from '../../lib/immobilienscout24/fetch-estates';
 
 export const command = 'fetch-estates';

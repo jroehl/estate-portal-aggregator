@@ -1,5 +1,5 @@
-import rp from 'request-promise-native';
 import { flatten } from 'lodash';
+import requestPromise from 'request-promise-native';
 
 import { Portal, FetchOptions } from '../../Portal';
 import {
@@ -8,7 +8,6 @@ import {
   Credentials,
   TokenAuth,
 } from '../../../Authorization';
-import requestPromise from 'request-promise-native';
 
 export const estateSchemas = [
   'catering_accommodation_purchase',
@@ -39,7 +38,7 @@ class FlowFactV2Authorization extends Authorization {
   async authorize(): Promise<AuthorizationHeader> {
     const { token } = this.credentials as TokenAuth;
     if (!this.authorizationHeader) {
-      const cognitoToken = await rp(
+      const cognitoToken = await requestPromise(
         'https://api.production.cloudios.flowfact-prod.cloud/admin-token-service/stable/public/adminUser/authenticate',
         {
           method: 'GET',

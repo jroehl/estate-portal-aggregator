@@ -2,7 +2,6 @@ import { Argv } from 'yargs';
 import { Logger } from '../../utils';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { command as parentCommand } from '../immobilienscout24';
-import { Mapping } from '../../classes/portals/Estate';
 import { generateDictionaryOptions, DictionaryFlags } from '../../cli';
 import { generateDictionary } from '../../lib/immobilienscout24/generate-dictionary';
 
@@ -21,9 +20,6 @@ exports.builder = (yargs: Argv) =>
     .usage(usage)
     .group(Object.keys(generateDictionaryOptions), 'Dictionary options')
     .options(generateDictionaryOptions);
-
-export const cleanValues = (mapping: Mapping): Mapping =>
-  Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
 
 exports.handler = async (argv: Arguments) => {
   try {

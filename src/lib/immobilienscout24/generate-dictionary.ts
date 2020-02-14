@@ -1,8 +1,10 @@
 import is24 from '../../translations';
 import { Mapping } from '../../classes/portals/Estate';
-import { AvailableTranslations } from '../../cli';
-import { cleanValues } from '../../commands/immobilienscout24_commands/generate-dictionary';
+import { AvailableTranslations } from '../../types';
 import { generateEstatePropertyKeys } from '../generate-dictionary';
+
+const cleanValues = (mapping: Mapping): Mapping =>
+  Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
 
 export const generateDictionary = (
   language?: AvailableTranslations

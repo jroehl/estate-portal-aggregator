@@ -5,7 +5,7 @@ import {
 } from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
 import { loadDictionary } from '../../utils/cli-tools';
-import { FetchSingleOptions } from '../../cli';
+import { FetchSingleOptions } from '../../types';
 import { Immobilienscout24Estate } from '../../classes/portals/Immobilienscout24/Estate';
 
 export const fetchEstate = async (

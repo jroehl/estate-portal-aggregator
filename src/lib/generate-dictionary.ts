@@ -7,7 +7,7 @@ import {
   Attachment,
   Mapping,
 } from '../classes/portals/Estate';
-import { AvailableTranslations } from '../cli';
+import { AvailableTranslations } from '../types';
 
 class RealEstate implements RealEstateCommon, RealEstateDetailed {
   active!: boolean;

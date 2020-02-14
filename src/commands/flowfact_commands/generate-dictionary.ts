@@ -4,11 +4,14 @@ import { flatten } from 'lodash';
 import { Logger } from '../../utils';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
-import { GlobalFlags } from '../../cli';
 import { TokenAuth } from '../../classes/Authorization';
 import { APIVersion } from '../../classes/portals/FlowFact';
 import { Mapping } from '../../classes/portals/Estate';
-import { DictionaryFlags, generateDictionaryOptions } from '../../cli';
+import {
+  DictionaryFlags,
+  generateDictionaryOptions,
+  GlobalFlags,
+} from '../../cli';
 import {
   generateDictionaryFlowFactV1,
   generateDictionaryFlowFactV2,
