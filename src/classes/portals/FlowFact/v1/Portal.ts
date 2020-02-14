@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 import { Portal, FetchOptions } from '../../Portal';
 import {
   BasicAuth,
@@ -79,7 +81,8 @@ export default class FlowFactV1 extends Portal {
     if (!options?.detailed) return result;
     return Promise.all(
       result.map(async (res: any) => {
-        const estateID = res.id || res.value.id;
+        const estateID = get(res, 'id') || get(res, 'value.id');
+        if (!estateID) return res;
         return this.fetchEstate(estateID);
       })
     );

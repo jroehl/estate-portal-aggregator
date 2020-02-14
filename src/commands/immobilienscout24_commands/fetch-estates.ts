@@ -6,7 +6,6 @@ import {
 } from '../immobilienscout24';
 import {
   Immobilienscout24,
-  Immobilienscout24Estate,
   Immobilienscout24EstateCommon,
   Immobilienscout24EstateDetailed,
 } from '../../classes/portals/Immobilienscout24/Portal';
@@ -24,7 +23,7 @@ import {
   FetchMultipleOptions,
 } from '../../cli';
 import { PaginatedFlags } from '../../cli';
-import { Estate as IEstate } from '../../classes/portals/Estate';
+import { Immobilienscout24Estate } from '../../classes/portals/Immobilienscout24/Estate';
 
 export const command = 'fetch-estates';
 
@@ -51,18 +50,14 @@ exports.builder = (yargs: Argv) =>
 
 export const fetchEstates = async (
   credentials: OAuth,
-  options: FetchMultipleOptions
-): Promise<Immobilienscout24Estate[]> => {
-  if (!options) {
-    options = {
-      normalizedResult: true,
-      detailedResult: false,
-    };
+  options: FetchMultipleOptions = {
+    normalizedResult: true,
+    detailedResult: true,
   }
-
+): Promise<Immobilienscout24Estate[]> => {
   const is24 = new Immobilienscout24(credentials);
 
-  let results: Immobilienscout24Estate[] = await is24.fetchEstates({
+  let results = await is24.fetchEstates({
     recursively: options.recursively,
     page: options.page,
     pageSize: options.pageSize,

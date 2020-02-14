@@ -41,20 +41,15 @@ exports.builder = (yargs: Argv) =>
 export const fetchEstate = async (
   id: string,
   credentials: OAuth,
-  options: FetchSingleOptions
+  options: FetchSingleOptions = { normalizedResult: true, detailedResult: true }
 ): Promise<Immobilienscout24Estate> => {
-  if (!options) {
-    options = {
-      normalizedResult: true,
-      detailedResult: true,
-    };
-  }
   const is24 = new Immobilienscout24(credentials);
 
   let result = await is24.fetchEstate(id);
 
   if (options.normalizedResult) {
     const dictionary = loadDictionary(options.dictionaryPath);
+
     const Estate = options.detailedResult
       ? Immobilienscout24EstateDetailed
       : Immobilienscout24EstateCommon;
@@ -77,7 +72,7 @@ exports.handler = async (argv: Arguments) => {
       parentCommand,
       command.replace(' <estate-id>', ''),
       argv.normalize ? 'normalized' : 'original',
-      'long'
+      argv.detailed ? 'long' : 'short'
     );
     if (argv.storeResult) {
       const fileName = storeResponse(name, result, argv.pretty);
