@@ -4,26 +4,12 @@ import {
   command as parentCommand,
   Immobilienscout24Flags,
 } from '../immobilienscout24';
-import {
-  Immobilienscout24,
-  Immobilienscout24EstateCommon,
-  Immobilienscout24EstateDetailed,
-} from '../../classes/portals/Immobilienscout24/Portal';
 import { OAuth } from '../../classes/Authorization';
-import {
-  storeResponse,
-  loadDictionary,
-  generateOutputName,
-} from '../../utils/cli-tools';
+import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import {
-  GlobalFlags,
-  fetchOptions,
-  fetchMultipleOptions,
-  FetchMultipleOptions,
-} from '../../cli';
+import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
 import { PaginatedFlags } from '../../cli';
-import { Immobilienscout24Estate } from '../../classes/portals/Immobilienscout24/Estate';
+import { fetchEstates } from '../../lib/immobilienscout24/fetch-estates';
 
 export const command = 'fetch-estates';
 
@@ -48,38 +34,6 @@ exports.builder = (yargs: Argv) =>
       ...fetchMultipleOptions,
     });
 
-export const fetchEstates = async (
-  credentials: OAuth,
-  options: FetchMultipleOptions = {
-    normalizedResult: true,
-    detailedResult: true,
-  }
-): Promise<Immobilienscout24Estate[]> => {
-  const is24 = new Immobilienscout24(credentials);
-
-  let results = await is24.fetchEstates({
-    recursively: options.recursively,
-    page: options.page,
-    pageSize: options.pageSize,
-    detailed: options.detailedResult,
-  });
-
-  if (options.normalizedResult) {
-    const dictionary = loadDictionary(options.dictionaryPath);
-
-    const Estate = options.detailedResult
-      ? Immobilienscout24EstateDetailed
-      : Immobilienscout24EstateCommon;
-
-    results = await Promise.all(
-      results.map(
-        async result => await new Estate(result, dictionary).setValues()
-      )
-    );
-  }
-
-  return results;
-};
 exports.handler = async (argv: Arguments) => {
   try {
     const results = await fetchEstates(argv as OAuth, {

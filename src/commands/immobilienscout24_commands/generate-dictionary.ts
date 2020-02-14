@@ -1,15 +1,10 @@
 import { Argv } from 'yargs';
 import { Logger } from '../../utils';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
-import is24 from '../../translations';
 import { command as parentCommand } from '../immobilienscout24';
 import { Mapping } from '../../classes/portals/Estate';
-import {
-  generateDictionaryOptions,
-  DictionaryFlags,
-  AvailableTranslations,
-} from '../../cli';
-import { generateEstatePropertyKeys } from '../generate-dictionary';
+import { generateDictionaryOptions, DictionaryFlags } from '../../cli';
+import { generateDictionary } from '../../lib/immobilienscout24/generate-dictionary';
 
 export const command = 'generate-dictionary';
 
@@ -27,19 +22,8 @@ exports.builder = (yargs: Argv) =>
     .group(Object.keys(generateDictionaryOptions), 'Dictionary options')
     .options(generateDictionaryOptions);
 
-const cleanValues = (mapping: Mapping): Mapping =>
+export const cleanValues = (mapping: Mapping): Mapping =>
   Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
-
-export const generateDictionary = (
-  language?: AvailableTranslations
-): Mapping => {
-  const result = language ? (is24 as Mapping)[language] : cleanValues(is24.en);
-
-  const excludedKeys = generateEstatePropertyKeys();
-  excludedKeys.forEach(key => delete (result as Mapping)[key]);
-
-  return result;
-};
 
 exports.handler = async (argv: Arguments) => {
   try {

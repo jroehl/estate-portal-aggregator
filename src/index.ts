@@ -1,22 +1,22 @@
-export { fetchEstate as fetchEstateImmobilienscout24 } from './commands/immobilienscout24_commands/fetch-estate';
-export { fetchEstates as fetchEstatesImmobilienscout24 } from './commands/immobilienscout24_commands/fetch-estates';
+export { fetchEstate as fetchEstateImmobilienscout24 } from './lib/immobilienscout24/fetch-estate';
+export { fetchEstates as fetchEstatesImmobilienscout24 } from './lib/immobilienscout24/fetch-estates';
 
 export {
   fetchEstateV1 as fetchEstateFlowFactV1,
   fetchEstateV2 as fetchEstateFlowFactV2,
-} from './commands/flowfact_commands/fetch-estate';
+} from './lib/flowfact/fetch-estate';
 
 export {
   fetchEstatesV1 as fetchEstatesFlowFactV1,
   fetchEstatesV2 as fetchEstatesFlowFactV2,
-} from './commands/flowfact_commands/fetch-estates';
+} from './lib/flowfact/fetch-estates';
 
-export { generateDictionary as generateDictionaryCommonProperties } from './commands/generate-dictionary';
-export { generateDictionary as generateDictionaryImmobilienscout24 } from './commands/immobilienscout24_commands/generate-dictionary';
+export { generateDictionary as generateDictionaryCommonProperties } from './lib/generate-dictionary';
+export { generateDictionary as generateDictionaryImmobilienscout24 } from './lib/immobilienscout24/generate-dictionary';
 export {
   generateDictionaryFlowFactV1,
   generateDictionaryFlowFactV2,
-} from './commands/flowfact_commands/generate-dictionary';
+} from './lib/flowfact/generate-dictionary';
 
 export {
   FlowFact,
