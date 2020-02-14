@@ -8,7 +8,7 @@ import {
 } from '../../classes/portals/FlowFact';
 import { BasicAuth, TokenAuth } from '../../classes/Authorization';
 import { loadDictionary } from '../../utils/cli-tools';
-import { FetchSingleOptions } from '../../cli';
+import { FetchSingleOptions } from '../../types';
 import FlowFactPortalV2 from '../../classes/portals/FlowFact/v2/Portal';
 import { enrichResultWithReadableKeys } from '../../classes/portals/FlowFact/v2/utils';
 import FlowFactPortalV1 from '../../classes/portals/FlowFact/v1/Portal';

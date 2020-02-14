@@ -4,8 +4,12 @@ import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import { TokenAuth, BasicAuth } from '../../classes/Authorization';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { Logger } from '../../utils';
-import { GlobalFlags, fetchOptions, fetchMultipleOptions } from '../../cli';
-import { PaginatedFlags } from '../../cli';
+import {
+  GlobalFlags,
+  fetchOptions,
+  fetchMultipleOptions,
+  PaginatedFlags,
+} from '../../cli';
 import {
   fetchEstatesV1,
   fetchEstatesV2,

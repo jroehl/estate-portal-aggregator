@@ -1,5 +1,5 @@
 import { flatten } from 'lodash';
-import { AvailableTranslations } from '../../cli';
+import { AvailableTranslations } from '../../types';
 import estateCommon from '../../translations';
 import { TokenAuth } from '../../classes/Authorization';
 import FlowFactPortalV2, {

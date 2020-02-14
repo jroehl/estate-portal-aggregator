@@ -1,6 +1,7 @@
 // Import our DAO object
 import * as yargs from 'yargs'; // We will take advantage of typings and intellsence.
 import { Mapping } from './classes/portals/Estate';
+import { AvailableTranslations } from './types';
 
 export interface GlobalFlags {
   detailed: boolean;
@@ -16,21 +17,9 @@ export interface PaginatedFlags {
   pageSize?: number;
 }
 
-export type AvailableTranslations = 'de' | 'en';
-
 export interface DictionaryFlags {
   language: AvailableTranslations;
 }
-
-export interface FetchSingleOptions {
-  dictionaryPath?: string;
-  normalizedResult?: boolean;
-  detailedResult?: boolean;
-}
-
-export interface FetchMultipleOptions
-  extends FetchSingleOptions,
-    PaginatedFlags {}
 
 export const fetchOptions: { [key: string]: yargs.Options } = {
   'store-result': {

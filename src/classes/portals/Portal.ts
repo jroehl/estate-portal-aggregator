@@ -1,4 +1,4 @@
-import rp, { RequestPromiseOptions } from 'request-promise-native';
+import requestPromise, { RequestPromiseOptions } from 'request-promise-native';
 import { merge } from 'lodash';
 
 import { Authorization } from '../Authorization';
@@ -44,7 +44,7 @@ export abstract class Portal {
     );
 
     try {
-      const result = await rp(uri, options);
+      const result = await requestPromise(uri, options);
       return result;
     } catch (error) {
       Logger.error(`ERROR: Fetching ${uri}`);
