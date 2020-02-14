@@ -19,6 +19,11 @@
   "bin": {
     "estate-portal": "bin/estate-portal"
   },
+  "release": {
+    "branches": [
+      "master"
+    ]
+  },
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
