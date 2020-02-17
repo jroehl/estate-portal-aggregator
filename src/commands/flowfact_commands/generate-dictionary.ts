@@ -1,21 +1,13 @@
 import { Argv } from 'yargs';
-import { flatten } from 'lodash';
 
 import { Logger } from '../../utils';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
-import { TokenAuth } from '../../classes/Authorization';
+import { TokenAuth, BasicAuth } from '../../classes/Authorization';
 import { APIVersion } from '../../classes/portals/FlowFact';
-import { Mapping } from '../../classes/portals/Estate';
-import {
-  DictionaryFlags,
-  generateDictionaryOptions,
-  GlobalFlags,
-} from '../../cli';
-import {
-  generateDictionaryFlowFactV1,
-  generateDictionaryFlowFactV2,
-} from '../../lib/flowfact/generate-dictionary';
+import { DictionaryFlags, generateDictionaryOptions } from '../../cli';
+import { FlowFactV1 } from '../../classes/portals/FlowFact/v1/Aggregator';
+import { FlowFactV2 } from '../../classes/portals/FlowFact/v2/Aggregator';
 
 export const command = 'generate-dictionary';
 
@@ -25,7 +17,7 @@ const usage = `
 $0 ${parentCommand} ${command} [args]
 `;
 
-interface Arguments extends GlobalFlags, FlowFactFlags, DictionaryFlags {}
+interface Arguments extends FlowFactFlags, DictionaryFlags {}
 
 exports.builder = (yargs: Argv) =>
   yargs
@@ -37,15 +29,11 @@ exports.handler = async (argv: Arguments) => {
   try {
     const apiVersion: APIVersion = argv.apiV1 ? 'v1' : 'v2';
 
-    let result: Mapping = {};
-    if (apiVersion === 'v1') {
-      result = generateDictionaryFlowFactV1(argv.language);
-    } else {
-      result = await generateDictionaryFlowFactV2(
-        argv as TokenAuth,
-        argv.language
-      );
-    }
+    const flowFact = argv.apiV1
+      ? new FlowFactV1(argv as BasicAuth)
+      : new FlowFactV2(argv as TokenAuth);
+
+    const result = await flowFact.generateDictionary(argv.language);
 
     const name = generateOutputName(
       parentCommand,

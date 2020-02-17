@@ -2,7 +2,11 @@ import { Argv } from 'yargs';
 
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import { TokenAuth, BasicAuth } from '../../classes/Authorization';
-import { storeResponse, generateOutputName } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  generateOutputName,
+  loadDictionary,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import {
   GlobalFlags,
@@ -10,10 +14,8 @@ import {
   fetchMultipleOptions,
   PaginatedFlags,
 } from '../../cli';
-import {
-  fetchEstatesV1,
-  fetchEstatesV2,
-} from '../../lib/flowfact/fetch-estates';
+import { FlowFactV1 } from '../../classes/portals/FlowFact/v1/Aggregator';
+import { FlowFactV2 } from '../../classes/portals/FlowFact/v2/Aggregator';
 
 export const command = 'fetch-estates';
 
@@ -37,16 +39,17 @@ exports.builder = (yargs: Argv) =>
 
 exports.handler = async (argv: Arguments) => {
   try {
-    const options = {
-      ...argv,
-      detailedResult: argv.detailed,
-      normalizedResult: argv.normalize,
-      dictionaryPath: argv.dictionary,
-    };
+    const dictionary = loadDictionary(argv.dictionary);
+    const flowFact = argv.apiV1
+      ? new FlowFactV1(argv as BasicAuth, dictionary)
+      : new FlowFactV2(argv as TokenAuth, dictionary);
 
-    const results = await (argv.apiV1
-      ? fetchEstatesV1(argv as BasicAuth, options)
-      : fetchEstatesV2(argv as TokenAuth, options));
+    let results;
+    if (!argv.normalize) {
+      results = await flowFact.fetchResults(argv);
+    } else {
+      results = await flowFact.fetchEstates(argv);
+    }
 
     const name = generateOutputName(
       parentCommand,
