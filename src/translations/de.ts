@@ -744,7 +744,7 @@ export default {
   lastmodificationdate: 'Letztes Änungsdatum',
   lastname: 'Nachname',
   lastnamefield: 'Nachname',
-  lastrefurbishment: 'Letzte Monisierung',
+  lastrefurbishment: 'Letzte Modernisierung',
   latitude: 'Latitude (Y-Wert) der WGS84-Koordinate (GPS)',
   lbn: 'Libanon',
   lbr: 'Liberia',
