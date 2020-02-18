@@ -420,6 +420,7 @@ export default {
   est: 'Estonia',
   estatetype: 'Immobilientyp',
   eth: 'Ethiopia',
+  eur: '€',
   expose: 'Expose',
   exposecontactdetails: 'Die Kontaktdaten eines Exposes',
   exposeprinturl: 'Print view url für Expose',

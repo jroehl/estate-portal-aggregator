@@ -426,6 +426,7 @@ export default {
   est: 'Spanien',
   estatetype: 'Estate type',
   eth: 'Estland',
+  eur: '€',
   expose: 'Expose',
   exposecontactdetails: 'The contact details for an expose',
   exposeprinturl: 'Print view url for expose',

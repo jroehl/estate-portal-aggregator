@@ -129,7 +129,7 @@ export abstract class Estate {
     this.error = this.response as RequestError;
   }
 
-  protected translate(value: string): string {
+  protected translate(value: string, path: string = 'N/A'): string {
     let result = value;
     if (
       isObject(this.dictionary) &&
@@ -138,8 +138,8 @@ export abstract class Estate {
     ) {
       const key = value.toLowerCase();
       result = this.dictionary[key];
-      if (result === undefined) {
-        Logger.warn(`No translation found for "${key}"`);
+      if (!result) {
+        Logger.warn(`No translation found for "${key}" <${path}>`);
         return value;
       }
     }
@@ -147,11 +147,11 @@ export abstract class Estate {
     return result;
   }
 
-  private parseValue(value: any, translate: boolean = true): any {
+  private parseValue(value: any, path: string, translate: boolean = true): any {
     if (!value || Array.isArray(value)) return value;
     if (value.toString().match(/AVAILABLE|YES|true/i)) return true;
     if (value.toString().match(/NOT_AVAILABLE|NOT|false/i)) return false;
-    return translate ? this.translate(value) : value;
+    return translate ? this.translate(value, path) : value;
   }
 
   protected getDate(path: any | any[], defaultValue?: any): number {
@@ -191,7 +191,7 @@ export abstract class Estate {
     for (const p of paths) {
       const result = get(this.response, p);
       if (result !== undefined && result !== null) {
-        return this.parseValue(result, false);
+        return this.parseValue(result, path, false);
       }
     }
     return defaultValue;
@@ -202,7 +202,7 @@ export abstract class Estate {
     for (const p of paths) {
       const result = get(this.response, p);
       if (result !== undefined && result !== null) {
-        return this.parseValue(result, true);
+        return this.parseValue(result, path, true);
       }
     }
     return defaultValue;
