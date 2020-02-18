@@ -23,6 +23,7 @@ export class FlowFactEstateCommonV1 extends Estate {
         'estatetype',
         'value.estatetype.selected.id',
       ]),
+      marketingType: this.getMarketingType(['tradetype', 'value.tradetype']),
       createdAt: this.getDate(['created', 'value.created']),
       externalID: this.get(['identifier', 'value.identifier']),
       internalID: this.get(['id', 'value.id']),
@@ -70,11 +71,9 @@ export class FlowFactEstateCommonV1 extends Estate {
       ],
       '€'
     );
-    const marketingType = this.getTranslated(['tradetype', 'value.tradetype']);
     return {
       value: price || rent,
       currency,
-      marketingType,
     };
   }
 

@@ -54,27 +54,19 @@ class ResultEnricher {
 
   public enrichResultWithReadableKeys = (response: any): any => {
     this.tries = 0;
-    const schemaID = get(response, '_metadata.schema');
-    if (!schemaID) return response;
-
     const result = cloneDeep(response);
-    const schema = this.schemas[schemaID];
-
-    if (!schema)
-      throw new Error(
-        `Schema <${schemaID}> not found - is the ResultEnricher initialized?`
-      );
-
-    Object.entries(schema.properties).forEach(
-      ([key, { type, fields = {} }]: [string, any]) => {
-        const fieldMap = this.getFieldMap(fields);
-        if (type === 'LIST' && result[key]) {
-          result[key].values = result[key].values.map((value: string) =>
-            fieldMap[value] ? fieldMap[value].key : value
-          );
+    Object.values(this.schemas).forEach((schema: any) => {
+      Object.entries(schema.properties).forEach(
+        ([key, { type, fields = {} }]: [string, any]) => {
+          const fieldMap = this.getFieldMap(fields);
+          if (type === 'LIST' && result[key]) {
+            result[key].values = result[key].values.map((value: string) =>
+              fieldMap[value] !== undefined ? fieldMap[value].key : value
+            );
+          }
         }
-      }
-    );
+      );
+    });
 
     return result;
   };

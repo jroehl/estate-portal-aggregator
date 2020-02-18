@@ -557,7 +557,7 @@ export default {
   fremdobjekte: 'Foreign objects',
   '(ohne)': '(without)',
   happylead: 'hAPPyLEAD',
-  tradetype: 'Type of marketing',
+  marketingtype: 'Type of marketing',
   'purchase-rent': 'Purchase / Rent',
   purchase: 'Purchase',
   maxrentingtime: 'Maximum rental period',

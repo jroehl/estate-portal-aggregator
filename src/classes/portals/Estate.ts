@@ -10,11 +10,14 @@ export interface Mapping {
 
 export type RealEstate = RealEstateCommon | RealEstateDetailed;
 
+export type Marketing = 'RENT' | 'PURCHASE' | 'PURCHASE_RENT';
+
 export interface RealEstateCommon {
   active: boolean;
   address?: Address;
   archived: boolean;
   estateType: string;
+  marketingType?: Marketing;
   createdAt: number;
   externalID: string;
   internalID: string;
@@ -29,7 +32,6 @@ export interface RealEstateCommon {
 export interface Price {
   value: number;
   currency: string;
-  marketingType: string;
   priceIntervalType?: string;
 }
 
@@ -93,10 +95,10 @@ export abstract class Estate {
 
   private error?: RequestError;
 
-  protected abstract common: RealEstateCommon;
+  public abstract common: RealEstateCommon;
   protected abstract async setCommon(): Promise<void>;
 
-  protected abstract details?: RealEstateDetailed;
+  public abstract details?: RealEstateDetailed;
   protected async setDetailed(): Promise<void> {} // tslint:disable-line no-empty
 
   async setValues(): Promise<Estate> {
@@ -166,6 +168,22 @@ export abstract class Estate {
   protected getArchived(path: any | any[], defaultValue?: any): boolean {
     const value = this.get(path, defaultValue);
     return !!`${value}`.match(/(ARCHIVED|TO_BE_DELETED|true)/i);
+  }
+
+  protected getMarketingType(
+    path: any | any[],
+    defaultValue?: any
+  ): Marketing | undefined {
+    const value = this.get(path, defaultValue);
+    if (value === undefined) return;
+
+    const result = value.toString().toLowerCase();
+    const hasRent = result.match(/.*(rent).*/gi);
+    const hasPurchase = result.match(/.*(purchase|buy).*/gi);
+
+    if (hasRent && hasPurchase) return 'PURCHASE_RENT';
+    if (hasRent) return 'RENT';
+    if (hasPurchase) return 'PURCHASE';
   }
 
   protected get(path: any | any[], defaultValue?: any): any {

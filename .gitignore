@@ -111,3 +111,5 @@ dist
 flowfact-*.json
 immobilienscout24-*.json
 generate-*.json
+
+/test.js

@@ -2,10 +2,15 @@ import { Argv } from 'yargs';
 
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import { BasicAuth, TokenAuth } from '../../classes/Authorization';
-import { storeResponse, generateOutputName } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  generateOutputName,
+  loadDictionary,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import { GlobalFlags, fetchOptions } from '../../cli';
-import { fetchEstateV1, fetchEstateV2 } from '../../lib/flowfact/fetch-estate';
+import { FlowFactV1 } from '../../classes/portals/FlowFact/v1/Aggregator';
+import { FlowFactV2 } from '../../classes/portals/FlowFact/v2/Aggregator';
 
 export const command = 'fetch-estate <estate-id>';
 
@@ -28,22 +33,24 @@ exports.builder = (yargs: Argv) =>
 
 exports.handler = async (argv: Arguments) => {
   try {
-    const options = {
-      detailedResult: argv.detailed,
-      normalizedResult: argv.normalize,
-      dictionaryPath: argv.dictionary,
-    };
+    const dictionary = loadDictionary(argv.dictionary);
+    const flowFact = argv.apiV1
+      ? new FlowFactV1(argv as BasicAuth, dictionary)
+      : new FlowFactV2(argv as TokenAuth, dictionary);
 
-    const result = await (argv.apiV1
-      ? fetchEstateV1(argv.id, argv as BasicAuth, options)
-      : fetchEstateV2(argv.id, argv as TokenAuth, options));
+    let result;
+    if (!argv.normalize) {
+      result = await flowFact.fetchResult(argv.id);
+    } else {
+      result = await flowFact.fetchEstate(argv.id);
+    }
 
     const name = generateOutputName(
       parentCommand,
       command.replace(' <estate-id>', ''),
       argv.apiV1 ? 'v1' : 'v2',
       argv.normalize ? 'normalized' : 'original',
-      argv.detailed ? 'long' : 'short'
+      'long'
     );
     if (argv.storeResult) {
       const fileName = storeResponse(name, result, argv.pretty);
@@ -52,6 +59,6 @@ exports.handler = async (argv: Arguments) => {
       Logger.logJSON(result);
     }
   } catch (error) {
-    Logger.error(error.message || error);
+    Logger.error(error);
   }
 };

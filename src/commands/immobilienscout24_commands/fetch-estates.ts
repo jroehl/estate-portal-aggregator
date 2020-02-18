@@ -5,7 +5,11 @@ import {
   Immobilienscout24Flags,
 } from '../immobilienscout24';
 import { OAuth } from '../../classes/Authorization';
-import { storeResponse, generateOutputName } from '../../utils/cli-tools';
+import {
+  storeResponse,
+  generateOutputName,
+  loadDictionary,
+} from '../../utils/cli-tools';
 import { Logger } from '../../utils';
 import {
   GlobalFlags,
@@ -13,7 +17,7 @@ import {
   fetchMultipleOptions,
   PaginatedFlags,
 } from '../../cli';
-import { fetchEstates } from '../../lib/immobilienscout24/fetch-estates';
+import { Immobilienscout24 } from '../../classes/portals/Immobilienscout24/Aggregator';
 
 export const command = 'fetch-estates';
 
@@ -40,12 +44,17 @@ exports.builder = (yargs: Argv) =>
 
 exports.handler = async (argv: Arguments) => {
   try {
-    const results = await fetchEstates(argv as OAuth, {
-      ...argv,
-      detailedResult: argv.detailed,
-      normalizedResult: argv.normalize,
-      dictionaryPath: argv.dictionary,
-    });
+    const is24 = new Immobilienscout24(
+      argv as OAuth,
+      loadDictionary(argv.dictionary)
+    );
+
+    let results;
+    if (!argv.normalize) {
+      results = await is24.fetchResults(argv);
+    } else {
+      results = await is24.fetchEstates(argv);
+    }
 
     const name = generateOutputName(
       parentCommand,
@@ -64,6 +73,6 @@ exports.handler = async (argv: Arguments) => {
       Logger.logJSON(results);
     }
   } catch (error) {
-    Logger.error(error.message || error);
+    Logger.error(error);
   }
 };
