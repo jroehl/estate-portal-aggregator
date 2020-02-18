@@ -14,8 +14,8 @@ export type Immobilienscout24Estate =
   | Immobilienscout24EstateDetailed;
 
 export class Immobilienscout24EstateCommon extends Estate {
-  protected common!: RealEstateCommon;
-  protected details?: RealEstateDetailed;
+  public common!: RealEstateCommon;
+  public details?: RealEstateDetailed;
 
   protected async setCommon(): Promise<void> {
     this.common = {

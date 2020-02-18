@@ -9,8 +9,8 @@ import {
 } from '../../Estate';
 
 export class FlowFactEstateCommonV2 extends Estate {
-  protected common!: RealEstateCommon;
-  protected details?: RealEstateDetailed;
+  public common!: RealEstateCommon;
+  public details?: RealEstateDetailed;
 
   protected async setCommon(): Promise<void> {
     this.common = {
