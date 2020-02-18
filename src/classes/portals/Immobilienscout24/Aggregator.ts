@@ -36,7 +36,7 @@ export class Immobilienscout24 extends Aggregator {
     ).setValues();
   }
 
-  public async fetchEstates(options: FetchOptions): Promise<Estate[]> {
+  public async fetchEstates(options: FetchOptions = {}): Promise<Estate[]> {
     const responses = await this.fetchResults(options);
 
     const Immobilienscout24Estate = options.detailed

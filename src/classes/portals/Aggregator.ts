@@ -7,7 +7,7 @@ export abstract class Aggregator {
   public async fetchResult(id: string): Promise<Mapping> {
     return this.portal.fetchEstate(id);
   }
-  public async fetchResults(options: FetchOptions): Promise<Mapping[]> {
+  public async fetchResults(options: FetchOptions = {}): Promise<Mapping[]> {
     return this.portal.fetchEstates(options);
   }
   public abstract async fetchEstate(id: string): Promise<Estate>;

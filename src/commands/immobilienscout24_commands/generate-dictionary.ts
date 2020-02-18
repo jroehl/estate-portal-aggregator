@@ -35,6 +35,6 @@ exports.handler = async (argv: Arguments) => {
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {
-    Logger.error(error.message || error);
+    Logger.error(error);
   }
 };

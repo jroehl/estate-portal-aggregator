@@ -59,6 +59,6 @@ exports.handler = async (argv: Arguments) => {
       Logger.logJSON(result);
     }
   } catch (error) {
-    Logger.error(error.message || error);
+    Logger.error(error);
   }
 };

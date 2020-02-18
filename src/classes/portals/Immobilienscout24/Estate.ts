@@ -23,6 +23,12 @@ export class Immobilienscout24EstateCommon extends Estate {
       address: this.getAddress(),
       archived: this.getArchived('realEstateState'),
       estateType: this.translate(this.getEstateType()),
+      marketingType: this.getMarketingType(
+        'price.marketingType',
+        this.get('baseRent') || this.getEstateType().match(/rent/i)
+          ? 'RENT'
+          : 'PURCHASE'
+      ),
       createdAt: this.getDate(['creationDate', '@creation']),
       externalID: this.get('externalId'),
       internalID: this.get('@id'),
@@ -69,15 +75,10 @@ export class Immobilienscout24EstateCommon extends Estate {
     if (!price && !rent) return;
 
     const currency = this.getTranslated('price.currency', '€');
-    const marketingType = this.get(
-      'price.marketingType',
-      rent || this.getEstateType().match(/rent/i) ? 'RENT' : 'PURCHASE'
-    );
     const priceIntervalType = this.getTranslated('price.intervalType');
     return {
       value: price || rent,
       currency,
-      marketingType: this.translate(marketingType),
       priceIntervalType,
     };
   }

@@ -6,6 +6,7 @@ import {
   Price,
   Attachment,
   Mapping,
+  Marketing,
 } from '../classes/portals/Estate';
 import { AvailableTranslations } from '../types';
 
@@ -14,6 +15,7 @@ class RealEstate implements RealEstateCommon, RealEstateDetailed {
   address?: Address;
   archived!: boolean;
   estateType!: string;
+  marketingType?: Marketing;
   createdAt!: number;
   externalID!: string;
   internalID!: string;
@@ -76,7 +78,6 @@ class Ad implements Address {
 class Pr implements Price {
   value!: number;
   currency!: string;
-  marketingType!: string;
   priceIntervalType?: string | undefined;
 }
 

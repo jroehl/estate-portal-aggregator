@@ -49,7 +49,7 @@ export class FlowFactV2 extends Aggregator {
     return new FlowFactEstateDetailedV2(response, this.dictionary).setValues();
   }
 
-  public async fetchEstates(options: FetchOptions): Promise<Estate[]> {
+  public async fetchEstates(options: FetchOptions = {}): Promise<Estate[]> {
     let responses = await this.fetchResults(options);
     responses = await enrichResultWithReadableKeys(
       this.portal as FlowFactPortalV2,

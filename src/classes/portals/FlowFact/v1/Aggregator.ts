@@ -19,7 +19,7 @@ export class FlowFactV1 extends Aggregator {
     return new FlowFactEstateDetailedV1(response, this.dictionary).setValues();
   }
 
-  public async fetchEstates(options: FetchOptions): Promise<Estate[]> {
+  public async fetchEstates(options: FetchOptions = {}): Promise<Estate[]> {
     const responses = await this.fetchResults(options);
     const FlowFactV1Estate = options.detailed
       ? FlowFactEstateDetailedV1
