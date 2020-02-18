@@ -8,7 +8,7 @@ import {
   Mapping,
   Marketing,
 } from '../classes/portals/Estate';
-import { AvailableTranslations } from '../types';
+import { AvailableLanguages } from '../types';
 
 class RealEstate implements RealEstateCommon, RealEstateDetailed {
   active!: boolean;
@@ -108,9 +108,7 @@ export const generateEstatePropertyKeys = (): string[] => {
   ].map(key => key.toLowerCase());
 };
 
-export const generateDictionary = (
-  language?: AvailableTranslations
-): Mapping => {
+export const generateDictionary = (language?: AvailableLanguages): Mapping => {
   const commonKeys = generateEstatePropertyKeys();
   const mapping = language ? estateCommon[language] : undefined;
   return objectify(commonKeys, mapping);

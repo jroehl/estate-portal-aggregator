@@ -1,1 +1,1 @@
-export type AvailableTranslations = 'de' | 'en';
+export type AvailableLanguages = 'de' | 'en';

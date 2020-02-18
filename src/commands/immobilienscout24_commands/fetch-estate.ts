@@ -35,10 +35,9 @@ exports.builder = (yargs: Argv) =>
 
 exports.handler = async (argv: Arguments) => {
   try {
-    const is24 = new Immobilienscout24(
-      argv as OAuth,
-      loadDictionary(argv.dictionary)
-    );
+    const is24 = new Immobilienscout24(argv as OAuth);
+
+    is24.dictionary = loadDictionary(argv.dictionary);
 
     let result;
     if (!argv.normalize) {

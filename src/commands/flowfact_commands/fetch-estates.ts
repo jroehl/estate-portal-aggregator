@@ -39,10 +39,11 @@ exports.builder = (yargs: Argv) =>
 
 exports.handler = async (argv: Arguments) => {
   try {
-    const dictionary = loadDictionary(argv.dictionary);
     const flowFact = argv.apiV1
-      ? new FlowFactV1(argv as BasicAuth, dictionary)
-      : new FlowFactV2(argv as TokenAuth, dictionary);
+      ? new FlowFactV1(argv as BasicAuth)
+      : new FlowFactV2(argv as TokenAuth);
+
+    flowFact.dictionary = loadDictionary(argv.dictionary);
 
     let results;
     if (!argv.normalize) {
