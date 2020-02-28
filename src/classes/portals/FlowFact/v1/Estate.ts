@@ -18,26 +18,26 @@ export class FlowFactEstateCommonV1 extends Estate {
       active: this.getActive(['active', 'value.active']),
       address: this.getAddress(),
       archived: this.getArchived(['archived', 'value.archived']),
-      estateType: this.getTranslated([
+      estateType: this.getTranslatableValue([
         'estatetype.selected.id',
         'estatetype',
         'value.estatetype.selected.id',
       ]),
       marketingType: this.getMarketingType(['tradetype', 'value.tradetype']),
       createdAt: this.getDate(['created', 'value.created']),
-      externalID: this.get(['identifier', 'value.identifier']),
-      internalID: this.get(['id', 'value.id']),
+      externalID: this.getValue(['identifier', 'value.identifier']),
+      internalID: this.getValue(['id', 'value.id']),
       livingSpace: this.getDetail('livingarea'),
       numberOfRooms: this.getDetail('rooms'),
       price: this.getPrice(),
-      title: this.get(['headline', 'value.headline']),
+      title: this.getValue(['headline', 'value.headline']),
       previewImage: this.getPreviewImage(),
       updatedAt: this.getDate(['modified', 'value.modified']),
     };
   }
 
   protected getDetail(detail: string): any {
-    const found = this.get('value.details.any', []).find(
+    const found = this.getValue('value.details.any', []).find(
       ({ name }: { name: string }) => name === detail
     );
     if (found) return found.value.value;
@@ -45,11 +45,11 @@ export class FlowFactEstateCommonV1 extends Estate {
 
   private getPreviewImage(): Attachment | undefined {
     return {
-      title: this.get([
+      title: this.getValue([
         'value.pictures.estatepicture[0].headline',
         'previewimage.headline',
       ]),
-      url: this.get([
+      url: this.getValue([
         'value.pictures.estatepicture[0].href',
         'previewimage.href',
       ]),
@@ -57,12 +57,15 @@ export class FlowFactEstateCommonV1 extends Estate {
   }
 
   private getPrice(): Price | undefined {
-    const price = this.get([
+    const price = this.getValue([
       'purchaseprice.value.value',
       'value.purchaseprice.value.value',
     ]);
-    const rent = this.get(['rent.value.value', 'value.rent.value.value']);
-    const currency = this.getTranslated(
+    const rent = this.getValue([
+      'rent.value.value',
+      'value.rent.value.value',
+    ]);
+    const currency = this.getTranslatableValue(
       [
         'rent.value.unit',
         'value.rent.value.unit',
@@ -79,13 +82,19 @@ export class FlowFactEstateCommonV1 extends Estate {
 
   private getAddress(): Address | undefined {
     return {
-      city: this.get(['location.city', 'value.location.city']),
-      postcode: this.get(['location.postalcode', 'value.location.postalcode']),
-      country: this.getTranslated([
+      city: this.getValue(['location.city', 'value.location.city']),
+      postcode: this.getValue([
+        'location.postalcode',
+        'value.location.postalcode',
+      ]),
+      country: this.getTranslatableValue([
         'location.country',
         'value.location.country',
       ]),
-      street: this.get(['location.street', 'value.location.street']),
+      street: this.getValue([
+        'location.street',
+        'value.location.street',
+      ]),
     };
   }
 }
@@ -152,7 +161,7 @@ export class FlowFactEstateDetailedV1 extends FlowFactEstateCommonV1 {
   // }
 
   private async getAttachments(): Promise<Attachment[]> {
-    return this.get('value.pictures.estatepicture', []).map(
+    return this.getValue('value.pictures.estatepicture', []).map(
       (attachment: any) =>
         ({
           title: get(attachment, 'headline'),

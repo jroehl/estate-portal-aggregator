@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { get, isObject } from 'lodash';
+import { get } from 'lodash';
 
 import { RequestError } from './Portal';
-import { Logger } from '../../utils';
+import { Translator } from './Translator';
 
 export interface Mapping {
   [key: string]: any | any[];
@@ -91,7 +91,11 @@ export interface Attachment {
 }
 
 export abstract class Estate {
-  constructor(private response: Mapping, private dictionary?: Mapping) {}
+  private translator: Translator;
+  constructor(private response: Mapping, dictionary?: Mapping) {
+    this.translator = new Translator();
+    if (dictionary) this.translator.dictionary = dictionary;
+  }
 
   private error?: RequestError;
 
@@ -111,10 +115,16 @@ export abstract class Estate {
     return this;
   }
 
+  public set dictionary(dictionary: Mapping) {
+    this.translator.dictionary = dictionary;
+  }
+
   public get values(): RealEstate | RequestError {
     if (this.error) return this.error;
-    if (!this.details) return this.common;
-    return { ...this.common, ...this.details };
+    const result = !this.details
+      ? this.common
+      : { ...this.common, ...this.details };
+    return this.translator.translateIfNeeded(result);
   }
 
   public toString(): string {
@@ -129,44 +139,26 @@ export abstract class Estate {
     this.error = this.response as RequestError;
   }
 
-  protected translate(value: string, path: string = 'N/A'): string {
-    let result = value;
-    if (
-      isObject(this.dictionary) &&
-      typeof value === 'string' &&
-      !value.match(/ |\n/gi)
-    ) {
-      const key = value.toLowerCase();
-      result = this.dictionary[key];
-      if (!result) {
-        Logger.warn(`No translation found for "${key}" <${path}>`);
-        return value;
-      }
-    }
-
-    return result;
-  }
-
-  private parseValue(value: any, path: string, translate: boolean = true): any {
+  private parseValue(value: any): any {
     if (!value || Array.isArray(value)) return value;
     if (value.toString().match(/AVAILABLE|YES|true/i)) return true;
     if (value.toString().match(/NOT_AVAILABLE|NOT|false/i)) return false;
-    return translate ? this.translate(value, path) : value;
+    return value;
   }
 
   protected getDate(path: any | any[], defaultValue?: any): number {
-    const value = this.get(path, defaultValue);
+    const value = this.getValue(path, defaultValue);
     if (!isNaN(value)) return Number(value);
     return moment(value).valueOf();
   }
 
   protected getActive(path: any | any[], defaultValue?: any): boolean {
-    const value = this.get(path, defaultValue);
+    const value = this.getValue(path, defaultValue);
     return !`${value}`.match(/(INACTIVE|false)/i);
   }
 
   protected getArchived(path: any | any[], defaultValue?: any): boolean {
-    const value = this.get(path, defaultValue);
+    const value = this.getValue(path, defaultValue);
     return !!`${value}`.match(/(ARCHIVED|TO_BE_DELETED|true)/i);
   }
 
@@ -174,7 +166,7 @@ export abstract class Estate {
     path: any | any[],
     defaultValue?: any
   ): Marketing | undefined {
-    const value = this.get(path, defaultValue);
+    const value = this.getValue(path, defaultValue);
     if (value === undefined) return;
 
     const result = value.toString().toLowerCase();
@@ -186,25 +178,29 @@ export abstract class Estate {
     if (hasPurchase) return 'PURCHASE';
   }
 
-  protected get(path: any | any[], defaultValue?: any): any {
+  private get(
+    path: any | any[],
+    defaultValue?: any,
+    isTranslatable: boolean = false
+  ): any {
     const paths = Array.isArray(path) ? path : [path];
+    let result = defaultValue;
     for (const p of paths) {
-      const result = get(this.response, p);
-      if (result !== undefined && result !== null) {
-        return this.parseValue(result, path, false);
+      const found = get(this.response, p);
+      if (found !== undefined && found !== null) {
+        result = this.parseValue(found);
+        break;
       }
     }
-    return defaultValue;
+    if (isTranslatable) this.translator.addToTranslatables({ [result]: path });
+    return result;
   }
 
-  protected getTranslated(path: any | any[], defaultValue?: any): any {
-    const paths = Array.isArray(path) ? path : [path];
-    for (const p of paths) {
-      const result = get(this.response, p);
-      if (result !== undefined && result !== null) {
-        return this.parseValue(result, path, true);
-      }
-    }
-    return defaultValue;
+  protected getValue(path: any | any[], defaultValue?: any): any {
+    return this.get(path, defaultValue, false);
+  }
+
+  protected getTranslatableValue(path: any | any[], defaultValue?: any): any {
+    return this.get(path, defaultValue, true);
   }
 }
