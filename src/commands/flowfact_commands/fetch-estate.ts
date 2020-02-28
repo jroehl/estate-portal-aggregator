@@ -37,13 +37,15 @@ exports.handler = async (argv: Arguments) => {
       ? new FlowFactV1(argv as BasicAuth)
       : new FlowFactV2(argv as TokenAuth);
 
-    flowFact.dictionary = loadDictionary(argv.dictionary);
-
     let result;
     if (!argv.normalize) {
       result = await flowFact.fetchResult(argv.id);
     } else {
       result = await flowFact.fetchEstate(argv.id);
+      result = result.getProperties(
+        argv.detailed,
+        loadDictionary(argv.dictionary)
+      );
     }
 
     const name = generateOutputName(
@@ -51,7 +53,7 @@ exports.handler = async (argv: Arguments) => {
       command.replace(' <estate-id>', ''),
       argv.apiV1 ? 'v1' : 'v2',
       argv.normalize ? 'normalized' : 'original',
-      'long'
+      argv.detailed ? 'long' : 'short'
     );
     if (argv.storeResult) {
       const fileName = storeResponse(name, result, argv.pretty);

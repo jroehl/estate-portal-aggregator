@@ -4,10 +4,10 @@ import { Logger } from '../../utils';
 import { storeResponse, generateOutputName } from '../../utils/cli-tools';
 import { command as parentCommand, FlowFactFlags } from '../flowfact';
 import { TokenAuth, BasicAuth } from '../../classes/Authorization';
-import { APIVersion } from '../../classes/portals/FlowFact';
 import { DictionaryFlags, generateDictionaryOptions } from '../../cli';
 import { FlowFactV1 } from '../../classes/portals/FlowFact/v1/Aggregator';
 import { FlowFactV2 } from '../../classes/portals/FlowFact/v2/Aggregator';
+import { APIVersion } from '../../types';
 
 export const command = 'generate-dictionary';
 

@@ -43,13 +43,14 @@ exports.handler = async (argv: Arguments) => {
       ? new FlowFactV1(argv as BasicAuth)
       : new FlowFactV2(argv as TokenAuth);
 
-    flowFact.dictionary = loadDictionary(argv.dictionary);
-
     let results;
     if (!argv.normalize) {
       results = await flowFact.fetchResults(argv);
     } else {
       results = await flowFact.fetchEstates(argv);
+      results = results.map(result =>
+        result.getProperties(argv.detailed, loadDictionary(argv.dictionary))
+      );
     }
 
     const name = generateOutputName(

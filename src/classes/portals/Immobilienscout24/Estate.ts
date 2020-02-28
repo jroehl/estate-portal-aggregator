@@ -3,39 +3,84 @@ import { get } from 'lodash';
 import {
   Price,
   Address,
-  RealEstateDetailed,
   Attachment,
   Estate,
-  RealEstateCommon,
+  RealEstateProperties,
 } from '../Estate';
 
-export type Immobilienscout24Estate =
-  | Immobilienscout24EstateCommon
-  | Immobilienscout24EstateDetailed;
-
-export class Immobilienscout24EstateCommon extends Estate {
-  public common!: RealEstateCommon;
-  public details?: RealEstateDetailed;
-
-  protected async setCommon(): Promise<void> {
-    this.common = {
+export class Immobilienscout24Estate extends Estate {
+  protected async parse(): Promise<RealEstateProperties> {
+    const estateType = this.getEstateType();
+    return {
       active: this.getActive('realEstateState'),
       address: this.getAddress(),
       archived: this.getArchived('realEstateState'),
-      estateType: this.translate(this.getEstateType()),
+      attachments: await this.getAttachments(),
+      attic: this.getTranslatableValue('attic'),
+      balcony: this.getTranslatableValue('balcony'),
+      buildingEnergyRatingType: this.getTranslatableValue(
+        'buildingEnergyRatingType'
+      ),
+      cellar: this.getTranslatableValue('cellar'),
+      condition: this.getTranslatableValue('condition'),
+      constructionPhase: this.getTranslatableValue('constructionPhase'),
+      constructionYear: this.getTranslatableValue('constructionYear'),
+      courtage: this.getCourtage(),
+      descriptionNote: this.getValue('descriptionNote'),
+      energyCertificateAvailability: this.getTranslatableValue(
+        'energyCertificate.energyCertificateAvailability'
+      ),
+      energyConsumptionContainsWarmWater: this.getTranslatableValue(
+        'energyConsumptionContainsWarmWater'
+      ),
+      energyPerformanceCertificate: this.getTranslatableValue(
+        'energyPerformanceCertificate'
+      ),
+      floor: this.getTranslatableValue('floor'),
+      freeFrom: this.getValue('freeFrom'),
+      furnishingNote: this.getValue('furnishingNote'),
+      garden: this.getTranslatableValue('garden'),
+      guestBathroom: this.getTranslatableValue('guestBathroom'),
+      guestToilet: this.getTranslatableValue('guestToilet'),
+      handicappedAccessible: this.getTranslatableValue('handicappedAccessible'),
+      heatingType: this.getTranslatableValue('heatingType'),
+      interiorQuality: this.getTranslatableValue('interiorQuality'),
+      lastRefurbishment: this.getTranslatableValue('lastRefurbishment'),
+      listed: this.getTranslatableValue('listed'),
+      locationNote: this.getValue('locationNote'),
+      lodgerFlat: this.getTranslatableValue('lodgerFlat'),
+      numberOfApartments: this.getTranslatableValue('numberOfApartments'),
+      numberOfBathRooms: this.getTranslatableValue('numberOfBathRooms'),
+      numberOfBedRooms: this.getTranslatableValue('numberOfBedRooms'),
+      numberOfCommercialUnits: this.getTranslatableValue(
+        'numberOfCommercialUnits'
+      ),
+      numberOfFloors: this.getValue('numberOfFloors'),
+      numberOfParkingSpaces: this.getTranslatableValue('numberOfParkingSpaces'),
+      otherNote: this.getValue('otherNote'),
+      parkingSpacePrice: this.getTranslatableValue('parkingSpacePrice'),
+      parkingSpaceType: this.getTranslatableValue('parkingSpaceType'),
+      patio: this.getTranslatableValue('patio'),
+      plotArea: this.getTranslatableValue('plotArea'),
+      residentialUnits: this.getTranslatableValue('residentialUnits'),
+      summerResidencePractical: this.getTranslatableValue(
+        'summerResidencePractical'
+      ),
+      usableFloorSpace: this.getTranslatableValue('usableFloorSpace'),
+      estateType: this.getTranslatableValue(null, estateType),
       marketingType: this.getMarketingType(
         'price.marketingType',
-        this.get('baseRent') || this.getEstateType().match(/rent/i)
+        this.getValue('baseRent') || estateType.match(/rent/i)
           ? 'RENT'
           : 'PURCHASE'
       ),
       createdAt: this.getDate(['creationDate', '@creation']),
-      externalID: this.get('externalId'),
-      internalID: this.get('@id'),
-      livingSpace: this.getTranslated('livingSpace'),
-      numberOfRooms: this.getTranslated('numberOfRooms'),
+      externalID: this.getValue('externalId'),
+      internalID: this.getValue('@id'),
+      livingSpace: this.getTranslatableValue('livingSpace'),
+      numberOfRooms: this.getTranslatableValue('numberOfRooms'),
       price: this.getPrice(),
-      title: this.get('title'),
+      title: this.getValue('title'),
       previewImage: this.getPreviewImage(),
       updatedAt: this.getDate([
         'lastModificationDate',
@@ -46,20 +91,20 @@ export class Immobilienscout24EstateCommon extends Estate {
   }
 
   private getEstateType(): string {
-    let result = this.get(['buildingType', 'apartmentType', 'estateType']);
+    let result = this.getValue(['buildingType', 'apartmentType', 'estateType']);
     if (!result) {
-      result = this.get('type', '').split('.')[1];
+      result = this.getValue('type', '').split('.')[1];
     }
     if (!result) {
-      result = this.get('@xsi.type', '').split(':')[1];
+      result = this.getValue('@xsi.type', '').split(':')[1];
     }
     return result;
   }
 
   private getPreviewImage(): Attachment {
     return {
-      title: this.get(['titlePicture.title', 'attachments[0].title']),
-      url: this.get(
+      title: this.getValue(['titlePicture.title', 'attachments[0].title']),
+      url: this.getValue(
         [
           'titlePicture.urls[0].url[0][@href]',
           'attachments[0].urls[0].url[0][@href]',
@@ -70,12 +115,12 @@ export class Immobilienscout24EstateCommon extends Estate {
   }
 
   private getPrice(): Price | undefined {
-    const price = this.get('price.value');
-    const rent = this.get('baseRent');
+    const price = this.getValue('price.value');
+    const rent = this.getValue('baseRent');
     if (!price && !rent) return;
 
-    const currency = this.getTranslated('price.currency', '€');
-    const priceIntervalType = this.getTranslated('price.intervalType');
+    const currency = this.getTranslatableValue('price.currency', '€');
+    const priceIntervalType = this.getTranslatableValue('price.intervalType');
     return {
       value: price || rent,
       currency,
@@ -85,72 +130,22 @@ export class Immobilienscout24EstateCommon extends Estate {
 
   private getAddress(): Address | undefined {
     return {
-      city: this.get('address.city'),
-      postcode: this.get('address.postcode'),
-      country: this.getTranslated('address.country'),
-      street: [this.get('address.street'), this.get('address.houseNumber')]
+      city: this.getValue('address.city'),
+      postcode: this.getValue('address.postcode'),
+      country: this.getTranslatableValue('address.country'),
+      street: [
+        this.getValue('address.street'),
+        this.getValue('address.houseNumber'),
+      ]
         .filter(Boolean)
         .join(' '),
-    };
-  }
-}
-
-export class Immobilienscout24EstateDetailed extends Immobilienscout24EstateCommon {
-  protected async setDetailed(): Promise<void> {
-    this.details = {
-      attachments: await this.getAttachments(),
-      attic: this.getTranslated('attic'),
-      balcony: this.getTranslated('balcony'),
-      buildingEnergyRatingType: this.getTranslated('buildingEnergyRatingType'),
-      cellar: this.getTranslated('cellar'),
-      condition: this.getTranslated('condition'),
-      constructionPhase: this.getTranslated('constructionPhase'),
-      constructionYear: this.getTranslated('constructionYear'),
-      courtage: this.getCourtage(),
-      descriptionNote: this.get('descriptionNote'),
-      energyCertificateAvailability: this.getTranslated(
-        'energyCertificate.energyCertificateAvailability'
-      ),
-      energyConsumptionContainsWarmWater: this.getTranslated(
-        'energyConsumptionContainsWarmWater'
-      ),
-      energyPerformanceCertificate: this.getTranslated(
-        'energyPerformanceCertificate'
-      ),
-      floor: this.getTranslated('floor'),
-      freeFrom: this.getTranslated('freeFrom'),
-      furnishingNote: this.get('furnishingNote'),
-      garden: this.getTranslated('garden'),
-      guestBathroom: this.getTranslated('guestBathroom'),
-      guestToilet: this.getTranslated('guestToilet'),
-      handicappedAccessible: this.getTranslated('handicappedAccessible'),
-      heatingType: this.getTranslated('heatingType'),
-      interiorQuality: this.getTranslated('interiorQuality'),
-      lastRefurbishment: this.getTranslated('lastRefurbishment'),
-      listed: this.getTranslated('listed'),
-      locationNote: this.get('locationNote'),
-      lodgerFlat: this.getTranslated('lodgerFlat'),
-      numberOfApartments: this.getTranslated('numberOfApartments'),
-      numberOfBathRooms: this.getTranslated('numberOfBathRooms'),
-      numberOfBedRooms: this.getTranslated('numberOfBedRooms'),
-      numberOfCommercialUnits: this.getTranslated('numberOfCommercialUnits'),
-      numberOfFloors: this.getTranslated('numberOfFloors'),
-      numberOfParkingSpaces: this.getTranslated('numberOfParkingSpaces'),
-      otherNote: this.get('otherNote'),
-      parkingSpacePrice: this.getTranslated('parkingSpacePrice'),
-      parkingSpaceType: this.getTranslated('parkingSpaceType'),
-      patio: this.getTranslated('patio'),
-      plotArea: this.getTranslated('plotArea'),
-      residentialUnits: this.getTranslated('residentialUnits'),
-      summerResidencePractical: this.getTranslated('summerResidencePractical'),
-      usableFloorSpace: this.getTranslated('usableFloorSpace'),
     };
   }
 
   private getCourtage(): string {
     const result = [
-      this.getTranslated('courtage.hasCourtage'),
-      this.getTranslated('courtage.courtageNote'),
+      this.getTranslatableValue('courtage.hasCourtage'),
+      this.getTranslatableValue('courtage.courtageNote'),
     ]
       .filter(Boolean)
       .join('\n');
@@ -158,7 +153,7 @@ export class Immobilienscout24EstateDetailed extends Immobilienscout24EstateComm
   }
 
   private async getAttachments(): Promise<Attachment[]> {
-    return this.get('attachments', []).map(
+    return this.getValue('attachments', []).map(
       (attachment: any) =>
         ({
           title: get(attachment, 'title'),

@@ -3,41 +3,84 @@ import { get } from 'lodash';
 import {
   Price,
   Address,
-  RealEstateDetailed,
   Attachment,
   Estate,
-  RealEstateCommon,
+  RealEstateProperties,
 } from '../../Estate';
 
-export class FlowFactEstateCommonV1 extends Estate {
-  public common!: RealEstateCommon;
-  public details?: RealEstateDetailed;
-
-  protected async setCommon(): Promise<void> {
-    this.common = {
+export class FlowFactEstateV1 extends Estate {
+  protected async parse(): Promise<RealEstateProperties> {
+    return {
       active: this.getActive(['active', 'value.active']),
       address: this.getAddress(),
       archived: this.getArchived(['archived', 'value.archived']),
-      estateType: this.getTranslated([
+      estateType: this.getTranslatableValue([
         'estatetype.selected.id',
         'estatetype',
         'value.estatetype.selected.id',
       ]),
       marketingType: this.getMarketingType(['tradetype', 'value.tradetype']),
       createdAt: this.getDate(['created', 'value.created']),
-      externalID: this.get(['identifier', 'value.identifier']),
-      internalID: this.get(['id', 'value.id']),
+      externalID: this.getValue(['identifier', 'value.identifier']),
+      internalID: this.getValue(['id', 'value.id']),
       livingSpace: this.getDetail('livingarea'),
       numberOfRooms: this.getDetail('rooms'),
       price: this.getPrice(),
-      title: this.get(['headline', 'value.headline']),
+      title: this.getValue(['headline', 'value.headline']),
       previewImage: this.getPreviewImage(),
       updatedAt: this.getDate(['modified', 'value.modified']),
+      attachments: await this.getAttachments(),
+      // @TODO implement missing properties
+      attic: this.getValue('attic'),
+      balcony: this.getValue('balcony'),
+      buildingEnergyRatingType: this.getValue('buildingEnergyRatingType'),
+      cellar: this.getValue('cellar'),
+      condition: this.getValue('condition'),
+      constructionPhase: this.getValue('constructionPhase'),
+      constructionYear: this.getValue('constructionYear'),
+      courtage: this.getValue('courtage'),
+      descriptionNote: this.getValue('descriptionNote'),
+      energyCertificateAvailability: this.getValue(
+        'energyCertificate.energyCertificateAvailability'
+      ),
+      energyConsumptionContainsWarmWater: this.getValue(
+        'energyConsumptionContainsWarmWater'
+      ),
+      energyPerformanceCertificate: this.getValue(
+        'energyPerformanceCertificate'
+      ),
+      floor: this.getValue('floor'),
+      freeFrom: this.getValue('freeFrom'),
+      furnishingNote: this.getValue('furnishingNote'),
+      garden: this.getValue('garden'),
+      guestBathroom: this.getValue('guestBathroom'),
+      guestToilet: this.getValue('guestToilet'),
+      handicappedAccessible: this.getValue('handicappedAccessible'),
+      heatingType: this.getValue('heatingType'),
+      interiorQuality: this.getValue('interiorQuality'),
+      lastRefurbishment: this.getValue('lastRefurbishment'),
+      listed: this.getValue('listed'),
+      locationNote: this.getValue('locationNote'),
+      lodgerFlat: this.getValue('lodgerFlat'),
+      numberOfApartments: this.getValue('numberOfApartments'),
+      numberOfBathRooms: this.getValue('numberOfBathRooms'),
+      numberOfBedRooms: this.getValue('numberOfBedRooms'),
+      numberOfCommercialUnits: this.getValue('numberOfCommercialUnits'),
+      numberOfFloors: this.getValue('numberOfFloors'),
+      numberOfParkingSpaces: this.getValue('numberOfParkingSpaces'),
+      otherNote: this.getValue('otherNote'),
+      parkingSpacePrice: this.getValue('parkingSpacePrice'),
+      parkingSpaceType: this.getValue('parkingSpaceType'),
+      patio: this.getValue('patio'),
+      plotArea: this.getValue('plotArea'),
+      residentialUnits: this.getValue('residentialUnits'),
+      summerResidencePractical: this.getValue('summerResidencePractical'),
+      usableFloorSpace: this.getValue('usableFloorSpace'),
     };
   }
 
   protected getDetail(detail: string): any {
-    const found = this.get('value.details.any', []).find(
+    const found = this.getValue('value.details.any', []).find(
       ({ name }: { name: string }) => name === detail
     );
     if (found) return found.value.value;
@@ -45,11 +88,11 @@ export class FlowFactEstateCommonV1 extends Estate {
 
   private getPreviewImage(): Attachment | undefined {
     return {
-      title: this.get([
+      title: this.getValue([
         'value.pictures.estatepicture[0].headline',
         'previewimage.headline',
       ]),
-      url: this.get([
+      url: this.getValue([
         'value.pictures.estatepicture[0].href',
         'previewimage.href',
       ]),
@@ -57,12 +100,12 @@ export class FlowFactEstateCommonV1 extends Estate {
   }
 
   private getPrice(): Price | undefined {
-    const price = this.get([
+    const price = this.getValue([
       'purchaseprice.value.value',
       'value.purchaseprice.value.value',
     ]);
-    const rent = this.get(['rent.value.value', 'value.rent.value.value']);
-    const currency = this.getTranslated(
+    const rent = this.getValue(['rent.value.value', 'value.rent.value.value']);
+    const currency = this.getTranslatableValue(
       [
         'rent.value.unit',
         'value.rent.value.unit',
@@ -79,80 +122,21 @@ export class FlowFactEstateCommonV1 extends Estate {
 
   private getAddress(): Address | undefined {
     return {
-      city: this.get(['location.city', 'value.location.city']),
-      postcode: this.get(['location.postalcode', 'value.location.postalcode']),
-      country: this.getTranslated([
+      city: this.getValue(['location.city', 'value.location.city']),
+      postcode: this.getValue([
+        'location.postalcode',
+        'value.location.postalcode',
+      ]),
+      country: this.getTranslatableValue([
         'location.country',
         'value.location.country',
       ]),
-      street: this.get(['location.street', 'value.location.street']),
+      street: this.getValue(['location.street', 'value.location.street']),
     };
   }
-}
-
-export class FlowFactEstateDetailedV1 extends FlowFactEstateCommonV1 {
-  protected async setDetailed(): Promise<void> {
-    this.details = {
-      attachments: await this.getAttachments(),
-      // @TODO implement missing properties
-      // attic: this.get('attic'),
-      // balcony: this.get('balcony'),
-      // buildingEnergyRatingType: this.get('buildingEnergyRatingType'),
-      // cellar: this.get('cellar'),
-      // condition: this.get('condition'),
-      // constructionPhase: this.get('constructionPhase'),
-      // constructionYear: this.get('constructionYear'),
-      // courtage: this.getCourtage(),
-      // descriptionNote: this.get('descriptionNote'),
-      // energyCertificateAvailability: this.get(
-      //   'energyCertificate.energyCertificateAvailability'
-      // ),
-      // energyConsumptionContainsWarmWater: this.get(
-      //   'energyConsumptionContainsWarmWater'
-      // ),
-      // energyPerformanceCertificate: this.get('energyPerformanceCertificate'),
-      // floor: this.get('floor'),
-      // freeFrom: this.get('freeFrom'),
-      // furnishingNote: this.get('furnishingNote'),
-      // garden: this.get('garden'),
-      // guestBathroom: this.get('guestBathroom'),
-      // guestToilet: this.get('guestToilet'),
-      // handicappedAccessible: this.get('handicappedAccessible'),
-      // heatingType: this.get('heatingType'),
-      // interiorQuality: this.get('interiorQuality'),
-      // lastRefurbishment: this.get('lastRefurbishment'),
-      // listed: this.get('listed'),
-      // locationNote: this.get('locationNote'),
-      // lodgerFlat: this.get('lodgerFlat'),
-      // numberOfApartments: this.get('numberOfApartments'),
-      // numberOfBathRooms: this.get('numberOfBathRooms'),
-      // numberOfBedRooms: this.get('numberOfBedRooms'),
-      // numberOfCommercialUnits: this.get('numberOfCommercialUnits'),
-      // numberOfFloors: this.get('numberOfFloors'),
-      // numberOfParkingSpaces: this.get('numberOfParkingSpaces'),
-      // otherNote: this.get('otherNote'),
-      // parkingSpacePrice: this.get('parkingSpacePrice'),
-      // parkingSpaceType: this.get('parkingSpaceType'),
-      // patio: this.get('patio'),
-      // plotArea: this.get('plotArea'),
-      // residentialUnits: this.get('residentialUnits'),
-      // summerResidencePractical: this.get('summerResidencePractical'),
-      // usableFloorSpace: this.get('usableFloorSpace'),
-    };
-  }
-
-  // private getCourtage(): string {
-  //   const result = [
-  //     this.get('courtage.hasCourtage'),
-  //     this.get('courtage.courtageNote'),
-  //   ]
-  //     .filter(Boolean)
-  //     .join('\n');
-  //   return result;
-  // }
 
   private async getAttachments(): Promise<Attachment[]> {
-    return this.get('value.pictures.estatepicture', []).map(
+    return this.getValue('value.pictures.estatepicture', []).map(
       (attachment: any) =>
         ({
           title: get(attachment, 'headline'),

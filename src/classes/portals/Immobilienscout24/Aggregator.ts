@@ -1,17 +1,14 @@
-import { isObject } from 'lodash';
+import { isObject, isUndefined } from 'lodash';
 
 import { Mapping, Estate } from '../Estate';
 import { OAuth } from '../../Authorization';
 import { Portal, FetchOptions } from '../Portal';
 import { Immobilienscout24Portal } from './Portal';
-import {
-  Immobilienscout24EstateDetailed,
-  Immobilienscout24EstateCommon,
-} from './Estate';
+import { Immobilienscout24Estate } from './Estate';
 import { Aggregator } from '../Aggregator';
 import { AvailableLanguages } from '../../../types';
-import { generateEstatePropertyKeys } from '../../../lib/generate-dictionary';
 import is24 from '../../../translations';
+import { generateEstatePropertyKeys } from '../../../lib/get-keys';
 
 const cleanValues = (mapping: Mapping): Mapping =>
   Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
@@ -25,41 +22,31 @@ export const generateDictionary = (language?: AvailableLanguages): Mapping => {
 
 export class Immobilienscout24 extends Aggregator {
   protected portal: Portal;
-  constructor(credentials: OAuth, public language?: AvailableLanguages) {
+  constructor(credentials: OAuth) {
     super();
     this.portal = new Immobilienscout24Portal(credentials) as Portal;
   }
 
   public async fetchEstate(id: string): Promise<Estate> {
     const response = await this.fetchResult(id);
-    const dictionary = await this.generateDictionary(this.language);
-    return new Immobilienscout24EstateDetailed(
-      response,
-      dictionary
-    ).setValues();
+    return new Immobilienscout24Estate().init(response);
   }
 
   public async fetchEstates(options: FetchOptions = {}): Promise<Estate[]> {
     const responses = await this.fetchResults(options);
 
-    const Immobilienscout24Estate = options.detailed
-      ? Immobilienscout24EstateDetailed
-      : Immobilienscout24EstateCommon;
-
-    const dictionary = await this.generateDictionary(this.language);
     return Promise.all(
-      responses.map(response =>
-        new Immobilienscout24Estate(response, dictionary).setValues()
-      )
+      responses.map(response => new Immobilienscout24Estate().init(response))
     );
   }
 
   public async generateDictionary(
-    language?: AvailableLanguages
+    language: AvailableLanguages
   ): Promise<Mapping> {
-    if (this.dictionary && isObject(this.dictionary)) return this.dictionary;
+    const dictionary = this.dictionaries[language];
+    if (isObject(dictionary)) return dictionary;
     const result = generateDictionary(language);
-    this.dictionary = result;
+    this.dictionaries[language] = result;
     return result;
   }
 }
