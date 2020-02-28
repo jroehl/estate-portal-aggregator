@@ -1,31 +1,33 @@
 import moment from 'moment';
-import { get } from 'lodash';
+import { get, pick } from 'lodash';
 
-import { RequestError } from './Portal';
 import { Translator } from './Translator';
+import { generateCommonEstatePropertyKeys } from '../../lib/get-keys';
 
 export interface Mapping {
   [key: string]: any | any[];
 }
 
-export type RealEstate = RealEstateCommon | RealEstateDetailed;
+export type RealEstateProperties =
+  | RealEstateCommonProperties
+  | RealEstateDetailedProperties;
 
 export type Marketing = 'RENT' | 'PURCHASE' | 'PURCHASE_RENT';
 
-export interface RealEstateCommon {
+export interface RealEstateCommonProperties {
   active: boolean;
-  address?: Address;
+  address: Address;
   archived: boolean;
   estateType: string;
-  marketingType?: Marketing;
+  marketingType: Marketing;
   createdAt: number;
   externalID: string;
   internalID: string;
-  livingSpace?: number;
-  numberOfRooms?: number;
-  price?: Price;
+  livingSpace: number;
+  numberOfRooms: number;
+  price: Price | undefined;
   title: string;
-  previewImage?: Attachment;
+  previewImage: Attachment;
   updatedAt: number;
 }
 
@@ -42,47 +44,47 @@ export interface Address {
   country: string;
 }
 
-export interface RealEstateDetailed {
-  attachments?: Attachment[];
-  attic?: boolean;
-  balcony?: boolean;
-  buildingEnergyRatingType?: string;
-  cellar?: boolean;
-  condition?: string;
-  constructionPhase?: string;
-  constructionYear?: number;
-  courtage?: string;
-  descriptionNote?: string;
-  energyCertificateAvailability?: boolean;
-  energyConsumptionContainsWarmWater?: boolean;
-  energyPerformanceCertificate?: boolean;
-  floor?: number;
-  freeFrom?: string;
-  furnishingNote?: string;
-  garden?: boolean;
-  guestBathroom?: boolean;
-  guestToilet?: boolean;
-  handicappedAccessible?: boolean;
-  heatingType?: string;
-  interiorQuality?: string;
-  lastRefurbishment?: number;
-  listed?: boolean;
-  locationNote?: string;
-  lodgerFlat?: boolean;
-  numberOfApartments?: number;
-  numberOfBathRooms?: number;
-  numberOfBedRooms?: number;
-  numberOfCommercialUnits?: number;
-  numberOfFloors?: number;
-  numberOfParkingSpaces?: number;
-  otherNote?: string;
-  parkingSpacePrice?: number;
-  parkingSpaceType?: string;
-  patio?: boolean;
-  plotArea?: number;
-  residentialUnits?: number;
-  summerResidencePractical?: boolean;
-  usableFloorSpace?: number;
+export interface RealEstateDetailedProperties {
+  attachments: Attachment[];
+  attic: boolean;
+  balcony: boolean;
+  buildingEnergyRatingType: string;
+  cellar: boolean;
+  condition: string;
+  constructionPhase: string;
+  constructionYear: number;
+  courtage: string;
+  descriptionNote: string;
+  energyCertificateAvailability: boolean;
+  energyConsumptionContainsWarmWater: boolean;
+  energyPerformanceCertificate: boolean;
+  floor: number;
+  freeFrom: string;
+  furnishingNote: string;
+  garden: boolean;
+  guestBathroom: boolean;
+  guestToilet: boolean;
+  handicappedAccessible: boolean;
+  heatingType: string;
+  interiorQuality: string;
+  lastRefurbishment: number;
+  listed: boolean;
+  locationNote: string;
+  lodgerFlat: boolean;
+  numberOfApartments: number;
+  numberOfBathRooms: number;
+  numberOfBedRooms: number;
+  numberOfCommercialUnits: number;
+  numberOfFloors: number;
+  numberOfParkingSpaces: number;
+  otherNote: string;
+  parkingSpacePrice: number;
+  parkingSpaceType: string;
+  patio: boolean;
+  plotArea: number;
+  residentialUnits: number;
+  summerResidencePractical: boolean;
+  usableFloorSpace: number;
 }
 
 export interface Attachment {
@@ -91,52 +93,53 @@ export interface Attachment {
 }
 
 export abstract class Estate {
-  private translator: Translator;
-  constructor(private response: Mapping, dictionary?: Mapping) {
-    this.translator = new Translator();
-    if (dictionary) this.translator.dictionary = dictionary;
+  private _translator: Translator;
+  private _response?: Mapping;
+  constructor() {
+    this._translator = new Translator();
   }
 
-  private error?: RequestError;
+  private _properties?: RealEstateProperties;
+  protected abstract async parse(): Promise<RealEstateProperties>;
 
-  public abstract common: RealEstateCommon;
-  protected abstract async setCommon(): Promise<void>;
-
-  public abstract details?: RealEstateDetailed;
-  protected async setDetailed(): Promise<void> {} // tslint:disable-line no-empty
-
-  async setValues(): Promise<Estate> {
-    if (this.response.type === 'error') {
-      this.setError();
-    } else {
-      await this.setCommon();
-      await this.setDetailed();
-    }
+  public async init(response: Mapping): Promise<Estate> {
+    if (response.type === 'error') throw response;
+    this._response = response;
+    this._properties = await this.parse();
     return this;
   }
 
-  public set dictionary(dictionary: Mapping) {
-    this.translator.dictionary = dictionary;
+  public getProperties(
+    detailed: boolean = true,
+    dictionary?: Mapping
+  ): RealEstateProperties {
+    if (!this._properties) throw new Error('Estate class not initialized');
+    let result = this._properties;
+    if (dictionary) {
+      result = this._translator.translateValues(dictionary, result);
+    }
+
+    if (!detailed) {
+      result = pick(
+        result,
+        ...generateCommonEstatePropertyKeys()
+      ) as RealEstateProperties;
+    }
+    return result;
   }
 
-  public get values(): RealEstate | RequestError {
-    if (this.error) return this.error;
-    const result = !this.details
-      ? this.common
-      : { ...this.common, ...this.details };
-    return this.translator.translateIfNeeded(result);
+  public getTranslatedProperties(
+    dictionary: Mapping
+  ): RealEstateDetailedProperties {
+    return this.getProperties(true, dictionary) as RealEstateDetailedProperties;
   }
 
-  public toString(): string {
-    return JSON.stringify(this.values);
+  public getCommon(): RealEstateCommonProperties {
+    return this.getProperties(false) as RealEstateCommonProperties;
   }
 
-  public toJSON(): any {
-    return this.values;
-  }
-
-  private setError(): void {
-    this.error = this.response as RequestError;
+  public getTranslatedCommon(dictionary: Mapping): RealEstateCommonProperties {
+    return this.getProperties(false, dictionary) as RealEstateCommonProperties;
   }
 
   private parseValue(value: any): any {
@@ -186,13 +189,13 @@ export abstract class Estate {
     const paths = Array.isArray(path) ? path : [path];
     let result = defaultValue;
     for (const p of paths) {
-      const found = get(this.response, p);
+      const found = get(this._response, p);
       if (found !== undefined && found !== null) {
         result = this.parseValue(found);
         break;
       }
     }
-    if (isTranslatable) this.translator.addToTranslatables({ [result]: path });
+    if (isTranslatable) this._translator.addToTranslatables({ [result]: path });
     return result;
   }
 

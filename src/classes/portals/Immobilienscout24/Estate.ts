@@ -3,26 +3,70 @@ import { get } from 'lodash';
 import {
   Price,
   Address,
-  RealEstateDetailed,
   Attachment,
   Estate,
-  RealEstateCommon,
+  RealEstateProperties,
 } from '../Estate';
 
-export type Immobilienscout24Estate =
-  | Immobilienscout24EstateCommon
-  | Immobilienscout24EstateDetailed;
-
-export class Immobilienscout24EstateCommon extends Estate {
-  public common!: RealEstateCommon;
-  public details?: RealEstateDetailed;
-
-  protected async setCommon(): Promise<void> {
+export class Immobilienscout24Estate extends Estate {
+  protected async parse(): Promise<RealEstateProperties> {
     const estateType = this.getEstateType();
-    this.common = {
+    return {
       active: this.getActive('realEstateState'),
       address: this.getAddress(),
       archived: this.getArchived('realEstateState'),
+      attachments: await this.getAttachments(),
+      attic: this.getTranslatableValue('attic'),
+      balcony: this.getTranslatableValue('balcony'),
+      buildingEnergyRatingType: this.getTranslatableValue(
+        'buildingEnergyRatingType'
+      ),
+      cellar: this.getTranslatableValue('cellar'),
+      condition: this.getTranslatableValue('condition'),
+      constructionPhase: this.getTranslatableValue('constructionPhase'),
+      constructionYear: this.getTranslatableValue('constructionYear'),
+      courtage: this.getCourtage(),
+      descriptionNote: this.getValue('descriptionNote'),
+      energyCertificateAvailability: this.getTranslatableValue(
+        'energyCertificate.energyCertificateAvailability'
+      ),
+      energyConsumptionContainsWarmWater: this.getTranslatableValue(
+        'energyConsumptionContainsWarmWater'
+      ),
+      energyPerformanceCertificate: this.getTranslatableValue(
+        'energyPerformanceCertificate'
+      ),
+      floor: this.getTranslatableValue('floor'),
+      freeFrom: this.getValue('freeFrom'),
+      furnishingNote: this.getValue('furnishingNote'),
+      garden: this.getTranslatableValue('garden'),
+      guestBathroom: this.getTranslatableValue('guestBathroom'),
+      guestToilet: this.getTranslatableValue('guestToilet'),
+      handicappedAccessible: this.getTranslatableValue('handicappedAccessible'),
+      heatingType: this.getTranslatableValue('heatingType'),
+      interiorQuality: this.getTranslatableValue('interiorQuality'),
+      lastRefurbishment: this.getTranslatableValue('lastRefurbishment'),
+      listed: this.getTranslatableValue('listed'),
+      locationNote: this.getValue('locationNote'),
+      lodgerFlat: this.getTranslatableValue('lodgerFlat'),
+      numberOfApartments: this.getTranslatableValue('numberOfApartments'),
+      numberOfBathRooms: this.getTranslatableValue('numberOfBathRooms'),
+      numberOfBedRooms: this.getTranslatableValue('numberOfBedRooms'),
+      numberOfCommercialUnits: this.getTranslatableValue(
+        'numberOfCommercialUnits'
+      ),
+      numberOfFloors: this.getValue('numberOfFloors'),
+      numberOfParkingSpaces: this.getTranslatableValue('numberOfParkingSpaces'),
+      otherNote: this.getValue('otherNote'),
+      parkingSpacePrice: this.getTranslatableValue('parkingSpacePrice'),
+      parkingSpaceType: this.getTranslatableValue('parkingSpaceType'),
+      patio: this.getTranslatableValue('patio'),
+      plotArea: this.getTranslatableValue('plotArea'),
+      residentialUnits: this.getTranslatableValue('residentialUnits'),
+      summerResidencePractical: this.getTranslatableValue(
+        'summerResidencePractical'
+      ),
+      usableFloorSpace: this.getTranslatableValue('usableFloorSpace'),
       estateType: this.getTranslatableValue(null, estateType),
       marketingType: this.getMarketingType(
         'price.marketingType',
@@ -95,65 +139,6 @@ export class Immobilienscout24EstateCommon extends Estate {
       ]
         .filter(Boolean)
         .join(' '),
-    };
-  }
-}
-
-export class Immobilienscout24EstateDetailed extends Immobilienscout24EstateCommon {
-  protected async setDetailed(): Promise<void> {
-    this.details = {
-      attachments: await this.getAttachments(),
-      attic: this.getTranslatableValue('attic'),
-      balcony: this.getTranslatableValue('balcony'),
-      buildingEnergyRatingType: this.getTranslatableValue(
-        'buildingEnergyRatingType'
-      ),
-      cellar: this.getTranslatableValue('cellar'),
-      condition: this.getTranslatableValue('condition'),
-      constructionPhase: this.getTranslatableValue('constructionPhase'),
-      constructionYear: this.getTranslatableValue('constructionYear'),
-      courtage: this.getCourtage(),
-      descriptionNote: this.getValue('descriptionNote'),
-      energyCertificateAvailability: this.getTranslatableValue(
-        'energyCertificate.energyCertificateAvailability'
-      ),
-      energyConsumptionContainsWarmWater: this.getTranslatableValue(
-        'energyConsumptionContainsWarmWater'
-      ),
-      energyPerformanceCertificate: this.getTranslatableValue(
-        'energyPerformanceCertificate'
-      ),
-      floor: this.getTranslatableValue('floor'),
-      freeFrom: this.getTranslatableValue('freeFrom'),
-      furnishingNote: this.getValue('furnishingNote'),
-      garden: this.getTranslatableValue('garden'),
-      guestBathroom: this.getTranslatableValue('guestBathroom'),
-      guestToilet: this.getTranslatableValue('guestToilet'),
-      handicappedAccessible: this.getTranslatableValue('handicappedAccessible'),
-      heatingType: this.getTranslatableValue('heatingType'),
-      interiorQuality: this.getTranslatableValue('interiorQuality'),
-      lastRefurbishment: this.getTranslatableValue('lastRefurbishment'),
-      listed: this.getTranslatableValue('listed'),
-      locationNote: this.getValue('locationNote'),
-      lodgerFlat: this.getTranslatableValue('lodgerFlat'),
-      numberOfApartments: this.getTranslatableValue('numberOfApartments'),
-      numberOfBathRooms: this.getTranslatableValue('numberOfBathRooms'),
-      numberOfBedRooms: this.getTranslatableValue('numberOfBedRooms'),
-      numberOfCommercialUnits: this.getTranslatableValue(
-        'numberOfCommercialUnits'
-      ),
-      numberOfFloors: this.getTranslatableValue('numberOfFloors'),
-      numberOfParkingSpaces: this.getTranslatableValue('numberOfParkingSpaces'),
-      otherNote: this.getValue('otherNote'),
-      parkingSpacePrice: this.getTranslatableValue('parkingSpacePrice'),
-      parkingSpaceType: this.getTranslatableValue('parkingSpaceType'),
-      patio: this.getTranslatableValue('patio'),
-      plotArea: this.getTranslatableValue('plotArea'),
-      residentialUnits: this.getTranslatableValue('residentialUnits'),
-      summerResidencePractical: this.getTranslatableValue(
-        'summerResidencePractical'
-      ),
-      usableFloorSpace: this.getTranslatableValue('usableFloorSpace'),
     };
   }
 

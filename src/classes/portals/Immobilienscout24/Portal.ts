@@ -9,10 +9,7 @@ import {
   Credentials,
   OAuth as IOAuth,
 } from '../../Authorization';
-export {
-  Immobilienscout24EstateCommon,
-  Immobilienscout24EstateDetailed,
-} from './Estate';
+export { Immobilienscout24Estate } from './Estate';
 
 class Immobilienscout24Authorization extends Authorization {
   protected authorizationHeader?: AuthorizationHeader;

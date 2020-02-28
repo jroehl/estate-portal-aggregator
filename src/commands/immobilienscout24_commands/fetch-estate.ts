@@ -37,20 +37,22 @@ exports.handler = async (argv: Arguments) => {
   try {
     const is24 = new Immobilienscout24(argv as OAuth);
 
-    is24.dictionary = loadDictionary(argv.dictionary);
-
     let result;
     if (!argv.normalize) {
       result = await is24.fetchResult(argv.id);
     } else {
       result = await is24.fetchEstate(argv.id);
+      result = result.getProperties(
+        argv.detailed,
+        loadDictionary(argv.dictionary)
+      );
     }
 
     const name = generateOutputName(
       parentCommand,
       command.replace(' <estate-id>', ''),
       argv.normalize ? 'normalized' : 'original',
-      'long'
+      argv.detailed ? 'long' : 'short'
     );
     if (argv.storeResult) {
       const fileName = storeResponse(name, result, argv.pretty);

@@ -46,13 +46,14 @@ exports.handler = async (argv: Arguments) => {
   try {
     const is24 = new Immobilienscout24(argv as OAuth);
 
-    is24.dictionary = loadDictionary(argv.dictionary);
-
     let results;
     if (!argv.normalize) {
       results = await is24.fetchResults(argv);
     } else {
       results = await is24.fetchEstates(argv);
+      results = results.map(result =>
+        result.getProperties(argv.detailed, loadDictionary(argv.dictionary))
+      );
     }
 
     const name = generateOutputName(

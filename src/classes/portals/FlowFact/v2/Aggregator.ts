@@ -3,7 +3,7 @@ import { flatten, isObject } from 'lodash';
 import { Mapping, Estate } from '../../Estate';
 import { TokenAuth } from '../../../Authorization';
 import { Portal, FetchOptions } from '../../Portal';
-import { FlowFactEstateDetailedV2, FlowFactEstateCommonV2 } from './Estate';
+import { FlowFactEstateV2 } from './Estate';
 import { Aggregator } from '../../Aggregator';
 import { AvailableLanguages } from '../../../../types';
 import FlowFactPortalV2, { estateSchemas } from './Portal';
@@ -35,7 +35,7 @@ const initFieldParse = (
 
 export class FlowFactV2 extends Aggregator {
   protected portal: Portal;
-  constructor(credentials: TokenAuth, public language?: AvailableLanguages) {
+  constructor(credentials: TokenAuth) {
     super();
     this.portal = new FlowFactPortalV2(credentials) as Portal;
   }
@@ -46,8 +46,7 @@ export class FlowFactV2 extends Aggregator {
       this.portal as FlowFactPortalV2,
       response
     );
-    const dictionary = await this.generateDictionary(this.language);
-    return new FlowFactEstateDetailedV2(response, dictionary).setValues();
+    return new FlowFactEstateV2().init(response);
   }
 
   public async fetchEstates(options: FetchOptions = {}): Promise<Estate[]> {
@@ -57,34 +56,27 @@ export class FlowFactV2 extends Aggregator {
       responses
     );
 
-    const FlowFactV2Estate = options.detailed
-      ? FlowFactEstateDetailedV2
-      : FlowFactEstateCommonV2;
-
-    const dictionary = await this.generateDictionary(this.language);
     return Promise.all(
-      responses.map(response =>
-        new FlowFactV2Estate(response, dictionary).setValues()
-      )
+      responses.map(response => new FlowFactEstateV2().init(response))
     );
   }
 
   public async generateDictionary(
-    language?: AvailableLanguages
+    language: AvailableLanguages
   ): Promise<Mapping> {
-    if (this.dictionary && isObject(this.dictionary)) return this.dictionary;
+    const dictionary = this.dictionaries[language];
+    if (isObject(dictionary)) return dictionary;
     const schemas = await (this.portal as FlowFactPortalV2).fetchSchemas();
     const reducedSchemas = schemas.filter(({ name }) =>
       estateSchemas.includes(name)
     );
-    const dictionary = {
+    const parseFields = initFieldParse(language, {
       ...estateCommon.fallbacks.en,
       ...estateCommon[language || 'en'],
-    };
-    const parseFields = initFieldParse(language, dictionary);
+    });
     const fields = flatten(parseFields(reducedSchemas));
     const result = Object.assign({}, ...fields);
-    this.dictionary = result;
+    this.dictionaries[language] = result;
     return result;
   }
 }
