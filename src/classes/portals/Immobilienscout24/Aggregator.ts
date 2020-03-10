@@ -1,4 +1,4 @@
-import { isObject, isUndefined } from 'lodash';
+import { isObject, cloneDeep } from 'lodash';
 
 import { Mapping, Estate } from '../Estate';
 import { OAuth } from '../../Authorization';
@@ -10,11 +10,15 @@ import { AvailableLanguages } from '../../../types';
 import is24 from '../../../translations';
 import { generateEstatePropertyKeys } from '../../../lib/get-keys';
 
+const safeIS24 = cloneDeep(is24);
+
 const cleanValues = (mapping: Mapping): Mapping =>
   Object.keys(mapping).reduce((red, key) => ({ ...red, [key]: '' }), {});
 
 export const generateDictionary = (language?: AvailableLanguages): Mapping => {
-  const result = language ? (is24 as Mapping)[language] : cleanValues(is24.en);
+  const result = language
+    ? (safeIS24 as Mapping)[language]
+    : cleanValues(safeIS24.en);
   const excludedKeys = generateEstatePropertyKeys();
   excludedKeys.forEach(key => delete (result as Mapping)[key]);
   return result;

@@ -1,4 +1,4 @@
-import { flatten, isObject } from 'lodash';
+import { flatten, isObject, cloneDeep } from 'lodash';
 
 import { Mapping, Estate } from '../../Estate';
 import { TokenAuth } from '../../../Authorization';
@@ -9,6 +9,8 @@ import { AvailableLanguages } from '../../../../types';
 import FlowFactPortalV2, { estateSchemas } from './Portal';
 import { enrichResultWithReadableKeys } from './utils';
 import estateCommon from '../../../../translations';
+
+const safeEstateCommon = cloneDeep(estateCommon);
 
 const initFieldParse = (
   language?: AvailableLanguages,
@@ -71,8 +73,8 @@ export class FlowFactV2 extends Aggregator {
       estateSchemas.includes(name)
     );
     const parseFields = initFieldParse(language, {
-      ...estateCommon.fallbacks.en,
-      ...estateCommon[language || 'en'],
+      ...safeEstateCommon.fallbacks.en,
+      ...safeEstateCommon[language || 'en'],
     });
     const fields = flatten(parseFields(reducedSchemas));
     const result = Object.assign({}, ...fields);

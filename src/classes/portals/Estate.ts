@@ -78,7 +78,7 @@ export interface RealEstateDetailedProperties {
   numberOfFloors: number;
   numberOfParkingSpaces: number;
   otherNote: string;
-  parkingSpacePrice: number;
+  parkingSpacePrice: string;
   parkingSpaceType: string;
   patio: boolean;
   plotArea: number;
