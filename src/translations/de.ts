@@ -401,8 +401,8 @@ export default {
   energy_efficient_70: 'KfW-Effizienzhaus 70',
   energy_required: 'Endenergiebedarf',
   energycertificate: 'Energieausweis',
-  energycertificateavailability: 'Verfügbarkeit vom Energieausweis',
-  energycertificatecreationdate: 'Erstellungsdatum vom Energieausweis',
+  energycertificateavailability: 'Energieausweis verfügbar',
+  energycertificatecreationdate: 'Erstellungsdatum Energieausweis',
   energyconsumptioncontainswarmwater:
     'Energieverbrauch für Warmwasser enthalten',
   energyconsumptionelectricity: 'Endenergieverbrauch Strom kWh/(m²*a)',

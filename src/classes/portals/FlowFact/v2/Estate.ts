@@ -11,12 +11,12 @@ export class FlowFactEstateV2 extends Estate {
   protected async parse(): Promise<RealEstateProperties> {
     return {
       attachments: await this.getAttachments(),
-      attic: this.getBoolean('attic'),
-      balcony: this.getBoolean('balconyavailable.values[0'),
+      attic: this.getBoolean('attic')!,
+      balcony: this.getBoolean('balconyavailable.values[0')!,
       buildingEnergyRatingType: this.getTranslatableValue(
         'buildingEnergyRatingType'
       ),
-      cellar: this.getBoolean('cellar.values[0]'),
+      cellar: this.getBoolean('cellar.values[0]')!,
       condition: this.getTranslatableValue('condition.values[0]'),
       constructionPhase: this.getTranslatableValue(
         'constructionphase.values[0]'
@@ -28,28 +28,28 @@ export class FlowFactEstateV2 extends Estate {
       descriptionNote: this.getValue('textEstate.values[0]'),
       energyCertificateAvailability: this.getBoolean(
         'energy_certificate_availability.values[0]'
-      ),
+      )!,
       energyConsumptionContainsWarmWater: this.getBoolean(
         'energywithwarmwater.values[0]'
-      ),
+      )!,
       energyPerformanceCertificate: this.getBoolean(
         'energyCertificate.energy_performance_certificate.values[0]'
-      ),
+      )!,
       floor: this.getTranslatableValue('floor.values[0]'),
       freeFrom: this.getValue('freeFrom'),
       furnishingNote: this.getValue('textEnvironment.values[0]'),
-      garden: this.getBoolean('gardenarea.values[0]'),
-      guestBathroom: this.getBoolean('guesttoilet.values[0]'),
-      guestToilet: this.getBoolean('guesttoilet.values[0]'),
-      handicappedAccessible: this.getBoolean('barrierfree.values[0]'),
+      garden: this.getBoolean('gardenarea.values[0]')!,
+      guestBathroom: this.getBoolean('guesttoilet.values[0]')!,
+      guestToilet: this.getBoolean('guesttoilet.values[0]')!,
+      handicappedAccessible: this.getBoolean('barrierfree.values[0]')!,
       heatingType: this.getTranslatableValue('typeofheating.values[0]'),
       interiorQuality: this.getTranslatableValue('qualfitout.values[0]'),
       lastRefurbishment: this.getTranslatableValue(
         'lastModernization.values[0]'
       ),
-      listed: this.getBoolean('monument.values[0]'),
+      listed: this.getBoolean('monument.values[0]')!,
       locationNote: this.getValue('textLocation.values[0]'),
-      lodgerFlat: this.getBoolean('lodger_flat.values[0]'),
+      lodgerFlat: this.getBoolean('lodger_flat.values[0]')!,
       numberOfApartments: this.getValue('numberOfApartments'),
       numberOfBathRooms: this.getTranslatableValue('numberbathrooms.values[0]'),
       numberOfBedRooms: this.getTranslatableValue('numberbedrooms.values[0]'),
@@ -59,10 +59,10 @@ export class FlowFactEstateV2 extends Estate {
       otherNote: this.getValue('textFree.values[0]'),
       parkingSpacePrice: this.getValue('parkingSpacePrice'),
       parkingSpaceType: this.getTranslatableValue('parking.values[0]'),
-      patio: this.getBoolean('patio'),
+      patio: this.getBoolean('patio')!,
       plotArea: this.getTranslatableValue('plotarea.values[0]'),
       residentialUnits: this.getValue('residentialUnits'),
-      summerResidencePractical: this.getBoolean('summerResidencePractical'),
+      summerResidencePractical: this.getBoolean('summerResidencePractical')!,
       usableFloorSpace: this.getTranslatableValue('usablearea.values[0]'),
       active: this.getActive('status.values[0]'),
       address: this.getAddress(),
@@ -81,10 +81,14 @@ export class FlowFactEstateV2 extends Estate {
     };
   }
 
-  protected getBoolean(path: any | any[], defaultValue?: any): boolean {
+  protected getBoolean(
+    path: any | any[],
+    defaultValue?: any
+  ): boolean | undefined {
     const value = this.getValue(path, defaultValue);
     if (value === 1) return true;
-    return false;
+    if (value === 0) return false;
+    return undefined;
   }
 
   private getPreviewImage(): Attachment | undefined {
