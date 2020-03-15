@@ -47,7 +47,7 @@ exports.handler = async (argv: Arguments) => {
     if (!argv.normalize) {
       results = await flowFact.fetchResults(argv);
     } else {
-      results = await flowFact.fetchEstates(argv);
+      results = await flowFact.fetchEstates({ ...argv, detailed: true });
       results = results.map(result =>
         result.getProperties(argv.detailed, loadDictionary(argv.dictionary))
       );
