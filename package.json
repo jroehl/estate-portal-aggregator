@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "author": "jroeh <mail@johannroehl.de>",
+  "author": "jroehl <mail@johannroehl.de>",
   "files": [
     "lib/**/*"
   ],
@@ -41,29 +41,29 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-async-to-generator": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-typescript": "^7.8.3",
-    "@types/lodash": "^4.14.149",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/lodash": "^4.14.150",
     "@types/moment": "^2.13.0",
-    "@types/node": "^13.7.0",
+    "@types/node": "^13.13.5",
     "@types/request-promise-native": "^1.0.17",
-    "@types/yargs": "^15.0.3",
-    "prettier": "^1.19.1",
-    "tslint": "^6.0.0",
+    "@types/yargs": "^15.0.4",
+    "prettier": "^2.0.5",
+    "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.4",
+    "@babel/runtime": "^7.9.6",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.25.3",
     "oauth-1.0a": "^2.2.6",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
-    "yargs": "^15.1.0"
+    "yargs": "^15.3.1"
   }
 }
