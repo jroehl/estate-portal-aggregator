@@ -64,7 +64,11 @@ export default class FlowFactPortalV1 extends Portal {
       value: { estateshort = [], total },
     } = res;
 
-    elements = [...elements, ...estateshort];
+    const sanitizedEstateShort = Array.isArray(estateshort)
+      ? estateshort
+      : [estateshort];
+
+    elements = [...elements, ...sanitizedEstateShort];
     if (options?.recursively && elements.length < total) {
       return this.fetchRecursive(
         baseURL,

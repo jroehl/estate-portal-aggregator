@@ -88,7 +88,9 @@ export default class FlowFactPortalV2 extends Portal {
 
     const { entries = [], totalCount } = res;
 
-    elements = [...elements, ...entries];
+    const sanitizedEntries = Array.isArray(entries) ? entries : [entries];
+
+    elements = [...elements, ...sanitizedEntries];
     if (options?.recursively && elements.length < totalCount) {
       return this.fetchRecursive(
         baseURL,

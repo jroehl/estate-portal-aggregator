@@ -86,7 +86,11 @@ export class Immobilienscout24Portal extends Portal {
       realEstateList: { realEstateElement = [] },
     } = res['realestates.realEstates'];
 
-    elements = [...elements, ...realEstateElement];
+    const sanitizedRealEstateElements = Array.isArray(realEstateElement)
+      ? realEstateElement
+      : [realEstateElement];
+
+    elements = [...elements, ...sanitizedRealEstateElements];
     if (options?.recursively && elements.length < numberOfHits) {
       return this.fetchRecursive(
         baseURL,
