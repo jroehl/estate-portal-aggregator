@@ -1,0 +1,56 @@
+{
+  "realestates.realEstates": {
+    "Paging": {
+      "pageNumber": 1,
+      "pageSize": 20,
+      "numberOfPages": 1,
+      "numberOfHits": 2
+    },
+    "realEstateList": {
+      "realEstateElement": {
+        "@xsi.type": "offerlistelement:OfferApartmentBuy",
+        "@xlink.href": "https://rest.sandbox-immobilienscout24.de/restapi/api/offer/v1.0/user/me/realestate/315859901",
+        "@modification": "2020-05-10T16:05:07.845Z",
+        "@creation": "2020-05-10T16:05:07.846Z",
+        "@id": "315859901",
+        "externalId": "315859901",
+        "title": "RestAPI - Immobilienscout24 Testobjekt! +++BITTE+++ NICHT kontaktieren - Wohnung Kauf",
+        "address": {
+          "street": "Heuersdorfer Str",
+          "houseNumber": "26",
+          "postcode": "04564",
+          "city": "Heuersdorf",
+          "geoHierarchy": {
+            "continent": {
+              "geoCodeId": 1,
+              "fullGeoCodeId": "1"
+            },
+            "country": {
+              "geoCodeId": 276,
+              "fullGeoCodeId": "1276"
+            },
+            "region": {
+              "geoCodeId": 13,
+              "fullGeoCodeId": "1276013"
+            },
+            "city": {
+              "geoCodeId": 32,
+              "fullGeoCodeId": "1276013032"
+            },
+            "quarter": {
+              "geoCodeId": 4,
+              "fullGeoCodeId": "1276013032004"
+            }
+          }
+        },
+        "realEstateState": "INACTIVE",
+        "price": {
+          "value": 6105880.63,
+          "currency": "EUR"
+        },
+        "livingSpace": 7.943069905e7,
+        "numberOfRooms": 128.23
+      }
+    }
+  }
+}

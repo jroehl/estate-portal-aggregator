@@ -1,0 +1,80 @@
+{
+  "realestates.apartmentBuy": {
+    "@id": "315859901",
+    "externalId": "315859901",
+    "title": "RestAPI - Immobilienscout24 Testobjekt! +++BITTE+++ NICHT kontaktieren - Wohnung Kauf",
+    "creationDate": "2020-05-10T16:05:07.846Z",
+    "address": {
+      "street": "Heuersdorfer Str",
+      "houseNumber": "26",
+      "postcode": "04564",
+      "city": "Heuersdorf",
+      "geoHierarchy": {
+        "continent": {
+          "geoCodeId": 1,
+          "fullGeoCodeId": "1"
+        },
+        "country": {
+          "geoCodeId": 276,
+          "fullGeoCodeId": "1276"
+        },
+        "region": {
+          "geoCodeId": 13,
+          "fullGeoCodeId": "1276013"
+        },
+        "city": {
+          "geoCodeId": 32,
+          "fullGeoCodeId": "1276013032"
+        },
+        "quarter": {
+          "geoCodeId": 4,
+          "fullGeoCodeId": "1276013032004"
+        }
+      }
+    },
+    "realEstateState": "INACTIVE",
+    "attachments": [
+      {
+        "@xlink.href": "https://rest.sandbox-immobilienscout24.de/restapi/api/offer/v1.0/user/me/realestate/315859901/attachment"
+      }
+    ],
+    "showAddress": "true",
+    "contact": {
+      "@id": "97638217"
+    },
+    "common.publishChannels": [],
+    "apartmentType": "NO_INFORMATION",
+    "lift": "false",
+    "cellar": "NOT_APPLICABLE",
+    "handicappedAccessible": "NOT_APPLICABLE",
+    "condition": "NO_INFORMATION",
+    "firingTypes": [
+      {
+        "firingType": "NO_INFORMATION"
+      }
+    ],
+    "energySourcesEnev2014": {
+      "energySourceEnev2014": "NO_INFORMATION"
+    },
+    "energyConsumptionContainsWarmWater": "NOT_APPLICABLE",
+    "guestToilet": "NOT_APPLICABLE",
+    "rented": "NOT_APPLICABLE",
+    "listed": "NOT_APPLICABLE",
+    "summerResidencePractical": "NOT_APPLICABLE",
+    "price": {
+      "value": 6105880.63,
+      "currency": "EUR",
+      "marketingType": "PURCHASE",
+      "priceIntervalType": "ONE_TIME_CHARGE"
+    },
+    "livingSpace": 7.943069905e7,
+    "numberOfRooms": 128.23,
+    "builtInKitchen": "false",
+    "balcony": "false",
+    "garden": "false",
+    "courtage": {
+      "hasCourtage": "YES",
+      "courtage": "7,14%"
+    }
+  }
+}
