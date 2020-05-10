@@ -2,6 +2,9 @@
 
 This module helps to fetch and normalize real estate data from [immobilienscout24](https://www.immobilienscout24.de/) and/or [flowfact](https://www.flowfact.de/).
 
+<details>
+<summary>TOC</summary>
+
 - [estate-portal-aggregator](#estate-portal-aggregator)
   - [CLI](#cli)
     - [generate-dictionary](#generate-dictionary)
@@ -17,6 +20,8 @@ This module helps to fetch and normalize real estate data from [immobilienscout2
     - [Immobilienscout24](#immobilienscout24-1)
     - [FlowFact](#flowfact-1)
   - [TODO](#todo)
+
+</details>
 
 ## CLI
 
@@ -82,18 +87,15 @@ estate-portal flowfact fetch-estate --help
 
 ## Usage as a module
 
-Following functions are exported:
+Following (typed) classes are exported:
 
-- fetchEstateImmobilienscout24
-- fetchEstatesImmobilienscout24
-- fetchEstateFlowFactV1
-- fetchEstatesFlowFactV1
-- fetchEstateFlowFactV2
-- fetchEstatesFlowFactV2
-- generateDictionaryCommonProperties
-- generateDictionaryImmobilienscout24
-- generateDictionaryFlowFactV1
-- generateDictionaryFlowFactV2
+- Immobilienscout24
+- FlowFactV1
+- FlowFactV2
+
+Following (typed) helper functions are exported:
+
+- generateCommonPropertiesDictionary
 
 ### Immobilienscout24
 
