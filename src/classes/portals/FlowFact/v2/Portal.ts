@@ -86,7 +86,7 @@ export default class FlowFactPortalV2 extends Portal {
 
     if (res.type === 'error') return [...elements, res];
 
-    const { entries, totalCount } = res;
+    const { entries = [], totalCount } = res;
 
     elements = [...elements, ...entries];
     if (options?.recursively && elements.length < totalCount) {
@@ -103,7 +103,7 @@ export default class FlowFactPortalV2 extends Portal {
 
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
     const items = await Promise.all(
-      estateSchemas.map(async schemaID => {
+      estateSchemas.map(async (schemaID) => {
         const results = await this.fetchRecursive(
           `${this.baseURL}/search-service/stable/schemas/${schemaID}`,
           {
@@ -126,7 +126,7 @@ export default class FlowFactPortalV2 extends Portal {
         const result = await this.fetchEstate(estateID);
         return result;
       })
-    ).then(x => x.filter(Boolean));
+    ).then((x) => x.filter(Boolean));
   }
 
   async fetchEstate(id: string): Promise<any> {

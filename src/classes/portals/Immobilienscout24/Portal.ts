@@ -24,9 +24,7 @@ class Immobilienscout24Authorization extends Authorization {
       },
       signature_method: 'HMAC-SHA1',
       hash_function(baseString: string, key: string) {
-        return createHmac('sha1', key)
-          .update(baseString)
-          .digest('base64');
+        return createHmac('sha1', key).update(baseString).digest('base64');
       },
     });
 
@@ -63,6 +61,7 @@ class Immobilienscout24Authorization extends Authorization {
 
 export class Immobilienscout24Portal extends Portal {
   baseURL: string =
+    process.env.IS24_BASE_URL ||
     'https://rest.immobilienscout24.de/restapi/api/offer/v1.0/user/me/realestate';
 
   constructor(credentials: IOAuth) {
@@ -84,7 +83,7 @@ export class Immobilienscout24Portal extends Portal {
 
     const {
       Paging: { numberOfHits },
-      realEstateList: { realEstateElement },
+      realEstateList: { realEstateElement = [] },
     } = res['realestates.realEstates'];
 
     elements = [...elements, ...realEstateElement];
@@ -113,6 +112,9 @@ export class Immobilienscout24Portal extends Portal {
   async fetchEstate(id: string): Promise<any> {
     const uri = `${this.baseURL}/${id}`;
     const res = await this.request(uri, undefined, { id });
+    if (res?.type === 'error') {
+      return res;
+    }
     const [type] = Object.keys(res);
     const attachments = await this.getAttachments(
       get(res[type], 'attachments[0]["@xlink.href"]', '')
@@ -123,6 +125,9 @@ export class Immobilienscout24Portal extends Portal {
   private async getAttachments(uri: string): Promise<any[]> {
     if (!uri) return [];
     const res = await this.request(uri);
+    if (res?.type === 'error') {
+      return res;
+    }
     return get(res, '["common.attachments"][0].attachment', []);
   }
 }

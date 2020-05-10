@@ -20,7 +20,7 @@ export const generateDictionary = (language?: AvailableLanguages): Mapping => {
     ? (safeIS24 as Mapping)[language]
     : cleanValues(safeIS24.en);
   const excludedKeys = generateEstatePropertyKeys();
-  excludedKeys.forEach(key => delete (result as Mapping)[key]);
+  excludedKeys.forEach((key) => delete (result as Mapping)[key]);
   return result;
 };
 
@@ -38,9 +38,8 @@ export class Immobilienscout24 extends Aggregator {
 
   public async fetchEstates(options: FetchOptions = {}): Promise<Estate[]> {
     const responses = await this.fetchResults(options);
-
     return Promise.all(
-      responses.map(response => new Immobilienscout24Estate().init(response))
+      responses.map((response) => new Immobilienscout24Estate().init(response))
     );
   }
 

@@ -61,7 +61,7 @@ export default class FlowFactPortalV1 extends Portal {
     if (res.type === 'error') return [...elements, res];
 
     const {
-      value: { estateshort, total },
+      value: { estateshort = [], total },
     } = res;
 
     elements = [...elements, ...estateshort];

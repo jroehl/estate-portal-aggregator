@@ -51,7 +51,7 @@ exports.handler = async (argv: Arguments) => {
       results = await is24.fetchResults(argv);
     } else {
       results = await is24.fetchEstates({ ...argv, detailed: true });
-      results = results.map(result =>
+      results = results.map((result) =>
         result.getProperties(argv.detailed, loadDictionary(argv.dictionary))
       );
     }
