@@ -96,7 +96,7 @@ export const generateEstatePropertyKeys = (): string[] => {
     ...propertyNames(Ad),
     ...propertyNames(Pr),
     ...propertyNames(At),
-  ].map(key => key.toLowerCase());
+  ].map((key) => key.toLowerCase());
 };
 
 export const generateDetailedEstatePropertyKeys = (): string[] =>

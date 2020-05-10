@@ -25,7 +25,7 @@ export class FlowFactV1 extends Aggregator {
     const responses = await this.fetchResults(options);
 
     return Promise.all(
-      responses.map(response => new FlowFactEstateV1().init(response))
+      responses.map((response) => new FlowFactEstateV1().init(response))
     );
   }
 

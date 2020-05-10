@@ -59,7 +59,7 @@ export class FlowFactV2 extends Aggregator {
     );
 
     return Promise.all(
-      responses.map(response => new FlowFactEstateV2().init(response))
+      responses.map((response) => new FlowFactEstateV2().init(response))
     );
   }
 
