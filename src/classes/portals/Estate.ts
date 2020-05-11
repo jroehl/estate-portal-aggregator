@@ -149,9 +149,10 @@ export abstract class Estate {
     return value;
   }
 
-  protected getDate(path: any | any[], defaultValue?: any): number {
+  protected getDate(path: any | any[], defaultValue?: any): number | undefined {
     const value = this.getValue(path, defaultValue);
     if (!isNaN(value)) return Number(value);
+    if (!value) return undefined;
     return moment(value).valueOf();
   }
 

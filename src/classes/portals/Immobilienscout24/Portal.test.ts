@@ -1,29 +1,26 @@
-import { Immobilienscout24Portal } from './Portal';
 import { Portal } from '../Portal';
-import estate from '../__mocks__/estate.json';
-import estates from '../__mocks__/estates.json';
-import estatesRecursive from '../__mocks__/estates-recursive.json';
-import { cloneDeep } from 'lodash';
+import { Immobilienscout24Portal } from './Portal';
+import {
+  getResultError,
+  getResultEstate,
+  getResultEstates,
+  credentials,
+} from './__mocks__/request-promise-native';
+
+const ENDPOINT = 'https://immobilienscout24.api/realestate';
 
 describe('Immobilienscout24 Portal', () => {
+  beforeAll(() => {
+    process.env.IS24_BASE_URL = ENDPOINT;
+  });
   describe('instance', () => {
     it('should initialize', () => {
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
       expect(portal).toBeInstanceOf(Portal);
     });
 
     it('should have base URL', () => {
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
       expect(portal.baseURL).toBeDefined();
     });
 
@@ -44,12 +41,7 @@ describe('Immobilienscout24 Portal', () => {
 
   describe('fetchEstate', () => {
     it('should return error', async () => {
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
 
       const result = await portal.fetchEstate('error');
       expect(result).toEqual({
@@ -59,101 +51,50 @@ describe('Immobilienscout24 Portal', () => {
         meta: {
           id: 'error',
         },
-        uri:
-          'https://rest.sandbox-immobilienscout24.de/restapi/api/offer/v1.0/user/me/realestate/error',
+        uri: `${ENDPOINT}/error`,
       });
     });
 
     it('should return 404 error', async () => {
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
 
       const result = await portal.fetchEstate('foo');
-      expect(result).toEqual({
-        type: 'error',
-        statusCode: 404,
-        message: 'NotFound',
-      });
+      expect(result).toEqual(getResultError());
     });
 
     it('should return estate', async () => {
-      const type = 'realestates.apartmentBuy';
-      const resultEstate = cloneDeep(estate[type]);
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
 
       const result = await portal.fetchEstate('315859901');
 
-      resultEstate.attachments = [{ attachment: 'exists' }];
-      resultEstate.type = type;
-      expect(result).toEqual(resultEstate);
+      expect(result).toEqual(getResultEstate());
     });
   });
 
   describe('fetchEstates', () => {
     it('should fetch multiple estates', async () => {
-      const resultEstates = cloneDeep(estates);
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
 
       const result = await portal.fetchEstates();
-      expect(result).toEqual(
-        resultEstates['realestates.realEstates'].realEstateList
-          .realEstateElement
-      );
+      expect(result).toEqual(getResultEstates());
     });
 
     it('should fetch recursively multiple estates', async () => {
-      const resultEstates = cloneDeep(estatesRecursive);
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
 
       const result = await portal.fetchEstates({
         recursively: true,
         pageSize: 2,
       });
-      expect(result).toEqual([
-        resultEstates['realestates.realEstates'].realEstateList
-          .realEstateElement,
-        resultEstates['realestates.realEstates'].realEstateList
-          .realEstateElement,
-      ]);
+      expect(result).toEqual([getResultEstates()[0], getResultEstates()[0]]);
     });
 
     it('should fetch multiple estates detailed', async () => {
-      const type = 'realestates.apartmentBuy';
-      const resultEstate = cloneDeep(estate[type]);
-      const portal = new Immobilienscout24Portal({
-        consumerKey: 'consumerKey',
-        consumerSecret: 'consumerSecret',
-        oauthToken: 'oauthToken',
-        oauthTokenSecret: 'oauthTokenSecret',
-      });
+      const portal = new Immobilienscout24Portal(credentials);
 
       const result = await portal.fetchEstates({ detailed: true });
-      resultEstate.attachments = [{ attachment: 'exists' }];
-      resultEstate.type = type;
 
-      expect(result).toEqual([
-        resultEstate,
-        { type: 'error', statusCode: 404, message: 'NotFound' },
-      ]);
+      expect(result).toEqual([getResultEstate(), getResultError()]);
     });
   });
 });
