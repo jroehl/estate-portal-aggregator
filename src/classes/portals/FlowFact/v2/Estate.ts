@@ -86,8 +86,8 @@ export class FlowFactEstateV2 extends Estate {
     defaultValue?: any
   ): boolean | undefined {
     const value = this.getValue(path, defaultValue);
-    if (value === 1) return true;
-    if (value === 0) return false;
+    if (value === 1 || `${value}` === 'true') return true;
+    if (value === 0 || `${value}` === 'false') return false;
     return undefined;
   }
 

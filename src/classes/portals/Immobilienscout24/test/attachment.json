@@ -1,0 +1,12 @@
+{
+  "common.attachments": [
+    {
+      "attachment": [
+        {
+          "title": "Lorem",
+          "urls": [{ "url": [{ "@href": "http://image" }] }]
+        }
+      ]
+    }
+  ]
+}

@@ -1,47 +1,40 @@
-import { Portal } from '../Portal';
-import { Immobilienscout24Portal } from './Portal';
+import { Portal } from '../../Portal';
+import FlowFactPortalV2 from './Portal';
 import {
   getResultError,
   getResultEstate,
   getResultEstates,
   credentials,
+  getSchemas,
   ENDPOINT,
 } from './test/helpers';
 
-describe('Immobilienscout24 Portal', () => {
+describe('FlowFact v2 Portal', () => {
   beforeAll(() => {
-    process.env.IS24_BASE_URL = ENDPOINT;
+    process.env.FLOWFACT_V2_BASE_URL = ENDPOINT;
   });
 
   describe('instance', () => {
     it('should initialize', () => {
-      const portal = new Immobilienscout24Portal(credentials);
+      const portal = new FlowFactPortalV2(credentials);
       expect(portal).toBeInstanceOf(Portal);
     });
 
     it('should have base URL', () => {
-      const portal = new Immobilienscout24Portal(credentials);
+      const portal = new FlowFactPortalV2(credentials);
       expect(portal.baseURL).toBeDefined();
     });
 
     it('should throw error', () => {
-      expect(
-        () =>
-          new Immobilienscout24Portal({
-            consumerKey: '',
-            consumerSecret: '',
-            oauthToken: '',
-            oauthTokenSecret: '',
-          })
-      ).toThrowError(
-        'Credential validation for Immobilienscout24 failed - missing property'
+      expect(() => new FlowFactPortalV2({ token: '' })).toThrowError(
+        'Credential validation for FlowFact v2 failed - missing property'
       );
     });
   });
 
   describe('fetchEstate', () => {
     it('should return error', async () => {
-      const portal = new Immobilienscout24Portal(credentials);
+      const portal = new FlowFactPortalV2(credentials);
 
       const result = await portal.fetchEstate('error');
       expect(result).toEqual({
@@ -51,51 +44,52 @@ describe('Immobilienscout24 Portal', () => {
         meta: {
           id: 'error',
         },
-        uri: `${ENDPOINT}/error`,
+        uri: `${ENDPOINT}/entity-service/stable/entities/error`,
       });
     });
 
     it('should return 404 error', async () => {
-      const portal = new Immobilienscout24Portal(credentials);
+      const portal = new FlowFactPortalV2(credentials);
 
       const result = await portal.fetchEstate('foo');
       expect(result).toEqual(getResultError());
     });
 
     it('should return estate', async () => {
-      const portal = new Immobilienscout24Portal(credentials);
+      const portal = new FlowFactPortalV2(credentials);
 
       const resultEstate = getResultEstate();
-      const result = await portal.fetchEstate(resultEstate['@id']);
-
+      const result = await portal.fetchEstate(resultEstate.id);
       expect(result).toEqual(resultEstate);
     });
   });
 
   describe('fetchEstates', () => {
     it('should fetch multiple estates', async () => {
-      const portal = new Immobilienscout24Portal(credentials);
-
+      const portal = new FlowFactPortalV2(credentials);
       const result = await portal.fetchEstates();
       expect(result).toEqual(getResultEstates());
     });
-
     it('should fetch recursively multiple estates', async () => {
-      const portal = new Immobilienscout24Portal(credentials);
-
+      const portal = new FlowFactPortalV2(credentials);
       const result = await portal.fetchEstates({
         recursively: true,
         pageSize: 2,
       });
       expect(result).toEqual([getResultEstates()[0], getResultEstates()[0]]);
     });
-
     it('should fetch multiple estates detailed', async () => {
-      const portal = new Immobilienscout24Portal(credentials);
-
+      const portal = new FlowFactPortalV2(credentials);
       const result = await portal.fetchEstates({ detailed: true });
-
       expect(result).toEqual([getResultEstate(), getResultError()]);
+    });
+  });
+
+  describe('fetchSchemas', () => {
+    it('should fetch multiple schemas', async () => {
+      const portal = new FlowFactPortalV2(credentials);
+      const result = await portal.fetchSchemas();
+      expect(result).toEqual(getSchemas());
     });
   });
 });

@@ -1,0 +1,312 @@
+{
+  "entries": [
+    {
+      "id": "75a1bcea-49de-3d8d-97bb-05b600e1bb6a",
+      "parking": {
+        "values": ["4"]
+      },
+      "contractDocuments": {
+        "values": []
+      },
+      "rooms": {
+        "values": [2.0]
+      },
+      "addresses": {
+        "values": [
+          {
+            "city": "Foobar",
+            "type": "private",
+            "state": null,
+            "street": "Foobarstreet",
+            "country": "Deutschland",
+            "zipcode": "12043",
+            "district": null,
+            "geolocation": {
+              "longitude": 15.0007270792071,
+              "latitude": 51.19507505
+            }
+          }
+        ]
+      },
+      "monument": {
+        "values": [true]
+      },
+      "documents": {
+        "values": []
+      },
+      "textEnvironment": {
+        "values": [
+          "Ex do duis consequat reprehenderit quis ea amet labore ipsum duis. Labore dolore incididunt duis eiusmod. Aute quis enim anim commodo exercitation do. Occaecat ut amet nulla labore elit reprehenderit esse eu id voluptate elit. Labore ea nisi velit eiusmod consequat cillum ipsum Lorem tempor qui. Veniam officia consequat magna esse consequat aute cupidatat minim esse est et culpa. Laboris magna ipsum deserunt sunt ea est amet adipisicing amet officia."
+        ]
+      },
+      "commissionProspect": {
+        "values": ["5,95 %"]
+      },
+      "typeoflocation": {
+        "values": ["04"]
+      },
+      "fuelenergy_type": {
+        "values": ["ol"]
+      },
+      "numberbathrooms": {
+        "values": [1.0]
+      },
+      "no_of_floors": {
+        "values": [1.0]
+      },
+      "contact": {
+        "values": [""]
+      },
+      "numberbedrooms": {
+        "values": [1.0]
+      },
+      "links": {
+        "values": []
+      },
+      "textFree": {
+        "values": ["Gerne vereinbaren wir einen Besichtigungstermin mit Ihnen."]
+      },
+      "longitude": {
+        "values": [15.0007270792071]
+      },
+      "identifier": {
+        "values": ["KAT8WE   4"]
+      },
+      "energidentificationdate": {
+        "values": [1540767600]
+      },
+      "textEstate": {
+        "values": [
+          "Qui cupidatat nulla ullamco eiusmod anim dolor irure sint exercitation in cillum veniam exercitation. Veniam Lorem magna reprehenderit labore elit anim id esse ea anim enim magna. In est consequat nisi est do. Irure consequat fugiat elit duis anim labore id irure ut. Amet cupidatat consequat velit ut culpa nulla mollit nulla duis qui commodo exercitation Lorem ullamco."
+        ]
+      },
+      "carportnum": {
+        "values": [1.0]
+      },
+      "priority": {
+        "values": [0]
+      },
+      "commissionLandlord": {
+        "values": [""]
+      },
+      "emsk": {
+        "values": ["9ab30ebd-096c-492e-88e3-d4f779518e91"]
+      },
+      "estatetype": {
+        "values": ["01ETAG"]
+      },
+      "onlineImage": {
+        "values": [
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/17/a58a7f44-79dc-4177-8ed2-4bf589673117.JPG",
+            "headline": "Wohnzimmer",
+            "description": "",
+            "position": 12,
+            "identifier": null,
+            "fileName": "IMG_4603.JPG"
+          },
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/91/65cacc57-abdd-4ff9-9b33-5e9391111491.JPG",
+            "headline": "Carport",
+            "description": "",
+            "position": 10,
+            "identifier": null,
+            "fileName": "89C7F245-C7C6-33E5-8A55-055C08159A1D.JPG"
+          }
+        ]
+      },
+      "commissioninclvat": {
+        "values": [true]
+      },
+      "internalDocuments": {
+        "values": []
+      },
+      "groundplotImage": {
+        "values": [
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/foo.jpg",
+            "headline": "",
+            "description": "",
+            "position": 0,
+            "identifier": null,
+            "fileName": "foo.jpg"
+          },
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/bar.jpg",
+            "headline": "",
+            "description": "",
+            "position": 1,
+            "identifier": null,
+            "fileName": "bar.jpg"
+          }
+        ]
+      },
+      "status": {
+        "values": ["inactive"]
+      },
+      "internImage": {
+        "values": []
+      },
+      "energy_certificate_availability": {
+        "values": ["A"]
+      },
+      "landlord": {
+        "values": ["3a2ac3d3-3d48-3777-8a65-2759dc4320f8"]
+      },
+      "latitude": {
+        "values": [51.19507505]
+      },
+      "shutters": {
+        "values": [true]
+      },
+      "commissionPartner": {
+        "values": [""]
+      },
+      "textLocation": {
+        "values": [
+          "Adipisicing minim dolor commodo consectetur irure ullamco aliqua. Irure exercitation ipsum nostrud aute laboris amet pariatur adipisicing minim commodo ad laborum do. Commodo reprehenderit dolor Lorem labore cupidatat elit proident veniam aute ex. Minim nulla id sunt cillum et nisi enim excepteur quis qui elit incididunt id. Adipisicing mollit aliqua deserunt id culpa reprehenderit consectetur. Elit commodo aliquip ipsum aliqua."
+        ]
+      },
+      "oldnewbuilding": {
+        "values": ["1"]
+      },
+      "longImage": {
+        "values": [
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/foo.jpg",
+            "headline": "",
+            "description": "",
+            "position": 0,
+            "identifier": null,
+            "fileName": "foo.jpg"
+          },
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/bar.jpg",
+            "headline": "",
+            "description": "",
+            "position": 1,
+            "identifier": null,
+            "fileName": "bar.jpg"
+          }
+        ]
+      },
+      "department": {
+        "values": ["0"]
+      },
+      "pass_valid_till": {
+        "values": [1856383200]
+      },
+      "headline": {
+        "values": ["Irure cillum aliquip veniam adipisicing aliqua ea."]
+      },
+      "commissionColleague": {
+        "values": [""]
+      },
+      "tradeType": {
+        "values": ["0"]
+      },
+      "commissionTipGiver": {
+        "values": [""]
+      },
+      "sendToLandlord": {
+        "values": [false]
+      },
+      "livingarea": {
+        "values": [66.18]
+      },
+      "commissionCompany": {
+        "values": [""]
+      },
+      "purchaseprice": {
+        "values": [54000.0]
+      },
+      "energyusagevalue": {
+        "values": [101.0]
+      },
+      "typeofheating": {
+        "values": ["OEL"]
+      },
+      "mainImage": {
+        "values": [
+          {
+            "online": false,
+            "uri": "https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/foo.jpg",
+            "headline": "",
+            "description": "",
+            "position": 0,
+            "identifier": null,
+            "fileName": "foo.jpg"
+          }
+        ]
+      },
+      "energyidentificationtype": {
+        "values": ["3"]
+      },
+      "linkpropertyvideo": {
+        "values": []
+      },
+      "location": {
+        "values": ["Parkähnlich"]
+      },
+      "internaldescription": {
+        "values": ["KAT8WE4 Foobarstreet, Ludwigsdorf"]
+      },
+      "yearofconstruction": {
+        "values": [1995.0]
+      },
+      "link360": {
+        "values": []
+      },
+      "_acps": [
+        {
+          "groupId": "4a5d16c4-56f8-4b06-b5ea-c06ac2bd07e6",
+          "accessLevel": 7
+        }
+      ],
+      "_acls": [
+        {
+          "id": "4a5d16c4-56f8-4b06-b5ea-c06ac2bd07e6",
+          "uri": "groups/groups/4a5d16c4-56f8-4b06-b5ea-c06ac2bd07e6",
+          "read": true,
+          "search": true,
+          "write": true,
+          "delete": true,
+          "type": "groups"
+        }
+      ],
+      "_metadata": {
+        "id": "75a1bcea-49de-3d8d-97bb-05b600e1bb6a",
+        "schema": "flat_purchase",
+        "timestamp": "1580294614972",
+        "createdTimestamp": "1571395296605",
+        "lastModifier": "d41da2c1-4f12-4e7c-b789-4c1c4053ed0d",
+        "documentType": "700f8385-0c62-4b76-81a9-952c161f3e2c"
+      },
+      "_refs": [
+        {
+          "id": "ebab20f2-c2ba-439a-8076-d0bfe94bf932",
+          "uri": "users/users/ebab20f2-c2ba-439a-8076-d0bfe94bf932",
+          "type": "user",
+          "relation": "creator"
+        },
+        {
+          "id": "91811a12-a594-42d4-bf75-bddb39c94b8b",
+          "uri": "companies/companies/91811a12-a594-42d4-bf75-bddb39c94b8b",
+          "type": "company",
+          "relation": "creator"
+        }
+      ]
+    }
+  ],
+  "totalCount": 2,
+  "page": 1,
+  "pageSize": 100,
+  "offset": 0,
+  "size": 100
+}

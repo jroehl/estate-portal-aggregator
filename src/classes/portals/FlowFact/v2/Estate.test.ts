@@ -1,5 +1,5 @@
-import { Immobilienscout24Estate } from './Estate';
-import { Estate } from '../Estate';
+import { FlowFactEstateV2 } from './Estate';
+import { Estate } from '../../Estate';
 import {
   getResultEstate,
   getResultCommon,
@@ -7,14 +7,14 @@ import {
   dictionary,
 } from './test/helpers';
 
-describe('Immobilienscout24 Estate', () => {
+describe('FlowFact v2  Estate', () => {
   it('should initialize', () => {
-    const estate = new Immobilienscout24Estate();
+    const estate = new FlowFactEstateV2();
     expect(estate).toBeInstanceOf(Estate);
   });
 
   it('should return common', async () => {
-    const estate = new Immobilienscout24Estate();
+    const estate = new FlowFactEstateV2();
 
     const result = await estate.init(getResultEstate());
     expect(result).toBeInstanceOf(Estate);
@@ -23,7 +23,7 @@ describe('Immobilienscout24 Estate', () => {
   });
 
   it('should return properties', async () => {
-    const estate = new Immobilienscout24Estate();
+    const estate = new FlowFactEstateV2();
 
     const result = await estate.init(getResultEstate());
     expect(result).toBeInstanceOf(Estate);
@@ -32,7 +32,7 @@ describe('Immobilienscout24 Estate', () => {
   });
 
   it('should return translated common', async () => {
-    const estate = new Immobilienscout24Estate();
+    const estate = new FlowFactEstateV2();
 
     const result = await estate.init(getResultEstate());
     expect(result).toBeInstanceOf(Estate);
@@ -42,7 +42,7 @@ describe('Immobilienscout24 Estate', () => {
   });
 
   it('should return translated properties', async () => {
-    const estate = new Immobilienscout24Estate();
+    const estate = new FlowFactEstateV2();
 
     const result = await estate.init(getResultEstate());
     expect(result).toBeInstanceOf(Estate);

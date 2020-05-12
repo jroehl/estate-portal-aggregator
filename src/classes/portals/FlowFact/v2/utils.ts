@@ -1,4 +1,4 @@
-import { get, cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash';
 
 import FlowFactPortalV2 from './Portal';
 import { Mapping } from '../../../../classes/portals/Estate';

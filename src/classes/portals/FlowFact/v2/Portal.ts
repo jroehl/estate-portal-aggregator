@@ -66,7 +66,9 @@ class FlowFactV2Authorization extends Authorization {
 }
 
 export default class FlowFactPortalV2 extends Portal {
-  baseURL: string = 'https://api.production.cloudios.flowfact-prod.cloud';
+  baseURL: string =
+    process.env.FLOWFACT_V2_BASE_URL ||
+    'https://api.production.cloudios.flowfact-prod.cloud';
 
   constructor(credentials: TokenAuth) {
     super(new FlowFactV2Authorization(credentials));
@@ -139,10 +141,5 @@ export default class FlowFactPortalV2 extends Portal {
   async fetchSchemas(options?: FetchOptions): Promise<any[]> {
     const uri = `${this.baseURL}/schema-service/stable/v2/schemas/`;
     return this.fetchRecursive(uri, undefined, options);
-  }
-
-  async fetchSchema(schemaID: string): Promise<any> {
-    const uri = `${this.baseURL}/schema-service/stable/v2/schemas/${schemaID}`;
-    return this.request(uri, undefined, { schemaID });
   }
 }

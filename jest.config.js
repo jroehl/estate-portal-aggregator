@@ -4,4 +4,5 @@ module.exports = {
   testEnvironment: 'node',
   testMatch: ['**/*.test.ts'],
   verbose: true,
+  coveragePathIgnorePatterns: ['/node_modules/', '/test/', '/utils/'],
 };

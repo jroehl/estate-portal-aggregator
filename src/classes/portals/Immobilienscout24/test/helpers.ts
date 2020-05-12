@@ -1,8 +1,10 @@
-import { cloneDeep, assign } from 'lodash';
+import { cloneDeep } from 'lodash';
 import estates from './estates.json';
 import estatesRecursive from './estates-recursive.json';
 import estate from './estate.json';
 import attachment from './attachment.json';
+
+export const ENDPOINT = 'https://immobilienscout24.api/realestate';
 
 export default async (uri: string, options: any) => {
   expect(options.headers.Authorization).toBeDefined();
@@ -17,6 +19,7 @@ export default async (uri: string, options: any) => {
 
   const id = estate['realestates.apartmentBuy']['@id'];
   if (uri.includes(id)) return estate;
+
   return { type: 'error', statusCode: 404, message: 'NotFound' };
 };
 
@@ -48,7 +51,7 @@ const translate = (obj: object): any => {
 export const getResultEstate = (): any => {
   const type = 'realestates.apartmentBuy';
   const resultEstate: any = cloneDeep(estate[type]);
-  resultEstate.attachments = [{ attachment: 'exists' }];
+  resultEstate.attachments = attachment['common.attachments'][0].attachment;
   resultEstate.type = type;
   return resultEstate;
 };
@@ -91,7 +94,7 @@ export const getResultCommon = (translated: boolean = false): any => {
     },
     title:
       'RestAPI - Immobilienscout24 Testobjekt! +++BITTE+++ NICHT kontaktieren - Wohnung Kauf',
-    previewImage: { title: undefined, url: '' },
+    previewImage: { title: 'Lorem', url: 'http://image' },
     updatedAt: undefined,
   };
 
@@ -101,8 +104,8 @@ export const getResultCommon = (translated: boolean = false): any => {
 
 export const getResultProperties = (translated: boolean = false): any => {
   const properties = {
-    ...getResultCommon(),
-    attachments: [{ title: undefined, url: '' }],
+    ...getResultCommon(translated),
+    attachments: [{ title: 'Lorem', url: 'http://image' }],
     attic: undefined,
     balcony: false,
     buildingEnergyRatingType: undefined,
@@ -117,7 +120,8 @@ export const getResultProperties = (translated: boolean = false): any => {
     energyPerformanceCertificate: undefined,
     floor: undefined,
     freeFrom: undefined,
-    furnishingNote: undefined,
+    furnishingNote:
+      'Ex ea consectetur nisi et Lorem esse ex. Non consequat deserunt eu cillum id. Excepteur non non pariatur fugiat ea culpa sunt pariatur nulla officia sint fugiat irure. Culpa aliqua commodo id irure. Sunt cupidatat aliquip incididunt in cillum. Duis anim ad enim adipisicing dolor incididunt occaecat esse consectetur cupidatat dolor. Deserunt ut fugiat qui est ullamco tempor proident dolor officia ex.',
     garden: false,
     guestBathroom: undefined,
     guestToilet: false,

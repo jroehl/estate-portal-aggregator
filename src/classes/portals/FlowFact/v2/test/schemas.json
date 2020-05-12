@@ -1,0 +1,2289 @@
+{
+  "entries": [
+    {
+      "id": "4cdb43b4-46d4-481c-b27e-70b934236c06",
+      "name": "appointments",
+      "groups": ["taskboard", "history"],
+      "captions": {
+        "en": "Appointments",
+        "de": "Termine"
+      },
+      "properties": {
+        "attachments": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Anhänge"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99,
+          "mediatype": "DOCUMENT"
+        },
+        "nylas_id": {
+          "type": "TEXT",
+          "captions": {
+            "de": "nylas id"
+          },
+          "hasMultipleValues": false
+        },
+        "before_date": {
+          "type": "DATE",
+          "captions": {
+            "de": "Termin vorlauf"
+          },
+          "hasMultipleValues": false
+        },
+        "identifier": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Kennung"
+          },
+          "hasMultipleValues": false,
+          "index": {
+            "textSearch": true,
+            "separateIndex": true
+          },
+          "readonly": "true"
+        },
+        "message": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Beschreibung"
+          },
+          "hasMultipleValues": false,
+          "placeholder": "Beschreiben Sie hier den Termin ausführlicher ?"
+        },
+        "reminderDate": {
+          "type": "DATE",
+          "captions": {
+            "de": "Erinnern am"
+          },
+          "hasMultipleValues": false,
+          "placeholder": "Wann möchten Sie erinnert werden ?"
+        },
+        "after_date": {
+          "type": "DATE",
+          "captions": {
+            "de": "Termin nachlauf"
+          },
+          "hasMultipleValues": false
+        },
+        "nylas_calendar_id": {
+          "type": "TEXT",
+          "captions": {
+            "de": "nylas calendar id"
+          },
+          "hasMultipleValues": false
+        },
+        "start_date": {
+          "type": "DATE",
+          "captions": {
+            "de": "Beginn"
+          },
+          "hasMultipleValues": false
+        },
+        "subject": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Betreff"
+          },
+          "hasMultipleValues": true,
+          "index": {
+            "textSearch": true
+          },
+          "placeholder": "Unter welchen Namen soll der Termin geführt werden ?"
+        },
+        "type": {
+          "type": "LIST",
+          "captions": {
+            "de": "Art"
+          },
+          "fields": {
+            "externalAppointment": {
+              "value": "1",
+              "captions": {
+                "de": "Termin (extern)"
+              }
+            },
+            "internalAppointment": {
+              "value": "2",
+              "captions": {
+                "de": "Termin (intern)"
+              }
+            },
+            "inspectionDate": {
+              "value": "0",
+              "captions": {
+                "de": "Besichtigungstermin"
+              }
+            }
+          },
+          "hasMultipleValues": false
+        },
+        "end_date": {
+          "type": "DATE",
+          "captions": {
+            "de": "Ende"
+          },
+          "hasMultipleValues": true
+        },
+        "nylas_account": {
+          "type": "TEXT",
+          "captions": {
+            "de": "nylas account"
+          },
+          "hasMultipleValues": false
+        },
+        "participants": {
+          "type": "SCHEMA",
+          "captions": {
+            "de": "Teilnehmer"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99,
+          "lnk_schema": "contacts",
+          "placeholder": "Teilnehmer am Termin"
+        },
+        "completed": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Erledigt"
+          },
+          "hasMultipleValues": false
+        },
+        "location_description": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Ort"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wo findet der Termin statt ?"
+        },
+        "nylas_master_event_id": {
+          "type": "TEXT",
+          "captions": {
+            "de": "nylas master event id"
+          },
+          "hasMultipleValues": false
+        },
+        "location": {
+          "type": "ADDRESS",
+          "captions": {
+            "de": "Adressen"
+          },
+          "hasMultipleValues": true
+        },
+        "linked_estate": {
+          "type": "SCHEMA",
+          "captions": {
+            "de": "Verlinkte Immobilie"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99,
+          "lnk_schema": "estates"
+        },
+        "assignee": {
+          "type": "USER",
+          "captions": {
+            "de": "Zuständige Mitarbeiter"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99
+        }
+      },
+      "metadata": {},
+      "global": true
+    },
+    {
+      "id": "3a4b7aec-dcda-4f78-8dfe-441a6f52750c",
+      "name": "catering_accommodation_purchase",
+      "groups": ["estates"],
+      "captions": {
+        "en": "Gastronomy/Accommodation - Purchase",
+        "de": "Gastronomie/Beherberg.-Kauf"
+      },
+      "properties": {
+        "latitude": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Breitengrad"
+          },
+          "hasMultipleValues": true
+        },
+        "let": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Vermietet"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ist das Objekt vermietet?"
+        },
+        "addresses": {
+          "type": "ADDRESS",
+          "captions": {
+            "de": "Adressen"
+          },
+          "hasMultipleValues": true
+        },
+        "commissioninclvat": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Provision inkl. MWST"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ist die Mehrwertsteuer in der Provision enthalten?"
+        },
+        "groupnumber": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Gruppennummer"
+          },
+          "hasMultipleValues": true,
+          "format": "##########",
+          "placeholder": "Gruppierungsnummer für Immobilien zur Übertragung auf ImmobilienScout24"
+        },
+        "shutters": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Rollladen"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Sind Rolladen vorhanden?"
+        },
+        "oii_external_id": {
+          "type": "TEXT",
+          "captions": {
+            "default": "OpenImmo Import External ID"
+          },
+          "hasMultipleValues": false,
+          "readonly": "true"
+        },
+        "wheelchairaccess": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Behindertengerecht"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ist die Immobilie Rollstuhlgerecht?"
+        },
+        "attachDocumentsOnAutoIEX": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Automatischer Dokumentenversand"
+          },
+          "initialValues": [true]
+        },
+        "energyefficienceclass": {
+          "type": "LIST",
+          "captions": {
+            "de": "Energieeffizienzklasse"
+          },
+          "fields": {
+            "energyefficienceclass_b": {
+              "value": "03",
+              "captions": {
+                "de": "B"
+              }
+            },
+            "energyefficienceclass_c": {
+              "value": "04",
+              "captions": {
+                "de": "C"
+              }
+            },
+            "energyefficienceclass_a": {
+              "value": "02",
+              "captions": {
+                "de": "A"
+              }
+            },
+            "energyefficienceclass_f": {
+              "value": "07",
+              "captions": {
+                "de": "F"
+              }
+            },
+            "energyefficienceclass_g": {
+              "value": "08",
+              "captions": {
+                "de": "G"
+              }
+            },
+            "energyefficienceclass_aplus": {
+              "value": "01",
+              "captions": {
+                "de": "A+"
+              }
+            },
+            "energyefficienceclass_d": {
+              "value": "05",
+              "captions": {
+                "de": "D"
+              }
+            },
+            "energyefficienceclass_e": {
+              "value": "06",
+              "captions": {
+                "de": "E"
+              }
+            },
+            "energyefficienceclass_h": {
+              "value": "09",
+              "captions": {
+                "de": "H"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie eine Energieeffizientklasse aus"
+        },
+        "Elektroausstattung": {
+          "type": "LIST",
+          "captions": {
+            "de": "Elektroausstattung"
+          },
+          "fields": {
+            "fittings_electrical_supply_double_floor": {
+              "value": "F03",
+              "captions": {
+                "de": "Elektrische Versorgung (doppelter Fußboden)"
+              }
+            },
+            "fittings_basic_electric_supply": {
+              "value": "F02",
+              "captions": {
+                "de": "Einfache elektrische Versorgung"
+              }
+            },
+            "fittings_modernized_electric_supply": {
+              "value": "F01",
+              "captions": {
+                "de": "Modernisierte elektrische Versorgung"
+              }
+            },
+            "fittings_intercom_with_video_surveillance": {
+              "value": "F07",
+              "captions": {
+                "de": "Türsprechanlage mit Videoüberwachung"
+              }
+            },
+            "fittings_conduit": {
+              "value": "F04",
+              "captions": {
+                "de": "Kabelkanal"
+              }
+            },
+            "fittings_cable_connection": {
+              "value": "F08",
+              "captions": {
+                "de": "Kabelanschluss"
+              }
+            },
+            "fittings_intercom": {
+              "value": "F06",
+              "captions": {
+                "de": "Türsprechanlage"
+              }
+            },
+            "fittings_satellite_system": {
+              "value": "F09",
+              "captions": {
+                "de": "Satellitenanlage"
+              }
+            },
+            "fittings_emergency_power_system": {
+              "value": "F11",
+              "captions": {
+                "de": "Notstromanlage"
+              }
+            },
+            "fittings_lightning_conductor": {
+              "value": "F10",
+              "captions": {
+                "de": "Blitzschutzanlage"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ausstattungsmerkmal: Elektrische Versorgung"
+        },
+        "contractdate": {
+          "type": "DATE",
+          "captions": {
+            "de": "Vertragsdatum"
+          },
+          "hasMultipleValues": true
+        },
+        "completiondate": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Verfügbar ab"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Bezugstermin des Objektes als Freitext (z.B. \"01.01.2015\", \"sofort\" oder \"nach Vereinbarung\")"
+        },
+        "probabilityForSale": {
+          "type": "LIST",
+          "captions": {
+            "de": "Abschlusswahrscheinlichkeit"
+          },
+          "fields": {
+            "nicht einschätzbar": {
+              "value": "nicht einschätzbar",
+              "captions": {
+                "de": "nicht einschätzbar"
+              }
+            },
+            "eventuell": {
+              "value": "eventuell",
+              "captions": {
+                "de": "eventuell"
+              }
+            },
+            "unwahrscheinlich": {
+              "value": "unwahrscheinlich",
+              "captions": {
+                "de": "unwahrscheinlich"
+              }
+            },
+            "wahrscheinlich": {
+              "value": "wahrscheinlich",
+              "captions": {
+                "de": "wahrscheinlich"
+              }
+            },
+            "sicher": {
+              "value": "sicher",
+              "captions": {
+                "de": "sicher"
+              }
+            }
+          },
+          "hasMultipleValues": true
+        },
+        "fuelenergy_type": {
+          "type": "LIST",
+          "captions": {
+            "de": "Befeuerung/Energieträger"
+          },
+          "fields": {
+            "fuelenergy_type_solar": {
+              "value": "so",
+              "captions": {
+                "de": "Solar"
+              }
+            },
+            "fuelenergy_type_coal": {
+              "value": "ko",
+              "captions": {
+                "de": "Kohle"
+              }
+            },
+            "fuelenergy_type_heatpump": {
+              "value": "wa",
+              "captions": {
+                "de": "Wärmepumpe"
+              }
+            },
+            "fuelenergy_type_noinformation": {
+              "value": "zz",
+              "captions": {
+                "de": "Keine Angabe"
+              }
+            },
+            "fuelenergy_type_heatsupply": {
+              "value": "WAE",
+              "captions": {
+                "de": "Wärmelieferung"
+              }
+            },
+            "fuelenergy_type_gas": {
+              "value": "ga",
+              "captions": {
+                "de": "Gas"
+              }
+            },
+            "fuelenergy_type_liquidgas": {
+              "value": "FLU",
+              "captions": {
+                "de": "Flüssiggas"
+              }
+            },
+            "fuelenergy_type_electricity": {
+              "value": "st",
+              "captions": {
+                "de": "Strom"
+              }
+            },
+            "fuelenergy_type_oil": {
+              "value": "ol",
+              "captions": {
+                "de": "Heizöl"
+              }
+            },
+            "fuelenergy_type_earth": {
+              "value": "er",
+              "captions": {
+                "de": "Erdwärme"
+              }
+            },
+            "fuelenergy_type_pellet": {
+              "value": "pe",
+              "captions": {
+                "de": "Pellet"
+              }
+            },
+            "fuelenergy_type_naturalgasheavy": {
+              "value": "ER2",
+              "captions": {
+                "de": "Erdgas schwer"
+              }
+            },
+            "fuelenergy_type_bio": {
+              "value": "BI1",
+              "captions": {
+                "de": "Bioenergie"
+              }
+            },
+            "fuelenergy_type_wood": {
+              "value": "HO1",
+              "captions": {
+                "de": "Holz"
+              }
+            },
+            "fuelenergy_type_localheat": {
+              "value": "NAH",
+              "captions": {
+                "de": "Nahwärme"
+              }
+            },
+            "fuelenergy_type_coalcoke": {
+              "value": "KOH",
+              "captions": {
+                "de": "Kohle/Koks"
+              }
+            },
+            "fuelenergy_type_distanceheat": {
+              "value": "fe",
+              "captions": {
+                "de": "Fernwärme"
+              }
+            },
+            "fuelenergy_type_longdistanceheatingdamp": {
+              "value": "FER",
+              "captions": {
+                "de": "Fernwärme Dampf"
+              }
+            },
+            "fuelenergy_type_naturalgaslight": {
+              "value": "ER1",
+              "captions": {
+                "de": "Erdgas leicht"
+              }
+            },
+            "fuelenergy_type_woodchips": {
+              "value": "HO2",
+              "captions": {
+                "de": "Holz-Hackschnitzel"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Angabe der im Energieausweis genannten wesentlichen Energieträger für die Heizung des Gebäudes"
+        },
+        "flooring": {
+          "type": "LIST",
+          "captions": {
+            "de": "Bodenbelag"
+          },
+          "fields": {
+            "flooring_deal": {
+              "value": "10",
+              "captions": {
+                "de": "Dielen"
+              }
+            },
+            "flooring_epoxy": {
+              "value": "02",
+              "captions": {
+                "de": "Epoxidharzboden"
+              }
+            },
+            "flooring_carpet": {
+              "value": "05",
+              "captions": {
+                "de": "Teppichboden"
+              }
+            },
+            "flooring_cement": {
+              "value": "01",
+              "captions": {
+                "de": "Beton"
+              }
+            },
+            "flooring_antistaticcarpet": {
+              "value": "051",
+              "captions": {
+                "de": "Antistatischer Teppichboden"
+              }
+            },
+            "flooring_tile": {
+              "value": "03",
+              "captions": {
+                "de": "Fliesen"
+              }
+            },
+            "flooring_terracotta": {
+              "value": "terracotta",
+              "captions": {
+                "de": "Terrakotta"
+              }
+            },
+            "flooring_doublefloor": {
+              "value": "11",
+              "captions": {
+                "de": "Doppelboden"
+              }
+            },
+            "flooring_marble": {
+              "value": "marble",
+              "captions": {
+                "de": "Marmor"
+              }
+            },
+            "flooring_laminate": {
+              "value": "06",
+              "captions": {
+                "de": "Laminat"
+              }
+            },
+            "flooring_granite": {
+              "value": "granite",
+              "captions": {
+                "de": "Granit"
+              }
+            },
+            "flooring_stone": {
+              "value": "011",
+              "captions": {
+                "de": "Stein"
+              }
+            },
+            "flooring_none": {
+              "value": "09",
+              "captions": {
+                "de": "Ohne Bodenbelag"
+              }
+            },
+            "flooring_linoleum": {
+              "value": "012",
+              "captions": {
+                "de": "Linoleum"
+              }
+            },
+            "flooring_pvc": {
+              "value": "07",
+              "captions": {
+                "de": "PVC"
+              }
+            },
+            "flooring_parquet": {
+              "value": "04",
+              "captions": {
+                "de": "Parkett"
+              }
+            },
+            "flooring_chairrolesacceptingcarpettiles": {
+              "value": "052",
+              "captions": {
+                "de": "Stuhlrollenfeste Teppichfliesen"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie die Art des Bodenbelages"
+        },
+        "traveltimeairport": {
+          "unit": "min",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Fahrzeit Flughafen"
+          },
+          "placeholder": "Fahrzeit zum nächsten Flughafen in Minuten"
+        },
+        "dpwiring": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "DV Verkabelung"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Existiert eine DV-Verkabelung?"
+        },
+        "additionalexpenses": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Nebenkosten"
+          },
+          "hasMultipleValues": true,
+          "format": "#,##0.00",
+          "placeholder": "Nebenkosten inklusive Heizkosten bei Mietobjekten, Umlegbare Nebenkosten bei Anlageobjekten; pro Monat bzw. pro m² (je nach Mietbezug)"
+        },
+        "longitude": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Längengrad"
+          },
+          "hasMultipleValues": true
+        },
+        "parent": {
+          "type": "SCHEMA",
+          "captions": {
+            "de": "Übergeordnet"
+          },
+          "hasMultipleValues": true,
+          "lnk_schema": "catering_accommodation_purchase"
+        },
+        "gastroseatingindoor": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Gastroplätze in Räumen"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Anzahl der Gastronomieplätze in geschlossenen Räumen"
+        },
+        "commissionLandlord": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Provision Eigentümer"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Provisionsangabe in €, % oder laut Info möglich"
+        },
+        "typeofheating": {
+          "type": "LIST",
+          "captions": {
+            "de": "Heizungsart"
+          },
+          "fields": {
+            "typeofheating_heatpump": {
+              "value": "WAE",
+              "captions": {
+                "de": "Wärmepumpe"
+              }
+            },
+            "typeofheating_oil": {
+              "value": "OEL",
+              "captions": {
+                "de": "Öl-Heizung"
+              }
+            },
+            "typeofheating_gasheating": {
+              "value": "GAS",
+              "captions": {
+                "de": "Gas-Heizung"
+              }
+            },
+            "typeofheating_centralheating": {
+              "value": "03",
+              "captions": {
+                "de": "Zentralheizung"
+              }
+            },
+            "typeofheating_blockheatingworks": {
+              "value": "BLO",
+              "captions": {
+                "de": "Blockheizkraftwerk"
+              }
+            },
+            "typeofheating_solar": {
+              "value": "SOL",
+              "captions": {
+                "de": "Solar-Heizung"
+              }
+            },
+            "typeofheating_electricheating": {
+              "value": "ELE",
+              "captions": {
+                "de": "Elektro-Heizung"
+              }
+            },
+            "typeofheating_ovenheating": {
+              "value": "02",
+              "captions": {
+                "de": "Ofenheizung"
+              }
+            },
+            "typeofheating_woodpellet": {
+              "value": "HOL",
+              "captions": {
+                "de": "Holz-Pelletheizung"
+              }
+            },
+            "typeofheating_groundHeating": {
+              "value": "FUS",
+              "captions": {
+                "de": "Fußbodenheizung"
+              }
+            },
+            "typeofheating_longdisctanceheating": {
+              "value": "FER",
+              "captions": {
+                "de": "Fernwärme"
+              }
+            },
+            "typeofheating_nightstorageheater": {
+              "value": "NAC",
+              "captions": {
+                "de": "Nachtspeicherofen"
+              }
+            },
+            "typeofheating_floorHeating": {
+              "value": "01",
+              "captions": {
+                "de": "Etagenheizung"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie eine Heizungsart"
+        },
+        "energyidentificationtype": {
+          "type": "LIST",
+          "captions": {
+            "de": "Energieausweistyp"
+          },
+          "fields": {
+            "energyidentificationtype_energyusagevalue": {
+              "value": "3",
+              "captions": {
+                "de": "Verbrauchsausweis"
+              }
+            },
+            "energyidentificationtype_endenergyneed": {
+              "value": "2",
+              "captions": {
+                "de": "Bedarfsausweis"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie einen Energieausweistyp aus"
+        },
+        "showAsReference": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Als Referenz bewerben"
+          },
+          "hasMultipleValues": false
+        },
+        "walkdistpubltransp": {
+          "unit": "min",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Fußweg Öffentl. Verkehr"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Fußweg zum nächsten öffentlichen Verkehrsmittel in Minuten"
+        },
+        "contractDocuments": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Vertragsunterlagen"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 50,
+          "mediatype": "DOCUMENT"
+        },
+        "mainImage": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Titelbild"
+          },
+          "hasMultipleValues": false,
+          "online": "true",
+          "mediatype": "IMAGE"
+        },
+        "heating_costs_in_ac": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Heizkosten in Nebenkosten"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Sind die Heizkosten in den Nebenkosten enthalten?"
+        },
+        "barrierfree": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Barrierefrei"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ist das Objekt barrierefrei?"
+        },
+        "traveltimemainstation": {
+          "unit": "min",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Fahrzeit Hauptbahnhof"
+          },
+          "format": "###0",
+          "placeholder": "Fahrzeit zum nächsten Hauptbahnhof in Minuten"
+        },
+        "links": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Sonstige Links"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 10,
+          "online": "true",
+          "mediatype": "LINK"
+        },
+        "energyusagevaluevoltage": {
+          "unit": "kWh/(m²*a)",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Energiekennwert Strom"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Angabe des Energiekennwertes für Strom in kWh/(m²*a)"
+        },
+        "landlord": {
+          "type": "SCHEMA",
+          "captions": {
+            "de": "Eigentümer"
+          },
+          "hasMultipleValues": true,
+          "lnk_schema": "contacts"
+        },
+        "access": {
+          "type": "DATE",
+          "captions": {
+            "de": "Zugang ab"
+          },
+          "hasMultipleValues": true,
+          "format": "DD.MM.YYYY",
+          "placeholder": "Datum ab wann der Zugang möglich ist"
+        },
+        "yearofconstruction": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Baujahr"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Baujahr des Objektes (z.B. 1986)"
+        },
+        "estimatedContractClosure": {
+          "type": "DATE",
+          "captions": {
+            "de": "Voraussichtlicher Vermarktungsbeginn"
+          },
+          "hasMultipleValues": true
+        },
+        "vatcode": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Kaufpreis inkl. MwSt"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ist die Mehrwertsteuer im Kaufpreis enthalten?"
+        },
+        "numseptoilets": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Anzahl separater WCs"
+          },
+          "hasMultipleValues": true,
+          "format": "##0",
+          "placeholder": "Anzahl der separaten WCs"
+        },
+        "no_of_floors": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Etagenzahl"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Gesamtanzahl der Etagen der Immobilie"
+        },
+        "linkpropertyvideo": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Link zum Immobilien-Video"
+          },
+          "hasMultipleValues": true,
+          "mediatype": "LINK"
+        },
+        "energy_certificate_availability": {
+          "type": "LIST",
+          "captions": {
+            "de": "Energieausweis"
+          },
+          "fields": {
+            "energy_certificate_availability_not_required": {
+              "value": "K",
+              "captions": {
+                "de": "Nicht benötigt"
+              }
+            },
+            "energy_certificate_availability_available": {
+              "value": "A",
+              "captions": {
+                "de": "Vorhanden"
+              }
+            },
+            "energy_certificate_availability_not_available": {
+              "value": "E",
+              "captions": {
+                "de": "Noch nicht vorhanden"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Energieausweis"
+        },
+        "link360": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Link zur 360° Tour"
+          },
+          "hasMultipleValues": true,
+          "online": "true",
+          "mediatype": "LINK"
+        },
+        "internImage": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Vertraulich"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99,
+          "online": "false",
+          "mediatype": "IMAGE"
+        },
+        "Treppen": {
+          "type": "LIST",
+          "captions": {
+            "de": "Treppen"
+          },
+          "fields": {
+            "fittings_steel_staircase_with_wooden_steps": {
+              "value": "M04",
+              "captions": {
+                "de": "Stahltreppe mit Holzstufen"
+              }
+            },
+            "fittings_steel_staircase": {
+              "value": "M03",
+              "captions": {
+                "de": "Stahltreppe"
+              }
+            },
+            "fittings_ferroconcrete_staircase": {
+              "value": "M01",
+              "captions": {
+                "de": "Stahlbetontreppe"
+              }
+            },
+            "fittings_wooden_staircase": {
+              "value": "M02",
+              "captions": {
+                "de": "Holztreppe"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ausstattungsmerkmal: Treppen"
+        },
+        "archiveon": {
+          "type": "DATE",
+          "captions": {
+            "de": "Archiviert am"
+          },
+          "hasMultipleValues": true,
+          "format": "DD.MM.YYYY HH:mm:ss",
+          "placeholder": "Datum der Archivierung"
+        },
+        "singlerooms": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Anzahl Einzelzimmer"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Anzahl der Einzelzimmer in Beherbergungsbetrieben"
+        },
+        "elevator_general": {
+          "type": "LIST",
+          "captions": {
+            "de": "Aufzug"
+          },
+          "fields": {
+            "elevator_passenger_opt": {
+              "value": "1",
+              "captions": {
+                "de": "Personenaufzug"
+              }
+            },
+            "elevator_freight_opt": {
+              "value": "2",
+              "captions": {
+                "de": "Lastenaufzug"
+              }
+            },
+            "elevator_barrierfree_opt": {
+              "value": "3",
+              "captions": {
+                "de": "Barrierefreier Aufzug"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie die Art des Aufzugs"
+        },
+        "keywords": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Stichworte"
+          },
+          "hasMultipleValues": true
+        },
+        "doublerooms": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Anzahl Doppelzimmer"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Anzahl der Doppelzimmer in Beherbergungsbetrieben"
+        },
+        "NotaryPurchasePrice": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Notarieller Kaufpreis"
+          },
+          "hasMultipleValues": true
+        },
+        "typeoflocation": {
+          "type": "LIST",
+          "captions": {
+            "de": "Lageart"
+          },
+          "fields": {
+            "typeoflocation_towncenter": {
+              "value": "13",
+              "captions": {
+                "de": "Stadtzentrum"
+              }
+            },
+            "typeoflocation_mixedarea": {
+              "value": "07",
+              "captions": {
+                "de": "Mischlage"
+              }
+            },
+            "typeoflocation_businessarea": {
+              "value": "05",
+              "captions": {
+                "de": "Gewerbelage"
+              }
+            },
+            "typeoflocation_a-zone": {
+              "value": "01",
+              "captions": {
+                "de": "A-Lage"
+              }
+            },
+            "typeoflocation_townborder": {
+              "value": "11",
+              "captions": {
+                "de": "Stadtrand"
+              }
+            },
+            "typeoflocation_industryarea": {
+              "value": "06",
+              "captions": {
+                "de": "Industrielage"
+              }
+            },
+            "typeoflocation_pedestrianzone": {
+              "value": "15",
+              "captions": {
+                "de": "Fußgängerzone"
+              }
+            },
+            "typeoflocation_sitearea": {
+              "value": "09",
+              "captions": {
+                "de": "Ortslage"
+              }
+            },
+            "typeoflocation_settlementarea": {
+              "value": "10",
+              "captions": {
+                "de": "Siedlung"
+              }
+            },
+            "typeoflocation_district": {
+              "value": "12",
+              "captions": {
+                "de": "Stadtteil"
+              }
+            },
+            "typeoflocation_newbuildingarea": {
+              "value": "08",
+              "captions": {
+                "de": "Neubaulage"
+              }
+            },
+            "typeoflocation_livingarea": {
+              "value": "04",
+              "captions": {
+                "de": "Wohnlage"
+              }
+            },
+            "typeoflocation_shoppingcenter": {
+              "value": "03",
+              "captions": {
+                "de": "Einkaufszentrum"
+              }
+            },
+            "typeoflocation_districtcenter": {
+              "value": "14",
+              "captions": {
+                "de": "Nebenzentrum"
+              }
+            },
+            "typeoflocation_b-zone": {
+              "value": "02",
+              "captions": {
+                "de": "B-Lage"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie eine Lageart"
+        },
+        "contractEnd": {
+          "type": "DATE",
+          "captions": {
+            "de": "Vertragsende"
+          },
+          "hasMultipleValues": true,
+          "format": "DD.MM.YYYY"
+        },
+        "parking": {
+          "type": "LIST",
+          "captions": {
+            "de": "Stellplatztyp"
+          },
+          "fields": {
+            "parking_garage": {
+              "value": "2",
+              "captions": {
+                "de": "Garage"
+              }
+            },
+            "parking_carport": {
+              "value": "4",
+              "captions": {
+                "de": "Carport"
+              }
+            },
+            "parking_basementgarage": {
+              "value": "7",
+              "captions": {
+                "de": "Tiefgarage"
+              }
+            },
+            "parking_noinformation": {
+              "value": "1",
+              "captions": {
+                "de": "Keine Angabe"
+              }
+            },
+            "parking_duplex": {
+              "value": "5",
+              "captions": {
+                "de": "Duplex"
+              }
+            },
+            "parking_parkingdeck": {
+              "value": "6",
+              "captions": {
+                "de": "Parkhaus"
+              }
+            },
+            "parking_outsideparkingspace": {
+              "value": "3",
+              "captions": {
+                "de": "Aussenstellplatz"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie einen Stellplatztyp"
+        },
+        "roofprofile": {
+          "type": "LIST",
+          "captions": {
+            "de": "Dachform"
+          },
+          "fields": {
+            "Walmdach": {
+              "value": "2",
+              "captions": {
+                "de": "Walmdach"
+              }
+            },
+            "Pyramidendach": {
+              "value": "7",
+              "captions": {
+                "de": "Pyramidendach"
+              }
+            },
+            "Satteldach": {
+              "value": "1",
+              "captions": {
+                "de": "Satteldach"
+              }
+            },
+            "Pultdach": {
+              "value": "5",
+              "captions": {
+                "de": "Pultdach"
+              }
+            },
+            "Flachdach": {
+              "value": "4",
+              "captions": {
+                "de": "Flachdach"
+              }
+            },
+            "Mansarddach": {
+              "value": "6",
+              "captions": {
+                "de": "Mansarddach"
+              }
+            },
+            "Krüppelwalmdach": {
+              "value": "3",
+              "captions": {
+                "de": "Krüppelwalmdach"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie eine Dachform aus"
+        },
+        "numgarages": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Garagenanzahl"
+          },
+          "hasMultipleValues": true,
+          "format": "##0",
+          "placeholder": "Gesamtanzahl der Garagen (Tiefgaragen-, Duplex- oder PKW-Stellplätze)"
+        },
+        "energidentificationdate": {
+          "type": "DATE",
+          "captions": {
+            "de": "Ausweis erstellt am"
+          },
+          "hasMultipleValues": true,
+          "format": "DD.MM.YYYY",
+          "placeholder": "Erstelldatum des Energieausweises"
+        },
+        "automatedSendingInteractiveExpose": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Automatischer Exposéversand"
+          },
+          "hasMultipleValues": true
+        },
+        "sourceOfContact": {
+          "type": "LIST",
+          "captions": {
+            "de": "Herkunft des Leads"
+          },
+          "fields": {
+            "Kaltakquise": {
+              "value": "Kaltakquise",
+              "captions": {
+                "de": "Kaltakquise"
+              }
+            },
+            "Plakat- / Printwerbung": {
+              "value": "Plakat- / Printwerbung",
+              "captions": {
+                "de": "Plakat- / Printwerbung"
+              }
+            },
+            "Stammkunde": {
+              "value": "Stammkunde",
+              "captions": {
+                "de": "Stammkunde"
+              }
+            },
+            "Onlinesuche / Webmarketing": {
+              "value": "Onlinesuche / Webmarketing",
+              "captions": {
+                "de": "Onlinesuche / Webmarketing"
+              }
+            },
+            "über Empfehlung": {
+              "value": "über Empfehlung",
+              "captions": {
+                "de": "über Empfehlung"
+              }
+            },
+            "eigene Website": {
+              "value": "eigene Website",
+              "captions": {
+                "de": "eigene Website"
+              }
+            },
+            "persönlicher Kontakt": {
+              "value": "persönlicher Kontakt",
+              "captions": {
+                "de": "persönlicher Kontakt"
+              }
+            },
+            "Tippgeber": {
+              "value": "Tippgeber",
+              "captions": {
+                "de": "Tippgeber"
+              }
+            }
+          },
+          "hasMultipleValues": true
+        },
+        "oii_supplier_id": {
+          "type": "TEXT",
+          "captions": {
+            "default": "OpenImmo FTP account supplier ID"
+          },
+          "hasMultipleValues": false,
+          "readonly": "true"
+        },
+        "roomsmodifiable": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Räume sind veränderbar"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Kann die räumliche Aufteilung verändert werden?"
+        },
+        "note": {
+          "type": "TEXTAREA",
+          "captions": {
+            "de": "Notiz"
+          },
+          "hasMultipleValues": false,
+          "maxItems": 1,
+          "maxcharacters": "3999",
+          "placeholder": "Eine interne Notiz zur Immobilie"
+        },
+        "documents": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Dokumente"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 50,
+          "online": "true",
+          "mediatype": "DOCUMENT"
+        },
+        "guestterrace": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Gastterasse"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Gibt es eine Gastterasse?"
+        },
+        "conferencerooms": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Anzahl Tagungsräume"
+          },
+          "hasMultipleValues": true,
+          "format": "##0",
+          "placeholder": "Anzahl der Tagungsräume in Beherbergungsbetrieben"
+        },
+        "Sicht- und Sonnenschutz": {
+          "type": "LIST",
+          "captions": {
+            "de": "Sicht- und Sonnenschutz"
+          },
+          "fields": {
+            "fittings_jalousies": {
+              "value": "K03",
+              "captions": {
+                "de": "Jalousien"
+              }
+            },
+            "fittings_marquees_electric": {
+              "value": "K02",
+              "captions": {
+                "de": "Markisen (elektrisch)"
+              }
+            },
+            "fittings_marquee": {
+              "value": "K01",
+              "captions": {
+                "de": "Markisen"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ausstattungsmerkmal: Sicht- und Sonnenschutz"
+        },
+        "shownInInteractiveExpose": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Als Empfehlung im IEX erlauben"
+          },
+          "hasMultipleValues": true
+        },
+        "commissionInformation": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Provisionshinweis"
+          },
+          "hasMultipleValues": true
+        },
+        "otherarea": {
+          "unit": "m²",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Sonstige Fläche"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Sonstige Fläche in m²"
+        },
+        "energyusagevalue": {
+          "unit": "kWh/(m²*a)",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Energiekennwert"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Angabe des Energiekennwertes in kWh/(m²*a)"
+        },
+        "pricesqm": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Kaufpreis pro m²"
+          },
+          "hasMultipleValues": true,
+          "format": "###,###,###,##0.00",
+          "placeholder": "Kaufpreis pro m²"
+        },
+        "numberbeds": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Anzahl Betten"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Anzahl der Betten in Beherbergungsbetrieben"
+        },
+        "otherrooms": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Anzahl Sonstigezimmer"
+          },
+          "hasMultipleValues": true,
+          "format": "###0",
+          "placeholder": "Anzahl der Sonstiger vermietbarer Zimmer in Beherbergungsbetrieben"
+        },
+        "internalDocuments": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Interne Dokumente"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 50,
+          "mediatype": "DOCUMENT"
+        },
+        "energywithwarmwater": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Energie mit Warmwasser"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Enthält der Energiekennwert die verbrauchte Energie zur Warmwasserbereitung?"
+        },
+        "reasonforarchiving": {
+          "type": "LIST",
+          "captions": {
+            "de": "Archivgrund"
+          },
+          "fields": {
+            "Task Completed": {
+              "value": "AE",
+              "captions": {
+                "de": "Auftrag beendet"
+              }
+            },
+            "reason_for_archiving_let": {
+              "value": "VM",
+              "captions": {
+                "de": "Vermietet"
+              }
+            },
+            "reason_for_archiving_other_reason": {
+              "value": "SG",
+              "captions": {
+                "de": "Sonstiger Grund"
+              }
+            },
+            "reason_for_archiving_end_of_instruction_exceeded": {
+              "value": "AU",
+              "captions": {
+                "de": "Auftragsende überschnitten"
+              }
+            },
+            "Sold": {
+              "value": "VK",
+              "captions": {
+                "de": "Verkauft"
+              }
+            },
+            "reason_for_archiving_sold": {
+              "value": "VK",
+              "captions": {
+                "de": "Verkauft"
+              }
+            },
+            "reason_for_archiving_instruction_completed": {
+              "value": "AE",
+              "captions": {
+                "de": "Auftrag beendet"
+              }
+            },
+            "Rented": {
+              "value": "VM",
+              "captions": {
+                "de": "Vermietet"
+              }
+            },
+            "reason_for_archiving_reservation_expired": {
+              "value": "RA",
+              "captions": {
+                "de": "Reservierung abgelaufen"
+              }
+            },
+            "reason_for_archiving_proprietor_is_landlord": {
+              "value": "EVM",
+              "captions": {
+                "de": "Eigentümer selbst vermietet"
+              }
+            },
+            "reason_for_archiving_sale_direct_by_proprietor": {
+              "value": "EVK",
+              "captions": {
+                "de": "Eigentümer selbst verkauft"
+              }
+            },
+            "reason_for_archiving_property_not_confirmed": {
+              "value": "ONB",
+              "captions": {
+                "de": "Objekt nicht bestätigt"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie den Grund der Archivierung aus"
+        },
+        "traveltimebab": {
+          "unit": "min",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Fahrzeit Autobahn"
+          },
+          "format": "###0",
+          "placeholder": "Fahrtzeit bis zur nächsten Autobahn in Minuten"
+        },
+        "purchaseprice": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Kaufpreis"
+          },
+          "hasMultipleValues": true,
+          "format": "#,##0.00",
+          "placeholder": "Kaufpreis für die Immobilie"
+        },
+        "estatetype": {
+          "type": "LIST",
+          "captions": {
+            "de": "Objektart"
+          },
+          "fields": {
+            "public_house": {
+              "value": "08GAE",
+              "captions": {
+                "de": "Gaststätte"
+              }
+            },
+            "boardinghouse": {
+              "value": "08PENT",
+              "captions": {
+                "de": "Boardinghaus"
+              }
+            },
+            "restaurant": {
+              "value": "08REST",
+              "captions": {
+                "de": "Restaurant"
+              }
+            },
+            "hotel_property": {
+              "value": "08HOTA",
+              "captions": {
+                "de": "Hotelanwesen"
+              }
+            },
+            "bar": {
+              "value": "08B",
+              "captions": {
+                "de": "Bar"
+              }
+            },
+            "cafe": {
+              "value": "08C",
+              "captions": {
+                "de": "Cafe"
+              }
+            },
+            "hotel_and_gastronomy_areas": {
+              "value": "08",
+              "captions": {
+                "de": "Hotellerie- und Gastronomieflächen"
+              }
+            },
+            "hotel": {
+              "value": "08HOT",
+              "captions": {
+                "de": "Hotel"
+              }
+            },
+            "pension": {
+              "value": "08PENS",
+              "captions": {
+                "de": "Pension"
+              }
+            },
+            "holiday_estate": {
+              "value": "08F",
+              "captions": {
+                "de": "Ferienimmobilie"
+              }
+            },
+            "inns": {
+              "value": "08HOTG",
+              "captions": {
+                "de": "Hotel garni"
+              }
+            },
+            "discotheque": {
+              "value": "08D",
+              "captions": {
+                "de": "Diskothek"
+              }
+            },
+            "guesthouse": {
+              "value": "08GAHS",
+              "captions": {
+                "de": "Gästehaus"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Bitte wählen Sie eine Objektart aus"
+        },
+        "onlineImage": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Internet"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99,
+          "online": "true",
+          "mediatype": "IMAGE"
+        },
+        "textEnvironment": {
+          "type": "TEXTAREA",
+          "captions": {
+            "de": "Ausstattung"
+          },
+          "hasMultipleValues": true,
+          "maxcharacters": "3999"
+        },
+        "totalarea": {
+          "unit": "m²",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Gesamtfläche"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Gesamtfläche der Immobilie in m²"
+        },
+        "commissionProspect": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Provision Käufer"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Provisionsangabe in €, % oder laut Info möglich"
+        },
+        "textFree": {
+          "type": "TEXTAREA",
+          "captions": {
+            "de": "Freitext"
+          },
+          "hasMultipleValues": true,
+          "maxcharacters": "3999"
+        },
+        "internaldescription": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Interne Bezeichnung"
+          },
+          "hasMultipleValues": true,
+          "index": {
+            "textSearch": true
+          }
+        },
+        "connectedGastronomy": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Eigene Gastronomie vorhanden"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Beherberung ver. über eigene Gastronomie"
+        },
+        "gastroarea": {
+          "unit": "m²",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Gastraumfläche "
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Gastronomische Fläche in m²"
+        },
+        "contractStart": {
+          "type": "DATE",
+          "captions": {
+            "de": "Vertragsbeginn"
+          },
+          "hasMultipleValues": true,
+          "format": "DD.MM.YYYY"
+        },
+        "textLocation": {
+          "type": "TEXTAREA",
+          "captions": {
+            "de": "Lage"
+          },
+          "hasMultipleValues": true,
+          "maxcharacters": "3999"
+        },
+        "usablearea": {
+          "unit": "m²",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Nutzfläche"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Zusätzliche Nebennutzflächen  in m²"
+        },
+        "headline": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Headline"
+          },
+          "hasMultipleValues": true,
+          "index": {
+            "textSearch": true
+          },
+          "placeholder": "Kurzbeschreibung zur Veröffentlichung im Exposé und auf den Portalen"
+        },
+        "floor": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Etage"
+          },
+          "hasMultipleValues": true,
+          "format": "##0.0",
+          "placeholder": "Angabe der Etage"
+        },
+        "takeoverPrice": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Übernahmenpreis der vorhandenen Ausstattung"
+          },
+          "hasMultipleValues": true,
+          "format": "#,##0.00",
+          "placeholder": "Kaufpreis für die bereits in der Immobilie befindlichen Ausstattung"
+        },
+        "targetprice": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Preisvorstellung / Ersteinschätzung"
+          },
+          "hasMultipleValues": true,
+          "subtype": "NUMBER",
+          "format": "#,##0.00",
+          "placeholder": "Anvisierter Kaufpreis für die Immobilie"
+        },
+        "pass_valid_till": {
+          "type": "DATE",
+          "captions": {
+            "de": "Ausweis gültig bis"
+          },
+          "hasMultipleValues": true,
+          "format": "DD.MM.YYYY",
+          "placeholder": "Datum, bis wann der Energieausweis gültig ist"
+        },
+        "cellararea": {
+          "unit": "m²",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Kellerfläche"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Kellerfläche in m²"
+        },
+        "groundplotImage": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Grundrisse"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 10,
+          "online": "true",
+          "mediatype": "IMAGE"
+        },
+        "textEstate": {
+          "type": "TEXTAREA",
+          "captions": {
+            "de": "Immobilie"
+          },
+          "hasMultipleValues": true,
+          "maxcharacters": "3999"
+        },
+        "reasonForSale": {
+          "type": "LIST",
+          "captions": {
+            "de": "Verkaufsgrund"
+          },
+          "fields": {
+            "Invest-Geschäft": {
+              "value": "Invest-Geschäft",
+              "captions": {
+                "de": "Invest-Geschäft"
+              }
+            },
+            "Umzug aus diversen Gründen": {
+              "value": "Umzug aus diversen Gründen",
+              "captions": {
+                "de": "Umzug aus diversen Gründen"
+              }
+            },
+            "Hinterlassenschaft": {
+              "value": "Hinterlassenschaft",
+              "captions": {
+                "de": "Hinterlassenschaft"
+              }
+            },
+            "Trennung vom Lebenspartner": {
+              "value": "Trennung vom Lebenspartner",
+              "captions": {
+                "de": "Trennung vom Lebenspartner"
+              }
+            },
+            "Sonstiges": {
+              "value": "Sonstiges",
+              "captions": {
+                "de": "Sonstiges"
+              }
+            },
+            "monetäre Gründe": {
+              "value": "monetäre Gründe",
+              "captions": {
+                "de": "monetäre Gründe"
+              }
+            }
+          },
+          "hasMultipleValues": true
+        },
+        "reserveduntil": {
+          "type": "DATE",
+          "captions": {
+            "de": "Reserviert bis"
+          },
+          "hasMultipleValues": true
+        },
+        "buyer": {
+          "type": "SCHEMA",
+          "captions": {
+            "de": "Käufer"
+          },
+          "hasMultipleValues": true,
+          "lnk_schema": "contacts",
+          "placeholder": "Käufer der Immobilie"
+        },
+        "longImage": {
+          "type": "MEDIA",
+          "captions": {
+            "de": "Expose"
+          },
+          "hasMultipleValues": true,
+          "maxItems": 99,
+          "online": "true",
+          "mediatype": "IMAGE"
+        },
+        "condition": {
+          "type": "LIST",
+          "captions": {
+            "de": "Zustand"
+          },
+          "fields": {
+            "condition_likenew": {
+              "value": "03",
+              "captions": {
+                "de": "Neuwertig"
+              }
+            },
+            "condition_needsrenovation": {
+              "value": "08",
+              "captions": {
+                "de": "Renovierungsbedürftig"
+              }
+            },
+            "condition_reorganised": {
+              "value": "04",
+              "captions": {
+                "de": "Saniert"
+              }
+            },
+            "condition_wellkept": {
+              "value": "07",
+              "captions": {
+                "de": "Gepflegt"
+              }
+            },
+            "condition_agreement": {
+              "value": "09",
+              "captions": {
+                "de": "Nach Vereinbarung"
+              }
+            },
+            "condition_firsttimeuseafterreorganization": {
+              "value": "02",
+              "captions": {
+                "de": "Erstbezug nach Sanierung"
+              }
+            },
+            "Unsaniert": {
+              "value": "11",
+              "captions": {
+                "de": "Unsaniert"
+              }
+            },
+            "condition_renovated": {
+              "value": "06",
+              "captions": {
+                "de": "Vollständig renoviert"
+              }
+            },
+            "condition_projected": {
+              "value": "10",
+              "captions": {
+                "de": "projektiert"
+              }
+            },
+            "condition_modernized": {
+              "value": "05",
+              "captions": {
+                "de": "Modernisiert"
+              }
+            },
+            "condition_firsttimeuse": {
+              "value": "01",
+              "captions": {
+                "de": "Erstbezug"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Wählen Sie den Zustand der Immobilie"
+        },
+        "heatingcosts": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Heizkosten pro Monat"
+          },
+          "hasMultipleValues": true,
+          "format": "###,###,###,##0.00",
+          "placeholder": "Heizkosten pro Monat"
+        },
+        "carportnum": {
+          "type": "NUMBER",
+          "captions": {
+            "de": "Stellplatzanzahl"
+          },
+          "hasMultipleValues": true,
+          "format": "##0",
+          "placeholder": "Anzahl der Stellplätze"
+        },
+        "contact": {
+          "type": "SCHEMA",
+          "captions": {
+            "de": "Ansprechpartner"
+          },
+          "hasMultipleValues": true,
+          "lnk_schema": "contacts",
+          "placeholder": "Name des Ansprechpartners, der auf den Portalen veröffentlicht wird"
+        },
+        "monument": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Denkmalschutzobjekt"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Ist das Objekt ein Denkmalschutzobjekt?"
+        },
+        "status": {
+          "type": "LIST",
+          "captions": {
+            "de": "Status"
+          },
+          "fields": {
+            "archived": {
+              "value": "archived",
+              "captions": {
+                "de": "Archiviert"
+              }
+            },
+            "inactive": {
+              "value": "inactive",
+              "captions": {
+                "de": "Inaktiv"
+              }
+            },
+            "active": {
+              "value": "active",
+              "captions": {
+                "de": "Aktiv"
+              }
+            }
+          },
+          "initialValues": ["active"],
+          "hasMultipleValues": false
+        },
+        "acquisitionStrategy": {
+          "type": "LIST",
+          "captions": {
+            "de": "Akquisestrategie"
+          },
+          "fields": {
+            "automatische Akquise": {
+              "value": "automatische Akquise",
+              "captions": {
+                "de": "automatische Akquise"
+              }
+            }
+          },
+          "hasMultipleValues": true
+        },
+        "instructiontype": {
+          "type": "LIST",
+          "captions": {
+            "de": "Vertragsart"
+          },
+          "fields": {
+            "instruction_type_non_exclusive": {
+              "value": "N",
+              "captions": {
+                "de": "Normaler allgemeiner Auftrag"
+              }
+            },
+            "instruction_type_other": {
+              "value": "S",
+              "captions": {
+                "de": "Sonstiger Auftrag"
+              }
+            },
+            "instruction_type_exclusive": {
+              "value": "A",
+              "captions": {
+                "de": "Alleinauftrag"
+              }
+            },
+            "instruction_type_qualified_exclusive": {
+              "value": "Q",
+              "captions": {
+                "de": "Qualifizierter Alleinauftrag"
+              }
+            }
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Vertragliche Grundlage der Tätigkeit"
+        },
+        "energyusagevalueheat": {
+          "unit": "kWh/(m²*a)",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Energiekennwert Wärme"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Angabe des Energiekennwertes für Wärme in kWh/(m²*a)"
+        },
+        "identifier": {
+          "type": "TEXT",
+          "captions": {
+            "de": "Kennung"
+          },
+          "hasMultipleValues": false,
+          "index": {
+            "textSearch": true,
+            "separateIndex": true
+          },
+          "readonly": "true"
+        },
+        "price_on_request": {
+          "type": "CHECKBOX",
+          "captions": {
+            "de": "Preis auf Anfrage"
+          },
+          "hasMultipleValues": true,
+          "placeholder": "Preis auf Anfrage zeigt bei Wohnimmobilien auf ImmobilienScout24 das Objekt mit dem Preis 0,00€ an"
+        },
+        "monthly_oberheads": {
+          "unit": "€",
+          "type": "NUMBER",
+          "captions": {
+            "de": "Betriebskosten"
+          },
+          "hasMultipleValues": true,
+          "format": "###,###,###,##0.00",
+          "placeholder": "Betriebskosten pro Jahr"
+        }
+      },
+      "metadata": {},
+      "global": true
+    }
+  ],
+  "totalCount": 2,
+  "page": 1,
+  "pageSize": 34
+}
