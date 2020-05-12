@@ -108,7 +108,7 @@ Have a look at [fetch-estate.ts](src/commands/flowfact_commands/fetch-estate.ts)
 ## TODO
 
 - [ ] tests
-  - [ ] unit-tests
+  - [x] unit-tests
   - [ ] e2e-tests
 - [x] integrate ci (github actions)
 - [x] integrate [semantic-release](https://www.npmjs.com/package/semantic-release)
