@@ -68,7 +68,10 @@ export class FlowFactEstateV2 extends Estate {
       address: this.getAddress(),
       archived: this.getArchived('status.values[0]'),
       estateType: this.getTranslatableValue('estatetype.values[0]'),
-      marketingType: this.getMarketingType('tradeType.values[0]'),
+      marketingType: this.getMarketingType(
+        ['tradeType.values[0]', '_metadata.schema'],
+        this.getValue('rent.values[0]') ? 'RENT' : 'PURCHASE'
+      ),
       createdAt: this.getDate('_metadata.createdTimestamp'),
       externalID: this.getValue('identifier.values[0]'),
       internalID: this.getValue('_metadata.id'),

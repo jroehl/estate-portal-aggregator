@@ -70,7 +70,7 @@ export class Immobilienscout24Estate extends Estate {
       estateType: this.getTranslatableValue(null, estateType),
       marketingType: this.getMarketingType(
         'price.marketingType',
-        this.getValue('baseRent') || estateType.match(/rent/i)
+        this.getValue('baseRent') || estateType.match(/.*(rent).*/i)
           ? 'RENT'
           : 'PURCHASE'
       ),
