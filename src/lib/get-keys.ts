@@ -65,6 +65,8 @@ class Detailed implements RealEstateDetailedProperties {
   residentialUnits!: number;
   summerResidencePractical!: boolean;
   usableFloorSpace!: number;
+  totalRent!: string;
+  serviceCharge!: string;
 }
 
 class Ad implements Address {
