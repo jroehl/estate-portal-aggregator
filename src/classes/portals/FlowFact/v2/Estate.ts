@@ -81,6 +81,8 @@ export class FlowFactEstateV2 extends Estate {
       title: this.getTranslatableValue('headline.values[0]'),
       previewImage: this.getPreviewImage(),
       updatedAt: this.getDate('_metadata.timestamp'),
+      totalRent: this.getMonetaryValue('rentinclusiveofheating.values[0]'),
+      serviceCharge: this.getMonetaryValue('additionalexpenses.values[0]'),
     };
   }
 
@@ -108,8 +110,17 @@ export class FlowFactEstateV2 extends Estate {
     if (!price && !rent) return;
     return {
       value: price || rent,
-      currency: this.getTranslatableValue('currency.values[0]', '€'),
+      currency: this.getCurrency(),
     };
+  }
+
+  private getMonetaryValue(path: any): string | undefined {
+    const value = this.getValue(path);
+    if (value) return `${value} ${this.getCurrency()}`;
+  }
+
+  private getCurrency(): string {
+    return this.getTranslatableValue('currency.values[0]', '€');
   }
 
   private getAddress(): Address {

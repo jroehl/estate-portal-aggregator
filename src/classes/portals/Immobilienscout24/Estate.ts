@@ -87,6 +87,8 @@ export class Immobilienscout24Estate extends Estate {
         '@modified',
         '@modification',
       ]),
+      totalRent: this.getMonetaryValue('totalRent'),
+      serviceCharge: this.getMonetaryValue('serviceCharge'),
     };
   }
 
@@ -119,13 +121,22 @@ export class Immobilienscout24Estate extends Estate {
     const rent = this.getValue('baseRent');
     if (!price && !rent) return;
 
-    const currency = this.getTranslatableValue('price.currency', '€');
+    const currency = this.getCurrency();
     const priceIntervalType = this.getTranslatableValue('price.intervalType');
     return {
       value: price || rent,
       currency,
       priceIntervalType,
     };
+  }
+
+  private getMonetaryValue(path: any): string | undefined {
+    const value = this.getValue(path);
+    if (value) return `${value} ${this.getCurrency()}`;
+  }
+
+  private getCurrency(): string {
+    return this.getTranslatableValue('price.currency', '€');
   }
 
   private getAddress(): Address | undefined {
