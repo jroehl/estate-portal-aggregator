@@ -86,7 +86,7 @@ export interface RealEstateDetailedProperties {
   summerResidencePractical: boolean;
   usableFloorSpace: number;
   totalRent: string | undefined;
-  serviceCharge: string | undefined;
+  additionalExpenses: string | undefined;
 }
 
 export interface Attachment {

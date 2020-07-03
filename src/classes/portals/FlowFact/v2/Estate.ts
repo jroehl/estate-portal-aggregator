@@ -82,7 +82,7 @@ export class FlowFactEstateV2 extends Estate {
       previewImage: this.getPreviewImage(),
       updatedAt: this.getDate('_metadata.timestamp'),
       totalRent: this.getMonetaryValue('rentinclusiveofheating.values[0]'),
-      serviceCharge: this.getMonetaryValue('additionalexpenses.values[0]'),
+      additionalExpenses: this.getMonetaryValue('additionalexpenses.values[0]'),
     };
   }
 

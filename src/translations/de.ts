@@ -10,6 +10,7 @@ export default {
   active: 'Veröffentlichungsstatus ist aktiv',
   additionalarea: 'Nebenfläche',
   additionalcosts: 'Nebenkosten',
+  additionalexpenses: 'Nebenkosten',
   additionalpictures:
     'Weitere Bilder für das Objekt. Die Werte floorplan und titlePicture sind immer false, um die Abwärtskompatibilität zu gewährleisten',
   additionalservicesincluded: 'Preis inkl. Zusatzservices',

@@ -77,7 +77,7 @@ export class FlowFactEstateV1 extends Estate {
       summerResidencePractical: this.getValue('summerResidencePractical'),
       usableFloorSpace: this.getValue('usableFloorSpace'),
       totalRent: undefined,
-      serviceCharge: undefined,
+      additionalExpenses: undefined,
     };
   }
 

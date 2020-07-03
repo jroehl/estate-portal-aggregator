@@ -88,7 +88,7 @@ export class Immobilienscout24Estate extends Estate {
         '@modification',
       ]),
       totalRent: this.getMonetaryValue('totalRent'),
-      serviceCharge: this.getMonetaryValue('serviceCharge'),
+      additionalExpenses: this.getMonetaryValue('serviceCharge'),
     };
   }
 

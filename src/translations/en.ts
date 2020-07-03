@@ -11,6 +11,7 @@ export default {
   active: 'Publication state is active',
   additionalarea: 'Additional area',
   additionalcosts: 'Additional costs',
+  additionalexpenses: 'Additional costs',
   additionalpictures:
     'Additional pictures for the object. The values floorplan and titlePicture are always false to ensure downward compatibility',
   additionalservicesincluded: 'Additional services included',
