@@ -59,7 +59,7 @@ class ResultEnricher {
       Object.entries(schema.properties).forEach(
         ([key, { type, fields = {} }]: [string, any]) => {
           const fieldMap = this.getFieldMap(fields);
-          if (type === 'LIST' && result[key]) {
+          if (type === 'LIST' && Array.isArray(result[key]?.values)) {
             result[key].values = result[key].values.map((value: string) =>
               fieldMap[value] !== undefined ? fieldMap[value].key : value
             );

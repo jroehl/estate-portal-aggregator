@@ -26,9 +26,9 @@ export class FlowFactEstateV2 extends Estate {
       ),
       courtage: this.getTranslatableValue('commissionInformation.values[0]'),
       descriptionNote: this.getValue('textEstate.values[0]'),
-      energyCertificateAvailability: this.getBoolean(
+      energyCertificateAvailability: this.getTranslatableValue(
         'energy_certificate_availability.values[0]'
-      )!,
+      ),
       energyConsumptionContainsWarmWater: this.getBoolean(
         'energywithwarmwater.values[0]'
       )!,
