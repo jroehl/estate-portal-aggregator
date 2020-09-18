@@ -147,7 +147,10 @@ export abstract class Estate {
   private parseValue(value: any): any {
     if (!value || Array.isArray(value)) return value;
     if (value.toString().match(/^(AVAILABLE|YES|true)$/i)) return true;
-    if (value.toString().match(/^(NOT_AVAILABLE|NO|NOT|false)$/i)) return false;
+    if (
+      value.toString().match(/^(NOT_APPLICABLE|NOT_AVAILABLE|NO|NOT|false)$/i)
+    )
+      return false;
     return value;
   }
 
@@ -198,7 +201,8 @@ export abstract class Estate {
         break;
       }
     }
-    if (isTranslatable) this._translator.addToTranslatables({ [result]: path });
+    if (isTranslatable && result)
+      this._translator.addToTranslatables({ [result]: path });
     return result;
   }
 

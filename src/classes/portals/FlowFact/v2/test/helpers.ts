@@ -74,6 +74,7 @@ export const getSchemas = (): any => {
 export const getResultCommon = (translated: boolean = false): any => {
   const common = {
     active: false,
+    additionalExpenses: undefined,
     address: {
       city: 'Foobartown',
       postcode: '12345',
@@ -89,6 +90,7 @@ export const getResultCommon = (translated: boolean = false): any => {
     numberOfRooms: 2,
     price: { value: 54000, currency: '€' },
     title: 'Wohnen in schöner ländlicher Gegend nahe der Stadt Foobartown',
+    totalRent: undefined,
     previewImage: {
       title: 'Wohnzimmer',
       url:
@@ -126,7 +128,7 @@ export const getResultProperties = (translated: boolean = false): any => {
     courtage: undefined,
     descriptionNote:
       'Dolore exercitation aliquip anim laborum cillum tempor excepteur occaecat culpa. Aliqua amet nisi ad quis ut incididunt adipisicing laborum reprehenderit consectetur esse. Do in amet incididunt commodo labore. Pariatur voluptate exercitation reprehenderit adipisicing tempor id culpa esse ullamco voluptate. Ex pariatur excepteur mollit culpa culpa tempor non ipsum. Magna amet adipisicing cillum excepteur nulla sint aliquip et. Aliqua occaecat id aliqua ut ullamco magna eiusmod officia veniam.',
-    energyCertificateAvailability: undefined,
+    energyCertificateAvailability: 'A',
     energyConsumptionContainsWarmWater: undefined,
     energyPerformanceCertificate: undefined,
     floor: undefined,

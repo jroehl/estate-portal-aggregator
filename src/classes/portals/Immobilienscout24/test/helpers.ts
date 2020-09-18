@@ -73,6 +73,7 @@ export const getResultError = (): any => {
 export const getResultCommon = (translated: boolean = false): any => {
   const common = {
     active: false,
+    additionalExpenses: undefined,
     address: {
       city: 'Heuersdorf',
       postcode: '04564',
@@ -95,6 +96,7 @@ export const getResultCommon = (translated: boolean = false): any => {
     title:
       'RestAPI - Immobilienscout24 Testobjekt! +++BITTE+++ NICHT kontaktieren - Wohnung Kauf',
     previewImage: { title: 'Lorem', url: 'http://image' },
+    totalRent: undefined,
     updatedAt: undefined,
   };
 
