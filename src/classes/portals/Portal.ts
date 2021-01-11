@@ -58,7 +58,7 @@ export abstract class Portal {
     }
   }
 
-  abstract async fetchEstates(options?: FetchOptions): Promise<any[]>;
+  abstract fetchEstates(options?: FetchOptions): Promise<any[]>;
 
-  abstract async fetchEstate(id: string): Promise<any>;
+  abstract fetchEstate(id: string): Promise<any>;
 }

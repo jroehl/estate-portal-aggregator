@@ -36,7 +36,7 @@ export abstract class Authorization {
   }
 
   abstract checkCredentials(credentials: Credentials): Credentials;
-  abstract async authorize(
+  abstract authorize(
     url?: string,
     method?: string
   ): Promise<AuthorizationHeader>;

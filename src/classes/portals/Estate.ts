@@ -102,7 +102,7 @@ export abstract class Estate {
   }
 
   private _properties?: RealEstateProperties;
-  protected abstract async parse(): Promise<RealEstateProperties>;
+  protected abstract parse(): Promise<RealEstateProperties>;
 
   public async init(response: Mapping): Promise<Estate> {
     if (response.type === 'error') throw response;

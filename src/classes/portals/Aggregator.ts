@@ -12,9 +12,9 @@ export abstract class Aggregator {
   public async fetchResults(options: FetchOptions = {}): Promise<Mapping[]> {
     return this.portal.fetchEstates(options);
   }
-  public abstract async fetchEstate(id: string): Promise<Estate>;
-  public abstract async fetchEstates(options: FetchOptions): Promise<Estate[]>;
-  public abstract async generateDictionary(
+  public abstract fetchEstate(id: string): Promise<Estate>;
+  public abstract fetchEstates(options: FetchOptions): Promise<Estate[]>;
+  public abstract generateDictionary(
     language: AvailableLanguages
   ): Promise<Mapping>;
 }
