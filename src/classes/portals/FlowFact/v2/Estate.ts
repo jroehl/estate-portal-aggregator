@@ -21,7 +21,7 @@ export class FlowFactEstateV2 extends Estate {
       constructionPhase: this.getTranslatableValue(
         'constructionphase.values[0]'
       ),
-      constructionYear: this.getTranslatableValue(
+      constructionYear: this.getValue(
         'yearofconstruction.values[0]'
       ),
       courtage: this.getTranslatableValue('commissionInformation.values[0]'),
@@ -35,7 +35,7 @@ export class FlowFactEstateV2 extends Estate {
       energyPerformanceCertificate: this.getBoolean(
         'energyCertificate.energy_performance_certificate.values[0]'
       )!,
-      floor: this.getTranslatableValue('floor.values[0]'),
+      floor: this.getValue('floor.values[0]'),
       freeFrom: this.getValue('freeFrom'),
       furnishingNote: this.getValue('textEnvironment.values[0]'),
       garden: this.getBoolean('gardenarea.values[0]')!,
@@ -51,8 +51,8 @@ export class FlowFactEstateV2 extends Estate {
       locationNote: this.getValue('textLocation.values[0]'),
       lodgerFlat: this.getBoolean('lodger_flat.values[0]')!,
       numberOfApartments: this.getValue('numberOfApartments'),
-      numberOfBathRooms: this.getTranslatableValue('numberbathrooms.values[0]'),
-      numberOfBedRooms: this.getTranslatableValue('numberbedrooms.values[0]'),
+      numberOfBathRooms: this.getValue('numberbathrooms.values[0]'),
+      numberOfBedRooms: this.getValue('numberbedrooms.values[0]'),
       numberOfCommercialUnits: this.getValue('numberOfCommercialUnits'),
       numberOfFloors: this.getValue('no_of_floors.values[0]'),
       numberOfParkingSpaces: this.getValue('numberOfParkingSpaces'),
@@ -75,8 +75,8 @@ export class FlowFactEstateV2 extends Estate {
       createdAt: this.getDate('_metadata.createdTimestamp'),
       externalID: this.getValue('identifier.values[0]'),
       internalID: this.getValue('_metadata.id'),
-      livingSpace: this.getTranslatableValue('livingarea.values[0]'),
-      numberOfRooms: this.getTranslatableValue('rooms.values[0]'),
+      livingSpace: this.getValue('livingarea.values[0]'),
+      numberOfRooms: this.getValue('rooms.values[0]'),
       price: this.getPrice(),
       title: this.getTranslatableValue('headline.values[0]'),
       previewImage: this.getPreviewImage(),
