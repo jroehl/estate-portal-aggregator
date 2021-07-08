@@ -1,10 +1,8 @@
 import { get } from 'lodash';
 import {
-  Price,
   Address,
   Attachment,
-  Estate,
-  RealEstateProperties,
+  Estate, Price, RealEstateProperties
 } from '../../Estate';
 
 export class FlowFactEstateV2 extends Estate {
@@ -21,9 +19,7 @@ export class FlowFactEstateV2 extends Estate {
       constructionPhase: this.getTranslatableValue(
         'constructionphase.values[0]'
       ),
-      constructionYear: this.getValue(
-        'yearofconstruction.values[0]'
-      ),
+      constructionYear: this.getValue('yearofconstruction.values[0]'),
       courtage: this.getTranslatableValue('commissionInformation.values[0]'),
       descriptionNote: this.getValue('textEstate.values[0]'),
       energyCertificateAvailability: this.getTranslatableValue(
@@ -69,7 +65,7 @@ export class FlowFactEstateV2 extends Estate {
       archived: this.getArchived('status.values[0]'),
       estateType: this.getTranslatableValue('estatetype.values[0]'),
       marketingType: this.getMarketingType(
-        ['tradeType.values[0]', '_metadata.schema'],
+        '_metadata.schema',
         this.getValue('rent.values[0]') ? 'RENT' : 'PURCHASE'
       ),
       createdAt: this.getDate('_metadata.createdTimestamp'),

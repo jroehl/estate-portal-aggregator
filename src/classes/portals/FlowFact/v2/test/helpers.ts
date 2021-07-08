@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
-import estates from './estates.json';
-import estatesRecursive from './estates-recursive.json';
 import estate from './estate.json';
+import estatesRecursive from './estates-recursive.json';
+import estates from './estates.json';
 import schemas from './schemas.json';
 
 export const ENDPOINT = 'https://flowfact-v2.api';
@@ -84,6 +84,7 @@ export const getResultCommon = (translated: boolean = false): any => {
     archived: false,
     estateType: '01ETAG',
     createdAt: 1571395296605,
+    marketingType: 'PURCHASE',
     externalID: 'KAT8WE   4',
     internalID: '75a1bcea-49de-3d8d-97bb-05b600e1bb6a',
     livingSpace: 66.18,
@@ -160,7 +161,7 @@ export const getResultProperties = (translated: boolean = false): any => {
     residentialUnits: undefined,
     summerResidencePractical: undefined,
     usableFloorSpace: undefined,
-    marketingType: undefined,
+    marketingType: "PURCHASE",
   };
   if (translated) return translate(properties);
   return properties;
