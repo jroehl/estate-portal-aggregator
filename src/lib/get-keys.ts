@@ -1,10 +1,10 @@
 import {
-  RealEstateCommonProperties,
-  RealEstateDetailedProperties,
   Address,
-  Price,
   Attachment,
   Marketing,
+  Price,
+  RealEstateCommonProperties,
+  RealEstateDetailedProperties
 } from '../classes/portals/Estate';
 
 class Common implements RealEstateCommonProperties {

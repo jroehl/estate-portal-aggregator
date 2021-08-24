@@ -1,10 +1,7 @@
-import { Immobilienscout24Estate } from './Estate';
 import { Estate } from '../Estate';
+import { Immobilienscout24Estate } from './Estate';
 import {
-  getResultEstate,
-  getResultCommon,
-  getResultProperties,
-  dictionary,
+  dictionary, getResultCommon, getResultEstate, getResultProperties
 } from './test/helpers';
 
 describe('Immobilienscout24 Estate', () => {

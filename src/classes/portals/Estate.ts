@@ -1,8 +1,8 @@
-import moment from 'moment';
 import { get, pick } from 'lodash';
-
-import { Translator } from './Translator';
+import moment from 'moment';
 import { generateCommonEstatePropertyKeys } from '../../lib/get-keys';
+import { Translator } from './Translator';
+
 
 export interface Mapping {
   [key: string]: any | any[];
