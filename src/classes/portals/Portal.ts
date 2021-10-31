@@ -1,8 +1,8 @@
-import requestPromise, { RequestPromiseOptions } from 'request-promise-native';
 import { merge } from 'lodash';
-
-import { Authorization } from '../Authorization';
+import requestPromise, { RequestPromiseOptions } from 'request-promise-native';
 import { Logger } from '../../utils';
+import { Authorization } from '../Authorization';
+
 
 export interface FetchOptions {
   detailed?: boolean;
@@ -50,8 +50,8 @@ export abstract class Portal {
       Logger.error(`ERROR: Fetching ${uri}`);
       return {
         type: 'error',
-        message: error.message || error,
-        statusCode: error.statusCode || error.code || 400,
+        message: (error as any).message || error,
+        statusCode: (error as any).statusCode || (error as any).code || 400,
         uri,
         meta,
       } as RequestError;
