@@ -1,12 +1,10 @@
 import { get } from 'lodash';
-
 import {
-  Price,
   Address,
   Attachment,
-  Estate,
-  RealEstateProperties,
+  Estate, Price, RealEstateProperties
 } from '../../Estate';
+
 
 export class FlowFactEstateV1 extends Estate {
   protected async parse(): Promise<RealEstateProperties> {
@@ -73,6 +71,7 @@ export class FlowFactEstateV1 extends Estate {
       parkingSpaceType: this.getValue('parkingSpaceType'),
       patio: this.getValue('patio'),
       plotArea: this.getValue('plotArea'),
+      totalArea: this.getValue('totalArea'),
       residentialUnits: this.getValue('residentialUnits'),
       summerResidencePractical: this.getValue('summerResidencePractical'),
       usableFloorSpace: this.getValue('usableFloorSpace'),

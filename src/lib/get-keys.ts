@@ -62,6 +62,7 @@ class Detailed implements RealEstateDetailedProperties {
   parkingSpaceType!: string;
   patio!: boolean;
   plotArea!: number;
+  totalArea!: number;
   residentialUnits!: number;
   summerResidencePractical!: boolean;
   usableFloorSpace!: number;

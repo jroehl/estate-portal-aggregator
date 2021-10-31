@@ -1,12 +1,10 @@
 import { get } from 'lodash';
-
 import {
-  Price,
   Address,
   Attachment,
-  Estate,
-  RealEstateProperties,
+  Estate, Price, RealEstateProperties
 } from '../Estate';
+
 
 export class Immobilienscout24Estate extends Estate {
   protected async parse(): Promise<RealEstateProperties> {
@@ -62,6 +60,7 @@ export class Immobilienscout24Estate extends Estate {
       parkingSpaceType: this.getTranslatableValue('parkingSpaceType'),
       patio: this.getTranslatableValue('patio'),
       plotArea: this.getTranslatableValue('plotArea'),
+      totalArea: this.getTranslatableValue('totalArea'),
       residentialUnits: this.getTranslatableValue('residentialUnits'),
       summerResidencePractical: this.getTranslatableValue(
         'summerResidencePractical'
