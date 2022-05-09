@@ -55,7 +55,7 @@
     "@types/node": "^16.0.0",
     "@types/request-promise-native": "^1.0.17",
     "@types/yargs": "^17.0.0",
-    "jest": "^27.0.3",
+    "jest": "^28.1.0",
     "jest-circus": "^27.0.3",
     "prettier": "^2.0.5",
     "tslint": "^6.1.2",
