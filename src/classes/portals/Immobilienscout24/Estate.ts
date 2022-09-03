@@ -163,7 +163,7 @@ export class Immobilienscout24Estate extends Estate {
   }
 
   private async getAttachments(): Promise<Attachment[]> {
-    return this.getValue('attachments', []).map(
+    return this.getValue('attachments', []).map?.(
       (attachment: any) =>
         ({
           title: get(attachment, 'title'),

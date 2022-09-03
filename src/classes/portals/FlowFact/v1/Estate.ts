@@ -137,7 +137,7 @@ export class FlowFactEstateV1 extends Estate {
   }
 
   private async getAttachments(): Promise<Attachment[]> {
-    return this.getValue('value.pictures.estatepicture', []).map(
+    return this.getValue('value.pictures.estatepicture', []).map?.(
       (attachment: any) =>
         ({
           title: get(attachment, 'headline'),
