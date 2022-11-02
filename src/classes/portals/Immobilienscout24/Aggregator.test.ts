@@ -1,7 +1,7 @@
-import { Immobilienscout24 } from './Aggregator';
-import { credentials, getResultEstate } from './test/helpers';
 import { Aggregator } from '../Aggregator';
 import { Estate } from '../Estate';
+import { Immobilienscout24 } from './Aggregator';
+import { credentials, getResultEstate } from './test/helpers';
 
 describe('Immobilienscout24 Aggregator', () => {
   it('should initialize', () => {

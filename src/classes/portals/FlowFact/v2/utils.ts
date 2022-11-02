@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash';
 
-import FlowFactPortalV2 from './Portal';
 import { Mapping } from '../../../../classes/portals/Estate';
 import { Logger } from '../../../../utils';
+import FlowFactPortalV2 from './Portal';
 
 export const enrichResultWithReadableKeys = async (
   flowFact: FlowFactPortalV2,

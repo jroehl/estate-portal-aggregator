@@ -72,7 +72,7 @@ export class FlowFactEstateV2 extends Estate {
       externalID: this.getValue('identifier.values[0]'),
       internalID: this.getValue('_metadata.id'),
       livingSpace: this.getValue('livingarea.values[0]'),
-      totalArea: this.getValue('totalarea.values[0]'),
+      totalArea: this.getTranslatableValue('totalarea.values[0]'),
       numberOfRooms: this.getValue('rooms.values[0]'),
       price: this.getPrice(),
       title: this.getTranslatableValue('headline.values[0]'),

@@ -1,37 +1,14 @@
 import { flatten } from 'lodash';
 import requestPromise from 'request-promise-native';
+import { Logger } from '../../../../utils';
 
-import { Portal, FetchOptions } from '../../Portal';
 import {
   Authorization,
   AuthorizationHeader,
   Credentials,
-  TokenAuth,
+  TokenAuth
 } from '../../../Authorization';
-
-export const estateSchemas = [
-  'catering_accommodation_purchase',
-  'catering_accommodation_rent',
-  'flat_purchase',
-  'flat_rent',
-  'garage_pitch',
-  'garage_pitch_purchase',
-  'garage_pitch_rent',
-  'house_purchase',
-  'houses_rent',
-  'investment',
-  'land_lease',
-  'land_purchase',
-  'office_surgery_purchase',
-  'office_surgery_rent',
-  'other_commercial_estates_purchase',
-  'other_commercial_estates_rent',
-  'production_halls_purchase',
-  'production_halls_rent',
-  'shops_commerce_purchase',
-  'shops_commerce_rent',
-  'temporary_accommodation',
-];
+import { FetchOptions, Portal } from '../../Portal';
 
 class FlowFactV2Authorization extends Authorization {
   protected authorizationHeader?: AuthorizationHeader;
@@ -53,7 +30,7 @@ class FlowFactV2Authorization extends Authorization {
   }
 
   checkCredentials(credentials: Credentials): Credentials {
-    const basicAuth = (credentials as unknown) as TokenAuth;
+    const basicAuth = credentials as unknown as TokenAuth;
     const isValid = Boolean(basicAuth.token);
 
     if (!isValid) {
@@ -106,23 +83,31 @@ export default class FlowFactPortalV2 extends Portal {
   }
 
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
+    const schemas = await this.fetchSchemas(undefined, ['estates']);
+
     const items = await Promise.all(
-      estateSchemas.map(async (schemaID) => {
-        const results = await this.fetchRecursive(
-          `${this.baseURL}/search-service/stable/schemas/${schemaID}`,
-          {
-            method: 'POST',
-            body: {
-              target: 'ENTITY',
-              distinct: true,
+      schemas.map(async ({ id: schemaID }) => {
+        try {
+          return await this.fetchRecursive(
+            `${this.baseURL}/search-service/stable/schemas/${schemaID}`,
+            {
+              method: 'POST',
+              body: {
+                target: 'ENTITY',
+                distinct: true,
+              },
             },
-          },
-          options
-        );
-        return results;
+            options
+          );
+        } catch (error) {
+          Logger.error((error as Error).message || error);
+          return [];
+        }
       })
     );
+
     const flattened = flatten(items);
+
     if (!options?.detailed) return flattened;
     return Promise.all(
       flattened.map(async (res: any) => {
@@ -138,8 +123,15 @@ export default class FlowFactPortalV2 extends Portal {
     return this.request(uri, undefined, { id });
   }
 
-  async fetchSchemas(options?: FetchOptions): Promise<any[]> {
+  async fetchSchemas(
+    options?: FetchOptions,
+    groups?: string[]
+  ): Promise<any[]> {
     const uri = `${this.baseURL}/schema-service/stable/v2/schemas/`;
-    return this.fetchRecursive(uri, undefined, options);
+    const res = await this.fetchRecursive(uri, undefined, options);
+    if (!groups?.length) return res;
+    return res.filter((schema: any) =>
+      schema.groups?.some((group: string) => groups.includes(group))
+    );
   }
 }

@@ -10,12 +10,13 @@ export default (uri: string, options: any) => {
   if (uri.includes('authenticate')) return 'cognitoToken';
   if (uri.includes('error')) throw new Error('Request error');
 
-  if (uri.includes('schemas/?')) {
-    return schemas;
-  }
+  if (uri.includes('schema-service')) return schemas;
 
   if (uri.includes('schemas')) {
-    if (options.method === 'POST' && uri.includes('flat_rent')) {
+    if (
+      options.method === 'POST' &&
+      uri.includes('9f0ea8f8-228e-4ec5-9637-07c1760e2f51')
+    ) {
       if (uri.includes('size=2')) return estatesRecursive;
       return estates;
     }
@@ -94,8 +95,7 @@ export const getResultCommon = (translated: boolean = false): any => {
     totalRent: undefined,
     previewImage: {
       title: 'Wohnzimmer',
-      url:
-        'https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/17/a58a7f44-79dc-4177-8ed2-4bf589673117.JPG',
+      url: 'https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/17/a58a7f44-79dc-4177-8ed2-4bf589673117.JPG',
     },
     updatedAt: 1580294614972,
   };
@@ -110,13 +110,11 @@ export const getResultProperties = (translated: boolean = false): any => {
     attachments: [
       {
         title: 'Wohnzimmer',
-        url:
-          'https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/17/a58a7f44-79dc-4177-8ed2-4bf589673117.JPG',
+        url: 'https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/17/a58a7f44-79dc-4177-8ed2-4bf589673117.JPG',
       },
       {
         title: 'Carport',
-        url:
-          'https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/91/65cacc57-abdd-4ff9-9b33-5e9391111491.JPG',
+        url: 'https://s3.eu-central-1.amazonaws.com/cloudios.production.image/8b/91811a12-a594-42d4-bf75-bddb39c94b8b/6a/75a1bcea-49de-3d8d-97bb-05b600e1bb6a/91/65cacc57-abdd-4ff9-9b33-5e9391111491.JPG',
       },
     ],
     attic: undefined,
@@ -161,7 +159,7 @@ export const getResultProperties = (translated: boolean = false): any => {
     residentialUnits: undefined,
     summerResidencePractical: undefined,
     usableFloorSpace: undefined,
-    marketingType: "PURCHASE",
+    marketingType: 'PURCHASE',
   };
   if (translated) return translate(properties);
   return properties;

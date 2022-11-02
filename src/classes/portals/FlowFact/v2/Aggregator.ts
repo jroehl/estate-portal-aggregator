@@ -1,14 +1,14 @@
-import { flatten, isObject, cloneDeep } from 'lodash';
+import { cloneDeep, flatten, isObject } from 'lodash';
 
-import { Mapping, Estate } from '../../Estate';
-import { TokenAuth } from '../../../Authorization';
-import { Portal, FetchOptions } from '../../Portal';
-import { FlowFactEstateV2 } from './Estate';
-import { Aggregator } from '../../Aggregator';
-import { AvailableLanguages } from '../../../../types';
-import FlowFactPortalV2, { estateSchemas } from './Portal';
-import { enrichResultWithReadableKeys } from './utils';
 import estateCommon from '../../../../translations';
+import { AvailableLanguages } from '../../../../types';
+import { TokenAuth } from '../../../Authorization';
+import { Aggregator } from '../../Aggregator';
+import { Estate, Mapping } from '../../Estate';
+import { FetchOptions, Portal } from '../../Portal';
+import { FlowFactEstateV2 } from './Estate';
+import FlowFactPortalV2 from './Portal';
+import { enrichResultWithReadableKeys } from './utils';
 
 const safeEstateCommon = cloneDeep(estateCommon);
 
@@ -68,15 +68,15 @@ export class FlowFactV2 extends Aggregator {
   ): Promise<Mapping> {
     const dictionary = this.dictionaries[language];
     if (isObject(dictionary)) return dictionary;
-    const schemas = await (this.portal as FlowFactPortalV2).fetchSchemas();
-    const reducedSchemas = schemas.filter(({ name }) =>
-      estateSchemas.includes(name)
+    const schemas = await (this.portal as FlowFactPortalV2).fetchSchemas(
+      undefined,
+      ['estates']
     );
     const parseFields = initFieldParse(language, {
       ...safeEstateCommon.fallbacks.en,
       ...safeEstateCommon[language || 'en'],
     });
-    const fields = flatten(parseFields(reducedSchemas));
+    const fields = flatten(parseFields(schemas));
     const result = Object.assign({}, ...fields);
     this.dictionaries[language] = result;
     return result;
