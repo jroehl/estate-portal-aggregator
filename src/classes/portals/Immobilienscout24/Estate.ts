@@ -2,9 +2,10 @@ import { get } from 'lodash';
 import {
   Address,
   Attachment,
-  Estate, Price, RealEstateProperties
+  Estate,
+  Price,
+  RealEstateProperties
 } from '../Estate';
-
 
 export class Immobilienscout24Estate extends Estate {
   protected async parse(): Promise<RealEstateProperties> {
@@ -153,13 +154,12 @@ export class Immobilienscout24Estate extends Estate {
   }
 
   private getCourtage(): string {
-    const result = [
+    return [
       this.getTranslatableValue('courtage.hasCourtage'),
       this.getTranslatableValue('courtage.courtageNote'),
     ]
       .filter(Boolean)
       .join('\n');
-    return result;
   }
 
   private async getAttachments(): Promise<Attachment[]> {

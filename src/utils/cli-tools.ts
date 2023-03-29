@@ -1,5 +1,5 @@
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import moment from 'moment';
-import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { Mapping } from '../classes/portals/Estate';
 

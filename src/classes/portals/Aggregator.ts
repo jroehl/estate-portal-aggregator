@@ -1,6 +1,6 @@
-import { Mapping, Estate } from './Estate';
-import { FetchOptions, Portal } from './Portal';
 import { AvailableLanguages } from '../../types';
+import { Estate, Mapping } from './Estate';
+import { FetchOptions, Portal } from './Portal';
 
 export abstract class Aggregator {
   protected abstract portal: Portal;

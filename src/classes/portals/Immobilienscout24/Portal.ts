@@ -1,14 +1,14 @@
-import OAuth from 'oauth-1.0a';
 import { createHmac } from 'crypto';
 import { get } from 'lodash';
+import OAuth from 'oauth-1.0a';
 
-import { Portal, FetchOptions } from '../Portal';
 import {
   Authorization,
   AuthorizationHeader,
   Credentials,
-  OAuth as IOAuth,
+  OAuth as IOAuth
 } from '../../Authorization';
+import { FetchOptions, Portal } from '../Portal';
 export { Immobilienscout24Estate } from './Estate';
 
 class Immobilienscout24Authorization extends Authorization {

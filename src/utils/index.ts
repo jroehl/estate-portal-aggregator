@@ -8,3 +8,9 @@ export class Logger {
   static logJSON = (json: any) =>
     notIsTest && console.log(JSON.stringify(json, null, 2)); // tslint:disable-line no-console
 }
+
+export function notEmpty<TValue>(
+  value: TValue | null | undefined
+): value is TValue {
+  return value != null;
+}

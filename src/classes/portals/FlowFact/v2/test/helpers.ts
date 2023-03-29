@@ -13,10 +13,7 @@ export default (uri: string, options: any) => {
   if (uri.includes('schema-service')) return schemas;
 
   if (uri.includes('schemas')) {
-    if (
-      options.method === 'POST' &&
-      uri.includes('9f0ea8f8-228e-4ec5-9637-07c1760e2f51')
-    ) {
+    if (options.method === 'POST' && uri.includes('estates')) {
       if (uri.includes('size=2')) return estatesRecursive;
       return estates;
     }

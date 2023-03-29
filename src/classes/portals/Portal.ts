@@ -3,12 +3,12 @@ import requestPromise, { RequestPromiseOptions } from 'request-promise-native';
 import { Logger } from '../../utils';
 import { Authorization } from '../Authorization';
 
-
 export interface FetchOptions {
   detailed?: boolean;
   recursively?: boolean;
   page?: number;
   pageSize?: number;
+  body?: Record<string, unknown>;
 }
 
 export interface RequestError {
@@ -44,8 +44,7 @@ export abstract class Portal {
     );
 
     try {
-      const result = await requestPromise(uri, options);
-      return result;
+      return await requestPromise(uri, options);
     } catch (error) {
       Logger.error(`ERROR: Fetching ${uri}`);
       return {

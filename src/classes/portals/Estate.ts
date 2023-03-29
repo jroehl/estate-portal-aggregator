@@ -123,7 +123,7 @@ export abstract class Estate {
     }
 
     if (!detailed) {
-      result = pick(
+      return pick(
         result,
         ...generateCommonEstatePropertyKeys()
       ) as RealEstateProperties;

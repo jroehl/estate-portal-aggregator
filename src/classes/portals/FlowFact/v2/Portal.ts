@@ -1,6 +1,4 @@
-import { flatten } from 'lodash';
 import requestPromise from 'request-promise-native';
-import { Logger } from '../../../../utils';
 
 import {
   Authorization,
@@ -54,11 +52,11 @@ export default class FlowFactPortalV2 extends Portal {
   private async fetchRecursive(
     baseURL: string,
     opts?: requestPromise.RequestPromiseOptions,
-    options?: FetchOptions,
+    fetchOptions?: FetchOptions,
     elements: any[] = []
   ): Promise<any[]> {
-    const currentPage = options?.page || 1;
-    const size = options?.pageSize || 50;
+    const currentPage = fetchOptions?.page || 1;
+    const size = fetchOptions?.pageSize || 50;
     const uri = `${baseURL}?size=${size}&page=${currentPage}`;
 
     const res = await this.request(uri, opts);
@@ -70,11 +68,11 @@ export default class FlowFactPortalV2 extends Portal {
     const sanitizedEntries = Array.isArray(entries) ? entries : [entries];
 
     elements = [...elements, ...sanitizedEntries];
-    if (options?.recursively && elements.length < totalCount) {
+    if (fetchOptions?.recursively && elements.length < totalCount) {
       return this.fetchRecursive(
         baseURL,
         opts,
-        { ...options, page: currentPage + 1 },
+        { ...fetchOptions, page: currentPage + 1 },
         elements
       );
     }
@@ -83,37 +81,24 @@ export default class FlowFactPortalV2 extends Portal {
   }
 
   async fetchEstates(options?: FetchOptions): Promise<any[]> {
-    const schemas = await this.fetchSchemas(undefined, ['estates']);
-
-    const items = await Promise.all(
-      schemas.map(async ({ id: schemaID }) => {
-        try {
-          return await this.fetchRecursive(
-            `${this.baseURL}/search-service/stable/schemas/${schemaID}`,
-            {
-              method: 'POST',
-              body: {
-                target: 'ENTITY',
-                distinct: true,
-              },
-            },
-            options
-          );
-        } catch (error) {
-          Logger.error((error as Error).message || error);
-          return [];
-        }
-      })
+    const estates = await this.fetchRecursive(
+      `${this.baseURL}/search-service/stable/schemas/estates`,
+      {
+        method: 'POST',
+        body: {
+          target: 'ENTITY',
+          distinct: true,
+          ...(options?.body || {}),
+        },
+      },
+      options
     );
+    if (!options?.detailed) return estates;
 
-    const flattened = flatten(items);
-
-    if (!options?.detailed) return flattened;
     return Promise.all(
-      flattened.map(async (res: any) => {
+      estates.map(async (res: any) => {
         const estateID = res._metadata.id;
-        const result = await this.fetchEstate(estateID);
-        return result;
+        return await this.fetchEstate(estateID);
       })
     ).then((x) => x.filter(Boolean));
   }

@@ -1,8 +1,10 @@
-import { get } from 'lodash';
+import { get, uniqBy } from 'lodash';
 import {
   Address,
   Attachment,
-  Estate, Price, RealEstateProperties
+  Estate,
+  Price,
+  RealEstateProperties
 } from '../../Estate';
 
 export class FlowFactEstateV2 extends Estate {
@@ -130,33 +132,16 @@ export class FlowFactEstateV2 extends Estate {
   }
 
   private async getAttachments(): Promise<Attachment[]> {
-    const onlineImages: Attachment[] = this.getValue(
-      'onlineImage.values',
-      []
-    ).map(
-      (attachment: any) =>
-        ({
-          title: get(attachment, 'headline'),
-          url: get(attachment, 'uri'),
-        } as Attachment)
+    return uniqBy(
+      [
+        ...this.getValue('mainImage.values', []),
+        ...this.getValue('onlineImage.values', []),
+        ...this.getValue('groundplotImage.values', []),
+      ].map((attachment: any) => ({
+        title: get(attachment, 'headline'),
+        url: get(attachment, 'uri'),
+      })),
+      'url'
     );
-
-    const mainImage = this.getValue('mainImage.values[0]');
-
-    if (mainImage) {
-      const main: Attachment = {
-        title: get(mainImage, 'headline'),
-        url: get(mainImage, 'uri'),
-      };
-
-      return [
-        main,
-        ...onlineImages.filter(
-          (attachment: Attachment) => attachment.url !== main.url
-        ),
-      ];
-    }
-
-    return onlineImages;
   }
 }
