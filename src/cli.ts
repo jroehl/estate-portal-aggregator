@@ -1,6 +1,7 @@
 // Import our DAO object
 import * as yargs from 'yargs'; // We will take advantage of typings and intellsence.
 import { Mapping } from './classes/portals/Estate';
+import { AVAILABLE_LANGUAGES } from './constants';
 import { AvailableLanguages } from './types';
 
 export interface GlobalFlags {
@@ -19,6 +20,7 @@ export interface PaginatedFlags {
 
 export interface DictionaryFlags {
   language: AvailableLanguages;
+  output?: string;
 }
 
 export const fetchOptions: { [key: string]: yargs.Options } = {
@@ -74,10 +76,27 @@ export const generateDictionaryOptions: Mapping = {
   language: {
     type: 'string',
     alias: ['l'],
-    choices: ['de', 'en'],
+    choices: AVAILABLE_LANGUAGES,
     required: false,
     description:
       'Generate pre-filled dictionary with translations for language',
+  },
+};
+
+export const updateDictionaryOptions: Mapping = {
+  language: {
+    type: 'string',
+    alias: ['l'],
+    choices: AVAILABLE_LANGUAGES,
+    required: false,
+    description:
+      'Generate pre-filled dictionary with translations for language',
+  },
+  output: {
+    type: 'string',
+    alias: ['o'],
+    required: false,
+    description: 'Output file name',
   },
 };
 

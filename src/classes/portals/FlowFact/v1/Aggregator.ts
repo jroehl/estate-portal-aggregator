@@ -1,13 +1,13 @@
 import { isObject } from 'lodash';
 
-import { Mapping, Estate } from '../../Estate';
-import { BasicAuth } from '../../../Authorization';
-import { Portal, FetchOptions } from '../../Portal';
-import { FlowFactEstateV1 } from './Estate';
-import { Aggregator } from '../../Aggregator';
 import { AvailableLanguages } from '../../../../types';
-import FlowFactPortalV1 from './Portal';
+import { BasicAuth } from '../../../Authorization';
+import { Aggregator } from '../../Aggregator';
+import { Estate, Mapping } from '../../Estate';
 import { generateDictionary } from '../../Immobilienscout24/Aggregator';
+import { FetchOptions, Portal } from '../../Portal';
+import { FlowFactEstateV1 } from './Estate';
+import FlowFactPortalV1 from './Portal';
 
 export class FlowFactV1 extends Aggregator {
   protected portal: Portal;

@@ -1,8 +1,8 @@
 import { Argv } from 'yargs';
-import { Logger } from '../utils';
-import { storeResponse, generateOutputName } from '../utils/cli-tools';
-import { generateDictionaryOptions, DictionaryFlags } from '../cli';
+import { DictionaryFlags, generateDictionaryOptions } from '../cli';
 import { generateDictionary } from '../lib/generate-dictionary';
+import { Logger } from '../utils';
+import { generateOutputName, storeResponse } from '../utils/cli-tools';
 
 export const command = 'generate-dictionary';
 
@@ -24,7 +24,7 @@ exports.handler = async (argv: Arguments) => {
   try {
     const result = generateDictionary(argv.language);
 
-    const name = generateOutputName(command, 'common', argv.language);
+    const name = argv.output || generateOutputName(command, 'common', argv.language);
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {

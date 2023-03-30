@@ -1,13 +1,13 @@
 import { Argv } from 'yargs';
-import { Logger } from '../../utils';
-import { storeResponse, generateOutputName } from '../../utils/cli-tools';
-import {
-  command as parentCommand,
-  Immobilienscout24Flags,
-} from '../immobilienscout24';
-import { generateDictionaryOptions, DictionaryFlags } from '../../cli';
 import { OAuth } from '../../classes/Authorization';
 import { Immobilienscout24 } from '../../classes/portals/Immobilienscout24/Aggregator';
+import { DictionaryFlags, generateDictionaryOptions } from '../../cli';
+import { Logger } from '../../utils';
+import { generateOutputName, storeResponse } from '../../utils/cli-tools';
+import {
+  command as parentCommand,
+  Immobilienscout24Flags
+} from '../immobilienscout24';
 
 export const command = 'generate-dictionary';
 
@@ -31,7 +31,8 @@ exports.handler = async (argv: Arguments) => {
 
     const result = await is24.generateDictionary(argv.language);
 
-    const name = generateOutputName(parentCommand, command, argv.language);
+    const name =
+      argv.output || generateOutputName(parentCommand, command, argv.language);
     const fileName = storeResponse(name, result, true);
     Logger.log(`Dictionary stored at "${fileName}"`);
   } catch (error) {

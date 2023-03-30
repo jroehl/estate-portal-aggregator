@@ -1,13 +1,13 @@
 import { Argv } from 'yargs';
 
-import { Logger } from '../../utils';
-import { storeResponse, generateOutputName } from '../../utils/cli-tools';
-import { command as parentCommand, FlowFactFlags } from '../flowfact';
-import { TokenAuth, BasicAuth } from '../../classes/Authorization';
-import { DictionaryFlags, generateDictionaryOptions } from '../../cli';
+import { BasicAuth, TokenAuth } from '../../classes/Authorization';
 import { FlowFactV1 } from '../../classes/portals/FlowFact/v1/Aggregator';
 import { FlowFactV2 } from '../../classes/portals/FlowFact/v2/Aggregator';
+import { DictionaryFlags, generateDictionaryOptions } from '../../cli';
 import { APIVersion } from '../../types';
+import { Logger } from '../../utils';
+import { generateOutputName, storeResponse } from '../../utils/cli-tools';
+import { command as parentCommand, FlowFactFlags } from '../flowfact';
 
 export const command = 'generate-dictionary';
 
@@ -35,7 +35,7 @@ exports.handler = async (argv: Arguments) => {
 
     const result = await flowFact.generateDictionary(argv.language);
 
-    const name = generateOutputName(
+    const name = argv.output || generateOutputName(
       parentCommand,
       command,
       apiVersion,

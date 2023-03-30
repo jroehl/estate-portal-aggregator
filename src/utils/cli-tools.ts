@@ -1,5 +1,4 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import moment from 'moment';
 import { resolve } from 'path';
 import { Mapping } from '../classes/portals/Estate';
 
@@ -8,10 +7,7 @@ export const storeResponse = (
   result: any,
   pretty: boolean
 ) => {
-  const file = resolve(
-    process.cwd(),
-    `${command}-${moment().toISOString()}.json`
-  );
+  const file = resolve(process.cwd(), `${command}.json`);
   writeFileSync(
     file,
     pretty ? JSON.stringify(result, null, 2) : JSON.stringify(result)
@@ -28,3 +24,5 @@ export const loadDictionary = (path?: string): Mapping | undefined => {
 
 export const generateOutputName = (...parts: string[]): string =>
   parts.filter(Boolean).join('-');
+
+export const getRootDir = () => resolve(__dirname, '../..');

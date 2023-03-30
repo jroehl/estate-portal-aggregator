@@ -72,10 +72,7 @@ export class FlowFactV2 extends Aggregator {
       undefined,
       ['estates']
     );
-    const parseFields = initFieldParse(language, {
-      ...safeEstateCommon.fallbacks.en,
-      ...safeEstateCommon[language || 'en'],
-    });
+    const parseFields = initFieldParse(language, safeEstateCommon[language || 'en']);
     const fields = flatten(parseFields(schemas));
     const result = Object.assign({}, ...fields);
     this.dictionaries[language] = result;

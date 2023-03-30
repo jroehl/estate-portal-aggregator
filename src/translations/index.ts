@@ -1,11 +1,7 @@
-import de from './de';
-import en from './en';
-import fallbacksEN from './fallbacks-en';
+import de from './de.json';
+import en from './en.json';
 
 export default {
   de,
   en,
-  fallbacks: {
-    en: fallbacksEN,
-  },
 };
