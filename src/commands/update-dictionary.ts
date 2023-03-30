@@ -20,7 +20,7 @@ const usage = `
 $0 ${command}
 `;
 
-interface Arguments extends DictionaryFlags {}
+type Arguments = DictionaryFlags;
 
 exports.builder = (yargs: Argv) =>
   yargs
@@ -37,13 +37,13 @@ exports.handler = async ({ language }: Arguments) => {
       `generate-dictionary --language ${language}`,
     ];
 
-    const outputs = commands.map((command) => {
+    const outputs = commands.map((args) => {
       const output = generateOutputName(
-        ...command.replace(/-/g, '').split(' ')
+        ...args.replace(/-/g, '').split(' ')
       );
-      Logger.log(`Executing "estate-portal ${command}"`);
+      Logger.log(`Executing "estate-portal ${args}"`);
       const bin = join(getRootDir(), 'bin', 'estate-portal');
-      execSync(`${bin} ${command} --output ${output}`, {
+      execSync(`${bin} ${args} --output ${output}`, {
         stdio: 'inherit',
       });
       return resolve(process.cwd(), `${output}.json`);
