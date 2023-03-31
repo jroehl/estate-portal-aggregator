@@ -43,7 +43,7 @@ class ResultEnricher {
       );
     } catch (error) {
       Logger.warn(
-        `ERROR: Fetching schemas, retrying ${this.tries}/${this.maxTries}`
+        `WARN: Fetching schemas, retrying ${this.tries}/${this.maxTries}`
       );
       if (this.tries <= this.maxTries) {
         return this.setSchemas();

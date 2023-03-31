@@ -1,5 +1,4 @@
 import { isUndefined } from 'lodash';
-import { Logger } from '../../utils';
 import { Mapping, RealEstateProperties } from './Estate';
 
 export class Translator {
@@ -14,18 +13,12 @@ export class Translator {
   }
 
   private translateValue(dictionary: Mapping, value: string): string {
-    let result = value;
     const isValidString = typeof value === 'string' && !value.match(/ |\n/gi);
     if (this.isTranslatable(value) && isValidString) {
       const key = value.toLowerCase();
-      result = dictionary![key];
-      if (!result) {
-        const path = this.getTranslatablePath(value);
-        Logger.warn(`No translation found for "${key}" <${path}>`);
-        result = value;
-      }
+      if (dictionary?.[key]) return dictionary[key];
     }
-    return result;
+    return value;
   }
 
   public translateValues(
